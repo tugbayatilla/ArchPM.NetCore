@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Authors>Tugbay Atilla</Authors>
+    <PackageTags>ArchPM, NetCore</PackageTags>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <Description>ArchPM .Net Core Operations</Description>
+    <FileVersion>0.0.1.0</FileVersion>
+  </PropertyGroup>
+
+</Project>

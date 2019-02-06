@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchPM.NetCore", "ArchPM.NetCore\ArchPM.NetCore.csproj", "{45549156-063C-45C9-9C36-0630B0C98D18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchPM.NetCore.Tests", "ArchPM.NetCore.Tests\ArchPM.NetCore.Tests.csproj", "{FEC0E644-4347-4997-ABAA-7E6F6BDEDFED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45549156-063C-45C9-9C36-0630B0C98D18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45549156-063C-45C9-9C36-0630B0C98D18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45549156-063C-45C9-9C36-0630B0C98D18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45549156-063C-45C9-9C36-0630B0C98D18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC0E644-4347-4997-ABAA-7E6F6BDEDFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC0E644-4347-4997-ABAA-7E6F6BDEDFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC0E644-4347-4997-ABAA-7E6F6BDEDFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC0E644-4347-4997-ABAA-7E6F6BDEDFED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0EA74EE2-FB36-4A7B-BEEF-7DDC82B63E6E}
+	EndGlobalSection
+EndGlobal
