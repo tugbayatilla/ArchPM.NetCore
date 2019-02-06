@@ -5,11 +5,18 @@
     <Authors>Tugbay Atilla</Authors>
     <PackageTags>ArchPM, NetCore</PackageTags>
     <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
     <Description>ArchPM .Net Core Operations</Description>
     <FileVersion>0.0.1.0</FileVersion>
+    <PackageLicenseUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/tugbayatilla/ArchPM.NetCore</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/icon.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/tugbayatilla/ArchPM.NetCore</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <Copyright>© 2019 Tugbay Atilla</Copyright>
+    <Version>0.0.1</Version>
   </PropertyGroup>
 
 </Project>
