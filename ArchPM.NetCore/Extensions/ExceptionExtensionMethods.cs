@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ArchPM.NetCore.Extensions.ExceptionExtensions
+namespace ArchPM.NetCore.Extensions
 {
     /// <summary>
     /// 

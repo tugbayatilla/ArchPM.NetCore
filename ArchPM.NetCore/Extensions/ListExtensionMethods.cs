@@ -4,8 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ArchPM.NetCore.Extensions.ListExtensions
+namespace ArchPM.NetCore.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ListExtensionMethods
     {
         /// <summary>

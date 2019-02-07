@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ArchPM.NetCore.Extensions.ConvertionExtensions
+namespace ArchPM.NetCore.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class ConvertionExtensionMethods
     {
         /// <summary>

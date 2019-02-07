@@ -1,6 +1,5 @@
 ﻿using ArchPM.NetCore.Enums;
 using ArchPM.NetCore.Exceptions;
-using ArchPM.NetCore.Extensions.ListExtensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-namespace ArchPM.NetCore.Extensions.ReflectionExtensions
+namespace ArchPM.NetCore.Extensions
 {
     /// <summary>
     /// 

@@ -1,22 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <Authors>Tugbay Atilla</Authors>
-    <PackageTags>ArchPM, NetCore</PackageTags>
-    <AssemblyVersion>0.0.2.0</AssemblyVersion>
+    <PackageTags>ArchPM, NetCore, Core</PackageTags>
+    <AssemblyVersion>0.0.3.0</AssemblyVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Changed target framework from .netCore 2.2 to .netCore 2.1</PackageReleaseNotes>
-    <Description>ArchPM .Net Core Operations</Description>
-    <FileVersion>0.0.2.0</FileVersion>
+    <PackageReleaseNotes>Upgraded to .netCore 2.2, Extension namespaces merged into single namespace, documentation added, assembly signed</PackageReleaseNotes>
+    <Description>ArchPM .NetCore Core Operations</Description>
+    <FileVersion>0.0.3.0</FileVersion>
     <PackageLicenseUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/tugbayatilla/ArchPM.NetCore</PackageProjectUrl>
     <PackageIconUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/icon.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/tugbayatilla/ArchPM.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>© 2019 Tugbay Atilla</Copyright>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\ArchPM.NetCore.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>

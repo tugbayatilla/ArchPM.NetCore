@@ -1,0 +1,1130 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ArchPM.NetCore</name>
+    </assembly>
+    <members>
+        <member name="T:ArchPM.NetCore.Api.ApiException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiException.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+            <value>
+            The message.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiException.DetailedMessage">
+            <summary>
+            Gets or sets the detailed message.
+            </summary>
+            <value>
+            The detailed message.
+            </value>
+        </member>
+        <member name="T:ArchPM.NetCore.Api.ApiResponse`1">
+            <summary>
+            To be able to use same format sending json response to client.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <seealso cref="T:ArchPM.NetCore.Api.IApiResponse`1" />
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.Result">
+            <summary>
+            Gets or sets a value the requested operation whether is operated correctly or not. 
+            this is not HttpResponse result.
+            </summary>
+            <value>
+              <c>true</c> if result; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.Code">
+            <summary>
+            Gets or sets the application specific code.
+            </summary>
+            <value>
+            The code.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+            <value>
+            The code.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.Source">
+            <summary>
+            Gets or sets the Source.
+            </summary>
+            <value>
+            The default value is Core
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.ApiExceptions">
+            <summary>
+            Gets or sets the exceptions.
+            </summary>
+            <value>
+            The errors.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.Data">
+            <summary>
+            Gets or sets the data.
+            </summary>
+            <value>
+            The data.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.ET">
+            <summary>
+            Gets or sets the et.
+            </summary>
+            <value>
+            The Execution Time
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.TryCount">
+            <summary>
+            Gets or sets the try count.
+            </summary>
+            <value>
+            The try count.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.ApiResponse`1.ExtraData">
+            <summary>
+            Gets or sets the extra data.
+            </summary>
+            <value>
+            The extra data.
+            </value>
+        </member>
+        <member name="M:ArchPM.NetCore.Api.ApiResponse`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Api.ApiResponse`1" /> class.
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Api.ApiResponse`1.CreateFail(System.Exception,System.Boolean)">
+            <summary>
+            Creates the exception.
+            </summary>
+            <param name="ex">The ex.</param>
+            <param name="getDetailedErrors">if set to <c>true</c> [get seperate errors].</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Api.ApiResponse`1.CreateSuccess(`0)">
+            <summary>
+            Creates the success.
+            </summary>
+            <param name="data">The data.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Api.ApiResponse`1.SetErrorCodeBasedOnException(System.Exception)">
+            <summary>
+            Sets the error code based on exception.
+            </summary>
+            <param name="ex">The ex.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Api.ApiResponseCodes">
+            <summary>
+            Sample response Codes. 
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Api.ApiResponseCodes.OK">
+            <summary>
+            Operation was executed successfully
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Api.ApiResponseCodes.OK_WITH_WARNINGS">
+            <summary>
+            Operation was executed but you need to check the warnings
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Api.ApiResponseCodes.ERROR">
+            <summary>
+            Operation was NOT executed. Check Errors
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Api.ApiResponseCodes.VALIDATION_ERROR">
+            <summary>
+            Operation was NOT executed because of Validations
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Api.ApiResponseCodes.AUTHENTICATION_FAILED">
+            <summary>
+            Operation was NOT executed. Need Authentication
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Api.ApiResponseCodes.AUTHORIZATION_FAILED">
+            <summary>
+            Operation was NOT executed. Need Authorization
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Api.ApiResponseCodes.FATAL_ERROR">
+            <summary>
+            Operation was NOT executed. Need Authorization
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Api.IApiResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponse.Result">
+            <summary>
+            Gets or sets a value the requested operation whether is operated correctly or not. 
+            this is not HttpResponse result.
+            </summary>
+            <value>
+              <c>true</c> if result; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponse.Code">
+            <summary>
+            Gets or sets the application specific code.
+            </summary>
+            <value>
+            The code.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponse.Message">
+            <summary>
+            Gets or sets the message.
+            </summary>
+            <value>
+            The code.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponse.Source">
+            <summary>
+            Gets the source.
+            </summary>
+            <value>
+            The code.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponse.TryCount">
+            <summary>
+            Gets or sets the try count.
+            </summary>
+            <value>
+            The try count.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponse.ExtraData">
+            <summary>
+            Gets or sets the extra data.
+            </summary>
+            <value>
+            The extra data.
+            </value>
+        </member>
+        <member name="T:ArchPM.NetCore.Api.IApiResponse`1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponse`1.Data">
+            <summary>
+            Gets or sets the data.
+            </summary>
+            <value>
+            The data.
+            </value>
+        </member>
+        <member name="T:ArchPM.NetCore.Api.IApiResponseElapsedTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponseElapsedTime.ET">
+            <summary>
+            Gets or sets the et.
+            </summary>
+            <value>
+            The Execution Time
+            </value>
+        </member>
+        <member name="T:ArchPM.NetCore.Api.IApiResponseError">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Api.IApiResponseError.ApiExceptions">
+            <summary>
+            Gets or sets the errors.
+            </summary>
+            <value>
+            The errors.
+            </value>
+        </member>
+        <member name="T:ArchPM.NetCore.Enums.EnumDescriptionAttribute">
+            <summary>
+            the attribute to get more information from enums
+            </summary>
+            <seealso cref="T:System.Attribute" />
+        </member>
+        <member name="P:ArchPM.NetCore.Enums.EnumDescriptionAttribute.Description">
+            <summary>
+            Gets and Sets description
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Enums.EnumDescriptionAttribute.Exclude">
+            <summary>
+            Gets and Sets it is excluded for not
+            </summary>
+            <value>
+              <c>true</c> if exclude; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumDescriptionAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Enums.EnumDescriptionAttribute"/> class.
+            </summary>
+            <param name="description">The description.</param>
+        </member>
+        <member name="T:ArchPM.NetCore.Enums.EnumManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager.GetEnumDescription(System.Type,System.String)">
+            <summary>
+            Gets the enum description.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="name">The name.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Enums.EnumManager`1">
+            <summary>
+            T enum
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.Foreach(System.Action{`0})">
+            <summary>
+            Iterates all enum items
+            </summary>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetDescription(System.String)">
+            <summary>
+            Get description if exist, or name
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetDescription(`0)">
+            <summary>
+            Get description if exist, or name
+            </summary>
+            <param name="e"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetDescription(System.Int32)">
+            <summary>
+            Get description if exist, or name
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetName(System.Int32)">
+            <summary>
+            Gets the name.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetName(`0)">
+            <summary>
+            Gets the name.
+            </summary>
+            <param name="e">The e.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetValue``1(`0)">
+            <summary>
+            Gets the value. 
+            </summary>
+            <typeparam name="U">Dont use String as Type!</typeparam>
+            <param name="e">The e.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetValueAsString(`0)">
+            <summary>
+            Gets the value as string.
+            </summary>
+            <param name="e">The e.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.GetList(System.Boolean)">
+            <summary>
+            Gets the list.
+            </summary>
+            <param name="hasExcluded">if set to <c>true</c> [has excluded].</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.Parse(System.String)">
+            <summary>
+            Parses the specified value.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.Parse(System.Int32)">
+            <summary>
+            Parses the specified value.
+            </summary>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Enums.EnumManager`1.TryParse(System.String,`0)">
+            <summary>
+            Tries the parse.
+            </summary>
+            <param name="value">The value.</param>
+            <param name="defaultValue">If exception orrurs, returns the default value</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Enums.EnumResult">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Enums.EnumResult.Description">
+            <summary>
+            Gets or sets the description.
+            </summary>
+            <value>
+            The description.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Enums.EnumResult.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Enums.EnumResult.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.AuthenticationException">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.AuthenticationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.AuthenticationException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.AuthenticationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.AuthenticationException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.AuthenticationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.AuthenticationException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.AuthorizationException">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.AuthorizationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.AuthorizationException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.AuthorizationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.AuthorizationException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.AuthorizationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.AuthorizationException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.BusinessException">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.BusinessException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.BusinessException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.BusinessException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.BusinessException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.BusinessException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.BusinessException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.DataLayerException">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.DataLayerException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.BusinessException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.DataLayerException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.BusinessException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.DataLayerException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.BusinessException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.FatalException">
+            <summary>
+            No log, no action anymore.
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.FatalException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.FatalException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.FatalException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.FatalException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.FatalException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.FatalException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.RepositoryException">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.RepositoryException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.RepositoryException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.RepositoryException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.RepositoryException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.RepositoryException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.RepositoryException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.ServiceAdaptorException">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.ServiceAdaptorException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.ServiceAdaptorException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.ServiceAdaptorException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.ServiceAdaptorException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.ServiceAdaptorException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.ServiceAdaptorException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Exceptions.ValidationException">
+            <summary>
+            
+            </summary>
+            <seealso cref="T:System.Exception" />
+            <seealso cref="T:ArchPM.NetCore.Exceptions.IArchPMNetCoreException" />
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.ValidationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.ValidationException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.ValidationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.ValidationException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Exceptions.ValidationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ArchPM.NetCore.Exceptions.ValidationException"/> class.
+            </summary>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.AssemblyExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.AssemblyExtensionMethods.GetProvider``1(System.Reflection.Assembly,System.Object[])">
+            <summary>
+            Gets the provider.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="currentAssembly">The current assembly.</param>
+            <param name="constructorArguments">The constructor arguments.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.AssemblyExtensionMethods.GetProviderTypes``1(System.Reflection.Assembly)">
+            <summary>
+            Gets the provider types.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="currentAssembly">The current assembly.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.ConvertionExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ConvertionExtensionMethods.TryToConvert``1(System.Object,``0)">
+            <summary>
+            Tries the convert to given type
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The expression.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ConvertionExtensionMethods.TryToConvert(System.Object,System.Type,System.Object)">
+            <summary>
+            Tries to convert.
+            </summary>
+            <param name="obj">The object.</param>
+            <param name="type">The type.</param>
+            <param name="defaultValue">The default value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ConvertionExtensionMethods.TryToConvert(System.Object,System.Type)">
+            <summary>
+            Tries the convert to given type
+            </summary>
+            <param name="obj"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ConvertionExtensionMethods.IsNumeric(System.Object)">
+            <summary>
+            Determines whether the specified expression is numeric.
+            </summary>
+            <param name="obj">The expression.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.DictionaryExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.DictionaryExtensionMethods.FindKeyByValue``2(System.Collections.Generic.IDictionary{``0,``1},``1)">
+            <summary>
+            Finds the key by value.
+            </summary>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <param name="dictionary">The dictionary.</param>
+            <param name="value">The value.</param>
+            <returns></returns>
+            <exception cref="T:System.Exception">the value is not found in the dictionary</exception>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.DictionaryExtensionMethods.Save``2(System.Collections.Generic.IDictionary{``0,``1},``0,``1)">
+            <summary>
+            Saves the specified key. updates if exist, otherwise insert key
+            </summary>
+            <typeparam name="TKey">The type of the key.</typeparam>
+            <typeparam name="TValue">The type of the value.</typeparam>
+            <param name="dictionary">The dictionary.</param>
+            <param name="key">The key.</param>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.DictionaryExtensionMethods.ToObject``1(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            To the object.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source">The source.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.DictionaryExtensionMethods.AsDictionary(System.Object,System.Reflection.BindingFlags)">
+            <summary>
+            Ases the dictionary.
+            </summary>
+            <param name="source">The source.</param>
+            <param name="bindingAttr">The binding attribute.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.EnumExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.GetDescription(System.Enum)">
+            <summary>
+            Gets the name.
+            </summary>
+            <param name="obj">The object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.GetValueAsString(System.Enum)">
+            <summary>
+            Get value as String
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.GetName(System.Enum)">
+            <summary>
+            Gets the name.
+            </summary>
+            <param name="obj">The object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.GetValue(System.Enum)">
+            <summary>
+            Gets the name.
+            </summary>
+            <param name="obj">The object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.Foreach``1(System.Enum,System.Action{``0})">
+            <summary>
+            Iterates all enum items
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.ToArray(System.Enum)">
+            <summary>
+            To the array.
+            </summary>
+            <param name="obj">The object.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.Has``1(System.Enum,``0)">
+            <summary>
+            Determines whether [has] [the specified value].
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type">The type.</param>
+            <param name="value">The value.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.Is``1(System.Enum,``0)">
+            <summary>
+            Determines whether [is] [the specified value].
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type">The type.</param>
+            <param name="value">The value.</param>
+            <returns>
+              <c>true</c> if [is] [the specified value]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.ExceptionExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIf``1(``0,System.Func{``0,System.Boolean},System.Exception)">
+            <summary>
+            Throws the exception if.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="predicate">The predicate.</param>
+            <param name="exception">The exception.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIf``1(``0,System.Func{``0,System.Boolean},System.String)">
+            <summary>
+            Throws the exception if.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="predicate">The predicate.</param>
+            <param name="message">The message.</param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIfNull(System.Object,System.Exception)">
+            <summary>
+            Throws the exception if null.
+            </summary>
+            <param name="obj">The object.</param>
+            <param name="exception">The exception.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIfNull``1(``0,System.String)">
+            <summary>
+            Throws the exception if null.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIfNull``1(System.Object,System.String)">
+            <summary>
+            Throws the exception if null.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.GetAllMessages(System.Exception,System.Boolean,System.String)">
+            <summary>
+            Gets all exception messages seperated by \r\n
+            </summary>
+            <param name="ex">The ex.</param>
+            <param name="showMessageTypeAsHeader">if set to <c>true</c> [show message type as header].</param>
+            <param name="messageSeperator"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.GetAllExceptions(System.Exception)">
+            <summary>
+            Gets all exceptions.
+            </summary>
+            <param name="ex">The ex.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.ListExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ListExtensionMethods.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Fors the each.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source">The source.</param>
+            <param name="action">The action.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ListExtensionMethods.ModifyEach``1(System.Collections.Generic.IList{``0},System.Func{``0,``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="source"></param>
+            <param name="projection"></param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ListExtensionMethods.NotEmpty``1(System.Collections.Generic.IList{``0})">
+            <summary>
+            Tests if provided list of objects is not null or empty.
+            Throws ValidationException if it is null or is empty.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="objects">list of objects</param>
+            <exception cref="T:ArchPM.NetCore.Exceptions.ValidationException">The list can't be empty</exception>
+        </member>
+        <member name="F:ArchPM.NetCore.Extensions.ListExtensionMethods.DefinedListNames">
+            <summary>
+            The defined list names
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ListExtensionMethods.IsList(System.Type)">
+            <summary>
+            Determines whether this instance is list.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>
+              <c>true</c> if the specified type is list; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.PropertyDTO">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>
+            The name.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.Value">
+            <summary>
+            Gets the value.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.ValueType">
+            <summary>
+            Gets the type of the value.
+            </summary>
+            <value>
+            The type of the value.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.ValueTypeOf">
+            <summary>
+            Gets the value type of.
+            </summary>
+            <value>
+            The value type of.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.Nullable">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:ArchPM.NetCore.Extensions.PropertyDTO"/> is nullable.
+            </summary>
+            <value>
+              <c>true</c> if nullable; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.IsPrimitive">
+            <summary>
+            Gets a value indicating whether this <see cref="T:ArchPM.NetCore.Extensions.PropertyDTO" /> is .net primitive type such as string, int, decimal etc.
+            </summary>
+            <value>
+              <c>true</c> if .net primitive type; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.IsEnum">
+            <summary>
+            Gets the property whether is enum or not
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.IsList">
+            <summary>
+            Gets a value indicating whether this instance is list.
+            </summary>
+            <value>
+              <c>true</c> if this instance is list; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.Attributes">
+            <summary>
+            Gets defined attribute types
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.PropertyDTO.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.ReflectionExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.CollectProperties(System.Type,System.Func{ArchPM.NetCore.Extensions.PropertyDTO,System.Boolean})">
+            <summary>
+            Collects the properties.
+            </summary>
+            <param name="entityType">Type of the entity.</param>
+            <param name="predicate">The predicate.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">entityType</exception>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.CollectProperties``1(``0,System.Func{ArchPM.NetCore.Extensions.PropertyDTO,System.Boolean})">
+            <summary>
+            Collects the properties.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity">The entity.</param>
+            <param name="predicate">The predicate.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">entity</exception>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsDotNetPirimitive(System.Type,System.Boolean)">
+            <summary>
+            Determines whether [is dot net pirimitive].
+            </summary>
+            <param name="systemType">Type of the system.</param>
+            <param name="acceptNullables">if set to <c>true</c> [accept nullables].</param>
+            <returns>
+              <c>true</c> if [is dot net pirimitive] [the specified system type]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsGenericNullable(System.Reflection.PropertyInfo)">
+            <summary>
+            Determines whether [is generic nullable].
+            </summary>
+            <param name="property">The property.</param>
+            <returns>
+              <c>true</c> if [is generic nullable] [the specified property]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.AddProperty(System.Dynamic.ExpandoObject,System.String,System.Object)">
+            <summary>
+            Adds the property.
+            </summary>
+            <param name="expando">The expando.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyValue">The property value.</param>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.ConvertPropertyInfoToPropertyDTO``1(``0,System.Reflection.PropertyInfo)">
+            <summary>
+            Converts the property information to property dto.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity">The entity.</param>
+            <param name="property">The property.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsEnumOrIsBaseEnum(System.Type)">
+            <summary>
+            Determines whether [is enum or is base enum] [the specified type].
+            </summary>
+            <param name="type">The type.</param>
+            <returns>
+              <c>true</c> if [is enum or is base enum] [the specified type]; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.TypeExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.TypeExtensionMethods.GetConstants(System.Type)">
+            <summary>
+            Gets the constants.
+            </summary>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.TypeExtensionMethods.GetConstantsValues``1(System.Type)">
+            <summary>
+            Gets the constants values.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type">The type.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.TypeExtensionMethods.CreateInstanceAndCast``1(System.Type,System.Object[])">
+            <summary>
+            Create and instance and cast
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="type"></param>
+            <param name="constructorArguments"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.TypeExtensionMethods.RecursivlyCheckBaseType(System.Type,System.Type)">
+            <summary>
+            Recursivlies the type of the check base.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="checkType">Type of the check.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Utils">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ArchPM.NetCore.Utils._lock">
+            <summary>
+            The lock
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Utils.CreateUniqueNumber(System.Nullable{System.DateTime})">
+            <summary>
+            Creates the unique number.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Utils.GetAssembliesInDirectory(System.String,System.IO.SearchOption)">
+            <summary>
+            Loads the assemblies.
+            </summary>
+            <param name="directoryPath">The directory path.</param>
+            <param name="searchOption">The search option.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Utils.IsDirectory(System.String)">
+            <summary>
+            Checks the path is a directory
+            </summary>
+            <param name="path">The path.</param>
+            <returns>
+            True: Directory, False:File
+            </returns>
+        </member>
+    </members>
+</doc>

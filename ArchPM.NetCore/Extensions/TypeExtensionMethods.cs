@@ -4,8 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace ArchPM.NetCore.Extensions.TypeExtensions
+namespace ArchPM.NetCore.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class TypeExtensionMethods
     {
         /// <summary>

@@ -4,8 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace ArchPM.NetCore.Extensions.AssemblyExtensions
+namespace ArchPM.NetCore.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class AssemblyExtensionMethods
     {
         /// <summary>
@@ -23,7 +26,7 @@ namespace ArchPM.NetCore.Extensions.AssemblyExtensions
                 if (!type.IsClass) continue;
                 if (type.IsAbstract) continue;
                 if (type.Name.Contains("<") || type.Name.Contains(">")) continue;
-                if (type.GetInterfaces().Contains(typeof(T)) || TypeExtensions.TypeExtensionMethods.RecursivlyCheckBaseType(type, typeof(T)))
+                if (type.GetInterfaces().Contains(typeof(T)) || TypeExtensionMethods.RecursivlyCheckBaseType(type, typeof(T)))
                 {
                     Type result = type;
                     if (type.ContainsGenericParameters)

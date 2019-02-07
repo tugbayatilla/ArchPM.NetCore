@@ -3,8 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ArchPM.NetCore.Extensions.EnumExtensions
+namespace ArchPM.NetCore.Extensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class EnumExtensionMethods
     {
         /// <summary>
