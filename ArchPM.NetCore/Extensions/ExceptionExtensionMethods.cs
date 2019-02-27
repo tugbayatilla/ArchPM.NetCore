@@ -8,6 +8,7 @@ namespace ArchPM.NetCore.Extensions
     /// </summary>
     public static class ExceptionExtensionMethods
     {
+
         /// <summary>
         /// Throws the exception if.
         /// </summary>
@@ -15,15 +16,16 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="obj">The object.</param>
         /// <param name="predicate">The predicate.</param>
         /// <param name="exception">The exception.</param>
+        /// <exception cref="Exception"></exception>
         public static void ThrowExceptionIf<T>(this T obj, Func<T, Boolean> predicate, Exception exception = null)
         {
             if (exception == null)
             {
                 exception = new Exception($"An object '{nameof(obj)}' instance can't be null");
             }
-            if(predicate == null)
+            if (predicate == null)
             {
-                throw new Exception($"{nameof(predicate)} is null!");
+                throw new Exception($"ThrowExceptionIf ExtensionMethod first parameter {nameof(predicate)} is null!");
             }
             if (predicate.Invoke(obj))
             {
@@ -44,15 +46,26 @@ namespace ArchPM.NetCore.Extensions
             ThrowExceptionIf(obj, predicate, new Exception(message));
         }
 
-        /// <summary>
-        /// Throws the exception if null.
-        /// </summary>
-        /// <param name="obj">The object.</param>
-        /// <param name="exception">The exception.</param>
-        public static void ThrowExceptionIfNull(this Object obj, Exception exception = null)
-        {
-            obj.ThrowExceptionIf(p => p == null, exception);
-        }
+        ///// <summary>
+        ///// Throws the exception if null.
+        ///// </summary>
+        ///// <param name="obj">The object.</param>
+        ///// <param name="exception">The exception.</param>
+        //public static void ThrowExceptionIfNull(this Object obj, Exception exception = null)
+        //{
+        //    obj.ThrowExceptionIf(p => p == null, exception);
+        //}
+
+        ///// <summary>
+        ///// Throws the exception if null.
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="obj">The object.</param>
+        ///// <param name="message">The message.</param>
+        //public static void ThrowExceptionIfNull<T>(this T obj, String message)
+        //{
+        //    obj.ThrowExceptionIf(p => p == null, new Exception(message));
+        //}
 
         /// <summary>
         /// Throws the exception if null.
@@ -60,26 +73,22 @@ namespace ArchPM.NetCore.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">The object.</param>
         /// <param name="message">The message.</param>
-        public static void ThrowExceptionIfNull<T>(this T obj, String message)
+        public static void ThrowExceptionIfNull<T>(this Object obj, String message = "") where T : Exception
         {
-            obj.ThrowExceptionIf(p => p == null, new Exception(message));
-        }
-
-        /// <summary>
-        /// Throws the exception if null.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj">The object.</param>
-        /// <param name="message">The message.</param>
-        public static void ThrowExceptionIfNull<T>(this Object obj, String message = "") where T: Exception, new()
-        {
-            if(String.IsNullOrEmpty(message))
+            if (String.IsNullOrEmpty(message))
             {
-                message = $"An object '{nameof(obj)}' instance can't be null";
+                message = "";
             }
             var ex = (T)Activator.CreateInstance(typeof(T), message);
 
-            ThrowExceptionIf(obj, p => p == null, ex);
+            if (obj is string)
+            {
+                ThrowExceptionIf(obj, p => string.IsNullOrEmpty(obj as string), ex);
+            }
+            else
+            {
+                ThrowExceptionIf(obj, p => p == null, ex);
+            }
         }
 
         /// <summary>

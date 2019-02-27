@@ -1,9 +1,0 @@
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\bin\Debug\netcoreapp2.2\ArchPM.NetCore.deps.json
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\bin\Debug\netcoreapp2.2\ArchPM.NetCore.dll
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\bin\Debug\netcoreapp2.2\ArchPM.NetCore.pdb
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\obj\Debug\netcoreapp2.2\ArchPM.NetCore.csprojAssemblyReference.cache
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\obj\Debug\netcoreapp2.2\ArchPM.NetCore.csproj.CoreCompileInputs.cache
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\obj\Debug\netcoreapp2.2\ArchPM.NetCore.AssemblyInfoInputs.cache
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\obj\Debug\netcoreapp2.2\ArchPM.NetCore.AssemblyInfo.cs
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\obj\Debug\netcoreapp2.2\ArchPM.NetCore.dll
-C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\obj\Debug\netcoreapp2.2\ArchPM.NetCore.pdb

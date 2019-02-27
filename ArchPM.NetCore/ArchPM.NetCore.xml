@@ -814,6 +814,7 @@
             <param name="obj">The object.</param>
             <param name="predicate">The predicate.</param>
             <param name="exception">The exception.</param>
+            <exception cref="T:System.Exception"></exception>
         </member>
         <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIf``1(``0,System.Func{``0,System.Boolean},System.String)">
             <summary>
@@ -824,21 +825,6 @@
             <param name="predicate">The predicate.</param>
             <param name="message">The message.</param>
             <exception cref="T:System.Exception"></exception>
-        </member>
-        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIfNull(System.Object,System.Exception)">
-            <summary>
-            Throws the exception if null.
-            </summary>
-            <param name="obj">The object.</param>
-            <param name="exception">The exception.</param>
-        </member>
-        <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIfNull``1(``0,System.String)">
-            <summary>
-            Throws the exception if null.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="obj">The object.</param>
-            <param name="message">The message.</param>
         </member>
         <member name="M:ArchPM.NetCore.Extensions.ExceptionExtensionMethods.ThrowExceptionIfNull``1(System.Object,System.String)">
             <summary>

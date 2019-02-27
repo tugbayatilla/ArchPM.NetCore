@@ -22,7 +22,7 @@ namespace ArchPM.NetCore.Extensions
         /// <exception cref="System.Exception">the value is not found in the dictionary</exception>
         public static TKey FindKeyByValue<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TValue value)
         {
-            dictionary.ThrowExceptionIfNull(new ArgumentNullException("dictionary"));
+            dictionary.ThrowExceptionIfNull<ArgumentNullException>(nameof(dictionary));
 
             foreach (KeyValuePair<TKey, TValue> pair in dictionary)
                 if (value.Equals(pair.Value))
@@ -41,7 +41,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="value">The value.</param>
         public static void Save<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key, TValue value)
         {
-            dictionary.ThrowExceptionIfNull(new ArgumentNullException("dictionary"));
+            dictionary.ThrowExceptionIfNull<ArgumentNullException>(nameof(dictionary));
 
             if (dictionary.ContainsKey(key))
             {
