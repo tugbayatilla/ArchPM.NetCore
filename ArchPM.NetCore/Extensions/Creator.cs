@@ -18,14 +18,14 @@ namespace ArchPM.NetCore.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="args">The arguments.</param>
         /// <returns></returns>
-        public delegate T ObjectActivator<T>(params object[] args);
+        internal delegate T ObjectActivator<T>(params object[] args);
         /// <summary>
         /// Gets the activator.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="ctor">The ctor.</param>
         /// <returns></returns>
-        public static ObjectActivator<T> GetActivator<T>(ConstructorInfo ctor)
+        internal static ObjectActivator<T> GetActivator<T>(ConstructorInfo ctor)
         {
             //taken from rogerjohansson.blog
             Type type = ctor.DeclaringType;
@@ -62,41 +62,60 @@ namespace ArchPM.NetCore.Extensions
             return compiled;
         }
 
+
         /// <summary>
-        /// Creates the sample data.
+        /// Creates the instance.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="configuration">The configuration.</param>
+        /// <param name="type">The type.</param>
         /// <returns></returns>
         public static Object CreateInstance(Type type)
         {
+            Object instance = null;
             if (type.ContainsGenericParameters)
             {
                 type = type.MakeGenericType(type.GenericTypeArguments);
             }
 
-            var ctors = type.GetConstructors();
-            var ctor = ctors[0];
-            var ctorParametersInfo = ctor.GetParameters();
+
             List<Object> constructorArguments = new List<object>();
-            foreach (var info in ctorParametersInfo)
+            ConstructorInfo ctorInfo = type.GetConstructors().FirstOrDefault();
+            if (ctorInfo != null)
             {
-                constructorArguments.Add(info.ParameterType.GetDefault());
+                var ctorParametersInfo = ctorInfo.GetParameters();
+                foreach (var info in ctorParametersInfo)
+                {
+                    constructorArguments.Add(info.ParameterType.GetDefault());
+                }
+
+                ObjectActivator<Object> createdActivator = GetActivator<Object>(ctorInfo);
+                //create an instance:
+                instance = createdActivator(constructorArguments.ToArray());
             }
 
-            ConstructorInfo ctorInfo = type.GetConstructors().First();
-            ObjectActivator<Object> createdActivator = GetActivator<Object>(ctorInfo);
-            //create an instance:
-            Object instance = createdActivator(constructorArguments.ToArray());
-
             return instance;
-
         }
 
+        /// <summary>
+        /// Creates the instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public static T CreateInstance<T>()
             where T : class
         {
             return CreateInstance(typeof(T)) as T;
+        }
+
+        /// <summary>
+        /// Creates and instance and fills it with the with data.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="configuration">The configuration.</param>
+        /// <returns></returns>
+        public static T FillWithData<T>(CreateSampleDataConfiguration configuration = null) where T : class
+        {
+            var obj = (T)Creator.CreateInstance(typeof(T));
+            return obj.CreateSampleData(configuration);
         }
     }
 }

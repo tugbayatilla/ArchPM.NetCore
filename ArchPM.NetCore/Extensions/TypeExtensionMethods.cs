@@ -45,6 +45,18 @@ namespace ArchPM.NetCore.Extensions
         }
 
         /// <summary>
+        /// Determines whether [is nullable type] [the specified type].
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        ///   <c>true</c> if [is nullable type] [the specified type]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsNullableType(this Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
+        }
+
+        /// <summary>
         /// Gets the constants values.
         /// </summary>
         /// <typeparam name="T"></typeparam>

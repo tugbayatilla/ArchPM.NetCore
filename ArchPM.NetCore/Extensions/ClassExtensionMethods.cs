@@ -7,13 +7,16 @@ using System.Text;
 
 namespace ArchPM.NetCore.Extensions
 {
-    
+
 
     /// <summary>
     /// 
     /// </summary>
     public static class ClassExtensionMethods
     {
+
+
+
         /// <summary>
         /// Craetes the sample data.
         /// Every Property value contains its name as a value such as Surname = "Surname" if it is a string,
@@ -28,16 +31,20 @@ namespace ArchPM.NetCore.Extensions
         {
             obj.ThrowExceptionIfNull<ArgumentNullException>(nameof(obj));
 
-            if(configuration == null)
+            if (configuration == null)
             {
                 configuration = new CreateSampleDataConfiguration();
             }
-            
+            configuration.KeyValueContainer.Add(obj.GetType().FullName);
+
 
             var properties = obj.CollectProperties().ToList();
             properties.ModifyEach(p =>
             {
-                if(p.ValueTypeOf == typeof(String))
+                if (configuration.KeyValueContainer.Contains(p.ValueTypeOf.FullName))
+                    return p;
+
+                if (p.ValueTypeOf == typeof(String))
                 {
                     var name = String.Concat(configuration.AlwaysUsePrefixForStringAs, p.Name, configuration.AlwaysUseSuffixForStringAs);
                     obj.SetValue(p.Name, name);
@@ -50,42 +57,29 @@ namespace ArchPM.NetCore.Extensions
                 {
                     obj.SetValue(p.Name, configuration.AlwaysUseDateTimeAs);
                 }
-                if(!p.IsPrimitive)
+                if (p.Value.IsNumeric())
+                {
+                    var length = configuration.AlwaysUseNumericPropertiesNameLengthAsvalue ? p.Name.Length : 0;
+                    obj.SetValue(p.Name, length);
+                }
+                if (!p.IsPrimitive)
                 {
                     var ins = Creator.CreateInstance(p.ValueTypeOf);
-                    object temp = null;
-                    if (!ListExtensionMethods.IsList(ins.GetType()))
+                    if (ins != null)
                     {
-                        temp = ins.CreateSampleData();
-                    }
-                    else
-                    {
-                        temp = ins;
+                        if (!ListExtensionMethods.IsList(ins.GetType()))
+                        {
+                            ins = ins.CreateSampleData(configuration);
+                        }
                     }
 
-                    obj.SetValue(p.Name, temp);
+                    obj.SetValue(p.Name, ins);
                 }
 
                 return p;
             });
 
             return obj as T;
-        }
-
-
-        /// <summary>
-        /// Sets the value.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="obj">The object.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <param name="propertyValue">The property value.</param>
-        /// <returns></returns>
-        public static T SetValue<T>(this T obj, String propertyName, Object propertyValue) where T : class
-        {
-            PropertyInfo propertyInfo = obj.GetType().GetProperty(propertyName);
-            propertyInfo.SetValue(obj, Convert.ChangeType(propertyValue, propertyInfo.PropertyType), null);
-            return obj;
         }
 
 
@@ -100,6 +94,7 @@ namespace ArchPM.NetCore.Extensions
         {
             AlwaysUseBooleanAs = true;
             AlwaysUseDateTimeAs = DateTime.Now;
+            AlwaysUseNumericPropertiesNameLengthAsvalue = true;
         }
         /// <summary>
         /// Gets or sets a value indicating whether [boolean values always].
@@ -124,11 +119,21 @@ namespace ArchPM.NetCore.Extensions
         public String AlwaysUseSuffixForStringAs { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [always use numeric properties name length asvalue].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [always use numeric properties name length asvalue]; otherwise, <c>false</c>.
+        /// </value>
+        public bool AlwaysUseNumericPropertiesNameLengthAsvalue { get; set; }
+
+        /// <summary>
         /// Gets or sets the use date time as.
         /// </summary>
         /// <value>
         /// The use date time as.
         /// </value>
         public DateTime AlwaysUseDateTimeAs { get; set; }
+
+        internal List<string> KeyValueContainer = new List<string>();
     }
 }

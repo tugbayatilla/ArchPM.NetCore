@@ -33,7 +33,7 @@ namespace ArchPM.NetCore.Tests
 
             var instance = cls.CreateSampleData();
 
-            instance.Priority.Should().Be(0);
+            instance.Priority.Should().Be(8);
             instance.Type.Should().Be(nameof(instance.Type));
             instance.Value.Should().Be(nameof(instance.Value));
         }
@@ -45,7 +45,7 @@ namespace ArchPM.NetCore.Tests
 
             var instance = cls.CreateSampleData();
 
-            instance.Priority.Should().Be(0);
+            instance.Priority.Should().Be(8);
             instance.Type.Should().Be(nameof(instance.Type));
             instance.Value.Should().Be(nameof(instance.Value));
         }
@@ -88,9 +88,9 @@ namespace ArchPM.NetCore.Tests
                     AlwaysUsePrefixForStringAs = prefix,
                     AlwaysUseSuffixForStringAs = suffix });
 
-            instance.Priority.Should().Be(0);
-            instance.Type.Should().Be(String.Format(result,instance.Type));
-            instance.Value.Should().Be(String.Format(result, instance.Value));
+            instance.Priority.Should().Be(8);
+            instance.Type.Should().Be(String.Format(result,nameof(instance.Type)));
+            instance.Value.Should().Be(String.Format(result, nameof(instance.Value)));
         }
     }
 }

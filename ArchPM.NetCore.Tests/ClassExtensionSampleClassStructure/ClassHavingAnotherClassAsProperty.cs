@@ -2,9 +2,9 @@
 {
     public class ClassHavingAnotherClassAsProperty
     {
-        public string Id { get; set; }
+        public InheritedClass Address { get; set; }
 
-        public AddressSOM Address { get; set; }
+        public string Id { get; set; }
 
         public string Fax { get; set; }
 
