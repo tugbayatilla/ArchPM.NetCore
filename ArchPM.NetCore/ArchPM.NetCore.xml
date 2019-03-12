@@ -669,16 +669,6 @@
             <param name="configuration">The configuration.</param>
             <returns></returns>
         </member>
-        <member name="M:ArchPM.NetCore.Extensions.ClassExtensionMethods.SetValue``1(``0,System.String,System.Object)">
-            <summary>
-            Sets the value.
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="obj">The object.</param>
-            <param name="propertyName">Name of the property.</param>
-            <param name="propertyValue">The property value.</param>
-            <returns></returns>
-        </member>
         <member name="T:ArchPM.NetCore.Extensions.CreateSampleDataConfiguration">
             <summary>
             Configuration object for CraeteSampleData
@@ -706,6 +696,14 @@
             </summary>
             <value>
             The suffix for string values.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.CreateSampleDataConfiguration.AlwaysUseNumericPropertiesNameLengthAsvalue">
+            <summary>
+            Gets or sets a value indicating whether [always use numeric properties name length asvalue].
+            </summary>
+            <value>
+              <c>true</c> if [always use numeric properties name length asvalue]; otherwise, <c>false</c>.
             </value>
         </member>
         <member name="P:ArchPM.NetCore.Extensions.CreateSampleDataConfiguration.AlwaysUseDateTimeAs">
@@ -777,10 +775,9 @@
         </member>
         <member name="M:ArchPM.NetCore.Extensions.Creator.CreateInstance(System.Type)">
             <summary>
-            Creates the sample data.
+            Creates the instance.
             </summary>
-            <typeparam name="T"></typeparam>
-            <param name="configuration">The configuration.</param>
+            <param name="type">The type.</param>
             <returns></returns>
         </member>
         <member name="M:ArchPM.NetCore.Extensions.Creator.CreateInstance``1">
@@ -1131,6 +1128,15 @@
             <param name="propertyName">Name of the property.</param>
             <param name="propertyValue">The property value.</param>
         </member>
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.SetValue``1(``0,System.String,System.Object)">
+            <summary>
+            Sets the value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyVal">The property value.</param>
+        </member>
         <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.ConvertPropertyInfoToPropertyDTO``1(``0,System.Reflection.PropertyInfo)">
             <summary>
             Converts the property information to property dto.
@@ -1174,6 +1180,15 @@
             </summary>
             <param name="type">The type.</param>
             <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.TypeExtensionMethods.IsNullableType(System.Type)">
+            <summary>
+            Determines whether [is nullable type] [the specified type].
+            </summary>
+            <param name="type">The type.</param>
+            <returns>
+              <c>true</c> if [is nullable type] [the specified type]; otherwise, <c>false</c>.
+            </returns>
         </member>
         <member name="M:ArchPM.NetCore.Extensions.TypeExtensionMethods.GetConstantsValues``1(System.Type)">
             <summary>
