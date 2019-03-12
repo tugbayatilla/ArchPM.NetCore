@@ -184,8 +184,11 @@ namespace ArchPM.NetCore.Extensions
             //equivalent to the specified object.
             propertyVal = Convert.ChangeType(propertyVal, targetType);
 
-            //Set the value of the property
-            propertyInfo.SetValue(obj, propertyVal, null);
+            if (propertyInfo.CanWrite)
+            {
+                //Set the value of the property
+                propertyInfo.SetValue(obj, propertyVal, null);
+            }
 
         }
 

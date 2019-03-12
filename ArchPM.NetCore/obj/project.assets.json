@@ -692,7 +692,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "restore": {
       "projectUniqueName": "C:\\Users\\tatilla.ext\\source\\repos\\ArchPM.NetCore\\ArchPM.NetCore\\ArchPM.NetCore.csproj",
       "projectName": "ArchPM.NetCore",
@@ -704,6 +704,7 @@
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
+        "C:\\Users\\tatilla.ext\\source\\repos\\Factory.Order.Services\\NuGet.Config",
         "C:\\Users\\tatilla.ext\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\ServiceFabricSDK.config"
