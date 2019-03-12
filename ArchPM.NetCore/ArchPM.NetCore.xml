@@ -653,6 +653,90 @@
             <param name="currentAssembly">The current assembly.</param>
             <returns></returns>
         </member>
+        <member name="T:ArchPM.NetCore.Extensions.Creator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.Creator.CreateInstance``1(ArchPM.NetCore.Extensions.SampleClassCreationConfiguration)">
+            <summary>
+            Creates the sample data.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="configuration">The configuration.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.ClassExtensionMethods">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ClassExtensionMethods.CreateSampleData``1(``0,ArchPM.NetCore.Extensions.SampleClassCreationConfiguration)">
+            <summary>
+            Craetes the sample data.
+            Every Property value contains its name as a value such as Surname = "Surname" if it is a string,
+            Boolean values always will be true, if config says otherwise
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="configuration">The configuration.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ArchPM.NetCore.Extensions.ClassExtensionMethods.SetValue``1(``0,System.String,System.Object)">
+            <summary>
+            Sets the value.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="obj">The object.</param>
+            <param name="propertyName">Name of the property.</param>
+            <param name="propertyValue">The property value.</param>
+            <returns></returns>
+        </member>
+        <member name="T:ArchPM.NetCore.Extensions.SampleClassCreationConfiguration">
+            <summary>
+            Configuration object for CraeteSampleData
+            </summary>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.SampleClassCreationConfiguration.BooleanValuesAlways">
+            <summary>
+            Gets or sets a value indicating whether [boolean values always].
+            </summary>
+            <value>
+              <c>true</c> if [boolean values always]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.SampleClassCreationConfiguration.PrefixForStringValues">
+            <summary>
+            Gets or sets the prefix for string values.
+            </summary>
+            <value>
+            The prefix for string values.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.SampleClassCreationConfiguration.SuffixForStringValues">
+            <summary>
+            Gets or sets the suffix for string values.
+            </summary>
+            <value>
+            The suffix for string values.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.SampleClassCreationConfiguration.UseDateTimeAs">
+            <summary>
+            Gets or sets the use date time as.
+            </summary>
+            <value>
+            The use date time as.
+            </value>
+        </member>
+        <member name="P:ArchPM.NetCore.Extensions.SampleClassCreationConfiguration.ConstructorParameters">
+            <summary>
+            Gets or sets the constructor parameters.
+            </summary>
+            <value>
+            The constructor parameters.
+            </value>
+        </member>
         <member name="T:ArchPM.NetCore.Extensions.ConvertionExtensionMethods">
             <summary>
             

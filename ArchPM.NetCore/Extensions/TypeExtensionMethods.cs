@@ -12,6 +12,27 @@ namespace ArchPM.NetCore.Extensions
     public static class TypeExtensionMethods
     {
         /// <summary>
+        /// Gets the default.
+        /// </summary>
+        /// <param name="t">The t.</param>
+        /// <returns></returns>
+        public static object GetDefault(this Type t)
+        {
+            Func<object> f = GetDefault<object>;
+            return f.Method.GetGenericMethodDefinition().MakeGenericMethod(t).Invoke(null, null);
+        }
+
+        /// <summary>
+        /// Gets the default.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private static T GetDefault<T>()
+        {
+            return default(T);
+        }
+
+        /// <summary>
         /// Gets the constants.
         /// </summary>
         /// <param name="type">The type.</param>
