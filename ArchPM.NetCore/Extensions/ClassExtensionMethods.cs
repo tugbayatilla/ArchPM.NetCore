@@ -26,6 +26,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="obj">The object.</param>
         /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
+        [Obsolete]
         public static T CreateSampleData<T>(this T obj, CreateSampleDataConfiguration configuration = null)
             where T : class
         {
@@ -41,19 +42,19 @@ namespace ArchPM.NetCore.Extensions
             var properties = obj.CollectProperties().ToList();
             properties.ModifyEach(p =>
             {
-                if (configuration.KeyValueContainer.Contains(p.ValueTypeOf.FullName))
+                if (configuration.KeyValueContainer.Contains(p.ValueType.FullName))
                     return p;
 
-                if (p.ValueTypeOf == typeof(String))
+                if (p.ValueType == typeof(String))
                 {
                     var name = String.Concat(configuration.AlwaysUsePrefixForStringAs, p.Name, configuration.AlwaysUseSuffixForStringAs);
                     obj.SetValue(p.Name, name);
                 }
-                if (p.ValueTypeOf == typeof(Boolean))
+                if (p.ValueType == typeof(Boolean))
                 {
                     obj.SetValue(p.Name, configuration.AlwaysUseBooleanAs);
                 }
-                if (p.ValueTypeOf == typeof(DateTime))
+                if (p.ValueType == typeof(DateTime))
                 {
                     obj.SetValue(p.Name, configuration.AlwaysUseDateTimeAs);
                 }
@@ -64,7 +65,7 @@ namespace ArchPM.NetCore.Extensions
                 }
                 if (!p.IsPrimitive)
                 {
-                    var ins = Creator.CreateInstance(p.ValueTypeOf);
+                    var ins = Creator.CreateInstance(p.ValueType);
                     if (ins != null)
                     {
                         if (!ListExtensionMethods.IsList(ins.GetType()))
@@ -88,6 +89,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// Configuration object for CraeteSampleData
     /// </summary>
+    [Obsolete]
     public class CreateSampleDataConfiguration
     {
         public CreateSampleDataConfiguration()

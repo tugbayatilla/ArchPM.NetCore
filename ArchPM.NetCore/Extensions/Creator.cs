@@ -101,9 +101,8 @@ namespace ArchPM.NetCore.Extensions
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public static T CreateInstance<T>()
-            where T : class
         {
-            return CreateInstance(typeof(T)) as T;
+            return (T)CreateInstance(typeof(T)) ;
         }
 
         /// <summary>
@@ -112,10 +111,13 @@ namespace ArchPM.NetCore.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
+        [Obsolete]
         public static T FillWithData<T>(CreateSampleDataConfiguration configuration = null) where T : class
         {
             var obj = (T)Creator.CreateInstance(typeof(T));
             return obj.CreateSampleData(configuration);
         }
+
+       
     }
 }

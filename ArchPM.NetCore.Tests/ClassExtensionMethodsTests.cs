@@ -5,6 +5,7 @@ using Xunit;
 using ArchPM.NetCore.Extensions;
 using ArchPM.NetCore.Tests.ClassExtensionSampleClassStructure;
 using FluentAssertions;
+using static ArchPM.NetCore.Extensions.SampleCreatorExtension;
 
 namespace ArchPM.NetCore.Tests
 {
@@ -31,9 +32,9 @@ namespace ArchPM.NetCore.Tests
         {
             var cls = new ClassHavingNoArguments();
 
-            var instance = cls.CreateSampleData();
+            var instance = cls.CreateSample();
 
-            instance.Priority.Should().Be(8);
+            instance.Priority.Should().Be(866);
             instance.Type.Should().Be(nameof(instance.Type));
             instance.Value.Should().Be(nameof(instance.Value));
         }
@@ -43,9 +44,9 @@ namespace ArchPM.NetCore.Tests
         {
             var cls = Creator.CreateInstance<ClassHavingArguments>();
 
-            var instance = cls.CreateSampleData();
+            var instance = cls.CreateSample();
 
-            instance.Priority.Should().Be(8);
+            instance.Priority.Should().Be(866);
             instance.Type.Should().Be(nameof(instance.Type));
             instance.Value.Should().Be(nameof(instance.Value));
         }
@@ -55,12 +56,14 @@ namespace ArchPM.NetCore.Tests
         {
             var cls = Creator.CreateInstance<InheritedClass>();
 
-            var instance = cls.CreateSampleData();
+            var instance = cls.CreateSample();
 
             instance.Addressing.Should().Be(nameof(instance.Addressing));
             instance.City.Should().Be(nameof(instance.City));
             instance.CountryIsoAlpha2Code.Should().Be(nameof(instance.CountryIsoAlpha2Code));
-            instance.AdditionalLines.Should().BeEmpty().Should().NotBeNull();
+            instance.AdditionalLines.Count.Should().Be(2);
+            instance.AdditionalLines[0].Should().Be("string_0");
+            instance.AdditionalLines[1].Should().Be("string_1");
         }
 
         [Fact]
@@ -68,10 +71,14 @@ namespace ArchPM.NetCore.Tests
         {
             var cls = Creator.CreateInstance<ClassHavingAnotherClassAsProperty>();
 
-            var instance = cls.CreateSampleData();
+            var instance = cls.CreateSample();
 
             instance.Address.Should().NotBeNull();
             instance.Address.Name.Should().Be(nameof(instance.Address.Name));
+            instance.Address.AdditionalLines.Count.Should().Be(2);
+            instance.Address.AdditionalLines[0].Should().Be("string_0");
+            instance.Address.AdditionalLines[1].Should().Be("string_1");
+
         }
 
         [Theory]
@@ -83,12 +90,12 @@ namespace ArchPM.NetCore.Tests
         {
             var cls = new ClassHavingNoArguments();
 
-            var instance = cls.CreateSampleData(
-                new CreateSampleDataConfiguration() {
+            var instance = cls.CreateSample(
+                new SampleConfiguration() {
                     AlwaysUsePrefixForStringAs = prefix,
                     AlwaysUseSuffixForStringAs = suffix });
 
-            instance.Priority.Should().Be(8);
+            instance.Priority.Should().Be(866);
             instance.Type.Should().Be(String.Format(result,nameof(instance.Type)));
             instance.Value.Should().Be(String.Format(result, nameof(instance.Value)));
         }

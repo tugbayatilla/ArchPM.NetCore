@@ -215,31 +215,31 @@ namespace ArchPM.NetCore.Extensions
             {
                 entityProperty.Value = null;
             }
-            entityProperty.ValueType = property.PropertyType.Name;
-            entityProperty.ValueTypeOf = property.PropertyType;
+            entityProperty.ValueTypeName = property.PropertyType.Name;
+            entityProperty.ValueType = property.PropertyType;
             entityProperty.Nullable = false;
 
             if (property.IsGenericNullable())
             {
-                entityProperty.ValueType = Nullable.GetUnderlyingType(property.PropertyType).Name;
-                entityProperty.ValueTypeOf = Nullable.GetUnderlyingType(property.PropertyType);
+                entityProperty.ValueTypeName = Nullable.GetUnderlyingType(property.PropertyType).Name;
+                entityProperty.ValueType = Nullable.GetUnderlyingType(property.PropertyType);
                 entityProperty.Nullable = true;
             }
 
             //when datetime gets the default value
-            if (entityProperty.Value != null && entityProperty.ValueTypeOf == typeof(DateTime) && (DateTime)entityProperty.Value == default(DateTime))
+            if (entityProperty.Value != null && entityProperty.ValueType == typeof(DateTime) && (DateTime)entityProperty.Value == default(DateTime))
             {
                 entityProperty.Value = null;
                 entityProperty.Nullable = true;
             }
             //String is reference type, it can be null
-            if (entityProperty.ValueTypeOf == typeof(String))
+            if (entityProperty.ValueType == typeof(String))
             {
                 entityProperty.Nullable = true;
             }
-            entityProperty.IsPrimitive = entityProperty.ValueTypeOf.IsDotNetPirimitive();
-            entityProperty.IsEnum = IsEnumOrIsBaseEnum(entityProperty.ValueTypeOf);
-            entityProperty.IsList = entityProperty.ValueTypeOf.IsList();
+            entityProperty.IsPrimitive = entityProperty.ValueType.IsDotNetPirimitive();
+            entityProperty.IsEnum = IsEnumOrIsBaseEnum(entityProperty.ValueType);
+            entityProperty.IsList = entityProperty.ValueType.IsList();
             if (entityProperty.IsList)
             {
                 entityProperty.Nullable = true;
@@ -248,7 +248,10 @@ namespace ArchPM.NetCore.Extensions
             {
                 entityProperty.Nullable = true;
             }
-
+            if(entity.GetType().IsClass && !entityProperty.IsPrimitive)
+            {
+                entityProperty.IsClass = true;
+            }
             return entityProperty;
         }
 

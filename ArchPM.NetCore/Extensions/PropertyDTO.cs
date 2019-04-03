@@ -36,7 +36,7 @@ namespace ArchPM.NetCore.Extensions
         /// The type of the value.
         /// </value>
         [XmlAttribute]
-        public String ValueType { get; internal set; }
+        public String ValueTypeName { get; internal set; }
 
         /// <summary>
         /// Gets the value type of.
@@ -45,7 +45,7 @@ namespace ArchPM.NetCore.Extensions
         /// The value type of.
         /// </value>
         [XmlIgnore]
-        public Type ValueTypeOf { get; internal set; }
+        public Type ValueType { get; internal set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this <see cref="PropertyDTO"/> is nullable.
@@ -64,7 +64,16 @@ namespace ArchPM.NetCore.Extensions
         /// </value>
         [XmlIgnore]
         public Boolean IsPrimitive { get; internal set; }
-       
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is class.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is class; otherwise, <c>false</c>.
+        /// </value>
+        [XmlIgnore]
+        public Boolean IsClass { get; internal set; }
+
         /// <summary>
         /// Gets the property whether is enum or not
         /// </summary>
@@ -94,7 +103,7 @@ namespace ArchPM.NetCore.Extensions
         /// </returns>
         public override string ToString()
         {
-            return String.Format("{0} [{1}] [{2}]", this.Name, this.ValueType, this.Nullable ? "Nullable" : "");
+            return String.Format("{0} [{1}] [{2}]", this.Name, this.ValueTypeName, this.Nullable ? "Nullable" : "");
         }
     }
 }
