@@ -15,7 +15,30 @@ namespace ArchPM.NetCore.Attributes
         /// <typeparam name="T"></typeparam>
         /// <param name="entity">The entity.</param>
         /// <exception cref="Exception"></exception>
+        [Obsolete("use ValidateRequiredAttributes instead!")]
         public static void Validate<T>(this T entity) where T : class
+        {
+            var context = new ValidationContext(entity, serviceProvider: null, items: null);
+            var results = new List<ValidationResult>();
+
+            var isValid = Validator.TryValidateObject(entity, context, results);
+
+            if (!isValid)
+            {
+                foreach (var validationResult in results)
+                {
+                    throw new Exception(validationResult.ErrorMessage);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Validates the required attributes.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entity">The entity.</param>
+        /// <exception cref="Exception"></exception>
+        public static void ValidateRequiredAttributes<T>(this T entity) where T : class
         {
             var context = new ValidationContext(entity, serviceProvider: null, items: null);
             var results = new List<ValidationResult>();
