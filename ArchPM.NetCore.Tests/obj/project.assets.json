@@ -1720,7 +1720,7 @@
           "build/netcoreapp1.0/xunit.runner.visualstudio.props": {}
         }
       },
-      "ArchPM.NetCore/2.0.1": {
+      "ArchPM.NetCore/2.0.2": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
@@ -5975,7 +5975,7 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "ArchPM.NetCore/2.0.1": {
+    "ArchPM.NetCore/2.0.2": {
       "type": "project",
       "path": "../ArchPM.NetCore/ArchPM.NetCore.csproj",
       "msbuildProject": "../ArchPM.NetCore/ArchPM.NetCore.csproj"
@@ -5983,7 +5983,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "ArchPM.NetCore >= 2.0.1",
+      "ArchPM.NetCore >= 2.0.2",
       "FluentAssertions >= 5.6.0",
       "Microsoft.NET.Test.Sdk >= 16.0.1",
       "Microsoft.NETCore.App >= 2.1.0",
