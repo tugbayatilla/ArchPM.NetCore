@@ -4,19 +4,19 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <Authors>Tugbay Atilla</Authors>
     <PackageTags>ArchPM, NetCore, Core</PackageTags>
-    <AssemblyVersion>1.0.5.0</AssemblyVersion>
+    <AssemblyVersion>1.0.6.0</AssemblyVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>SampeCreatorExtension Added</PackageReleaseNotes>
+    <PackageReleaseNotes>SampleCreatorExtension renamed to SampleCreator</PackageReleaseNotes>
     <Description>ArchPM .NetCore Core Operations</Description>
-    <FileVersion>1.0.5.0</FileVersion>
+    <FileVersion>1.0.6.0</FileVersion>
     <PackageLicenseUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/tugbayatilla/ArchPM.NetCore</PackageProjectUrl>
     <PackageIconUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/tugbayatilla/ArchPM.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>© 2019 Tugbay Atilla</Copyright>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

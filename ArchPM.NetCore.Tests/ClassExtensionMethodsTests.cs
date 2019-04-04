@@ -5,7 +5,7 @@ using Xunit;
 using ArchPM.NetCore.Extensions;
 using ArchPM.NetCore.Tests.ClassExtensionSampleClassStructure;
 using FluentAssertions;
-using static ArchPM.NetCore.Extensions.SampleCreatorExtension;
+using static ArchPM.NetCore.Extensions.SampleCreator;
 
 namespace ArchPM.NetCore.Tests
 {

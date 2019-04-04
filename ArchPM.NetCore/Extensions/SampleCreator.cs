@@ -12,13 +12,13 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class SampleCreatorExtension
+    public static class SampleCreator
     {
         /// <summary>
-        /// Craetes the sample data.
+        /// Creates the sample data for given type
         /// Every Property value contains its name as a value such as Surname = "Surname" if it is a string,
         /// Boolean values always will be true, if config says otherwise
-        /// everynumric value get value depends on their names. sum every char in the name as ascii 
+        /// everynumric value get value depends on their names. sum every char in the name as ascii
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">The object.</param>

@@ -111,7 +111,7 @@ namespace ArchPM.NetCore.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
-        [Obsolete]
+        [Obsolete("use SampleCreator.CreateSample method instead!")]
         public static T FillWithData<T>(CreateSampleDataConfiguration configuration = null) where T : class
         {
             var obj = (T)Creator.CreateInstance(typeof(T));

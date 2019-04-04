@@ -16,7 +16,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_primitive_values()
         {
             var now = DateTime.Now;
-            var sample = SampleCreatorExtension.CreateSample<SampleDataClass>(new SampleCreatorExtension.SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreator.SampleConfiguration() { AlwaysUseDateTimeAs = now });
 
             sample.Should().NotBeNull();
             sample.BooleanProperty.Should().BeTrue();
@@ -68,7 +68,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_simple_sub_class_property()
         {
             var now = DateTime.Now;
-            var sample = SampleCreatorExtension.CreateSample<SampleDataClass>();
+            var sample = SampleCreator.CreateSample<SampleDataClass>();
 
             sample.SampleDataSimpleSubClass.Should().NotBeNull();
             sample.SampleDataSimpleSubClass.IntProperty.Should().Be(1168);
@@ -79,7 +79,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_inherited_sub_class_property()
         {
             var now = DateTime.Now;
-            var sample = SampleCreatorExtension.CreateSample<SampleDataClass>(new SampleCreatorExtension.SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreator.SampleConfiguration() { AlwaysUseDateTimeAs = now });
 
             sample.SampleDataInheritedSubClass.Should().NotBeNull();
             sample.SampleDataInheritedSubClass.DateTimeProperty.Should().Be(now.AddDays(1650));
@@ -89,7 +89,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_primitive_constructor_sub_class_property()
         {
             var now = DateTime.Now;
-            var sample = SampleCreatorExtension.CreateSample<SampleDataClass>(new SampleCreatorExtension.SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreator.SampleConfiguration() { AlwaysUseDateTimeAs = now });
 
             sample.SampleDataPrimitiveConstructorSubClass.Should().NotBeNull();
             sample.SampleDataPrimitiveConstructorSubClass.DateTimeProperty.Should().Be(now.AddDays(1650));
@@ -99,7 +99,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_generic_list_property()
         {
             var now = DateTime.Now;
-            var sample = SampleCreatorExtension.CreateSample<SampleDataClass>(new SampleCreatorExtension.SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreator.SampleConfiguration() { AlwaysUseDateTimeAs = now });
 
             sample.SampleDataSimpleSubClassList.Should().NotBeNull();
             sample.SampleDataSimpleSubClassList.Count.Should().Be(2);
