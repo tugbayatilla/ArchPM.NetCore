@@ -76,4 +76,16 @@ namespace ArchPM.NetCore.Tests.TestModels
         public IList<ClassHavingAnotherClassAsProperty> IListInterfaceProperty { get; set; }
     }
 
+    public class ClassHavingEnumProperty
+    {
+        public SampleEnum SampleEnumProperty { get; set; }
+
+        public enum SampleEnum
+        {
+            Value1,
+            Value2 = 4,
+            Value
+        }
+    }
+
 }

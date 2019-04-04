@@ -49,6 +49,10 @@ namespace ArchPM.NetCore.Creators
                         var name = String.Concat(configuration.AlwaysUsePrefixForStringAs, p.Name, configuration.AlwaysUseSuffixForStringAs);
                         obj.SetValue(p.Name, name);
                     }
+                    else if (p.IsEnum)
+                    {
+                        obj.SetValue(p.Name, 0, false);
+                    }
                     else if (p.ValueType == typeof(bool))
                     {
                         obj.SetValue(p.Name, configuration.AlwaysUseBooleanAs);

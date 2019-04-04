@@ -9,6 +9,16 @@ namespace ArchPM.NetCore.Tests
     public class SampleCreatorTests
     {
         [Fact]
+        public void Should_fill_class_having_enum_property()
+        {
+            var now = DateTime.Now;
+            var sample = SampleCreator.CreateSample<ClassHavingEnumProperty>();
+
+            sample.SampleEnumProperty.Should().Be(0);
+        }
+
+
+        [Fact]
         public void Should_create_and_fill_when_having_ilist_interface_property()
         {
             var now = DateTime.Now;
