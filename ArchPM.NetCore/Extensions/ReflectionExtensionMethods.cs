@@ -160,7 +160,8 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="obj">The object.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="propertyVal">The property value.</param>
-        public static void SetValue<T>(this T obj, string propertyName, object propertyVal)
+        /// <param name="appyChangeType">if set to <c>true</c> [change type]. if you explicitly change the type of the property then set as false</param>
+        public static void SetValue<T>(this T obj, string propertyName, object propertyVal, bool appyChangeType = true)
         {
             //find out the type
             Type type = obj.GetType();
@@ -175,9 +176,12 @@ namespace ArchPM.NetCore.Extensions
             //if the property type is nullable, we need to get the underlying type of the property
             var targetType = propertyInfo.PropertyType.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
 
-            //Returns an System.Object with the specified System.Type and whose value is
-            //equivalent to the specified object.
-            propertyVal = Convert.ChangeType(propertyVal, targetType);
+            if (appyChangeType)
+            {
+                //Returns an System.Object with the specified System.Type and whose value is
+                //equivalent to the specified object.
+                propertyVal = Convert.ChangeType(propertyVal, targetType);
+            }
 
             if (propertyInfo.CanWrite)
             {

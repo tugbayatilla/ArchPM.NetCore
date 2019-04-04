@@ -9,6 +9,19 @@ namespace ArchPM.NetCore.Tests
     public class SampleCreatorTests
     {
         [Fact]
+        public void Should_create_and_fill_when_having_ilist_interface_property()
+        {
+            var now = DateTime.Now;
+            var instance = SampleCreator.CreateSample<ClassHavingIListInterfaceAsProperty>(new SampleConfiguration()
+            {
+                AlwaysUseDateTimeAs = now
+            });
+
+            instance.Should().NotBeNull();
+            instance.IListInterfaceProperty.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
         public void Should_create_and_fill_company()
         {
             var now = DateTime.Now;
@@ -122,6 +135,31 @@ namespace ArchPM.NetCore.Tests
             sample.SampleDataSimpleSubClassList.Count.Should().Be(2);
 
             sample.SampleDataSimpleSubClassList[0].IntProperty.Should().Be(1168);
+        }
+
+        [Fact]
+        public void Should_fill_generic_list_interface_property()
+        {
+            var sample = SampleCreator.CreateSample<SampleDataClass>();
+
+            sample.SampleDataSimpleSubClassIListInterface.Should().NotBeNullOrEmpty();
+            sample.SampleDataSimpleSubClassIListInterface[0].IntProperty.Should().Be(1168);
+        }
+
+        [Fact]
+        public void Should_fill_generic_collection_interface_property()
+        {
+            var sample = SampleCreator.CreateSample<SampleDataClass>();
+
+            sample.SampleDataSimpleSubClassICollectionInterface.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void Should_fill_generic_enumeration_interface_property()
+        {
+            var sample = SampleCreator.CreateSample<SampleDataClass>();
+
+            sample.SampleDataSimpleSubClassIEnumerableInterface.Should().NotBeNullOrEmpty();
         }
 
 

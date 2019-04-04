@@ -91,7 +91,15 @@ namespace ArchPM.NetCore.Creators
                 }
                 else if (p.IsList)
                 {
+                    bool changeType = true;
+                    if (p.ValueType.IsInterface && p.ValueType.IsOnlyGenericList())
+                    {
+                        p.ValueType = typeof(List<>).MakeGenericType(p.ValueType.GenericTypeArguments);
+                        changeType = false;
+                    }
+
                     var ins = ObjectCreator.CreateInstance(p.ValueType);
+
                     if (p.ValueType.IsGenericType)
                     {
                         if (ins is IList)
@@ -116,7 +124,7 @@ namespace ArchPM.NetCore.Creators
                             }
                         }
                     }
-                    obj.SetValue(p.Name, ins);
+                    obj.SetValue(p.Name, ins, changeType);
                 }
                 else if (p.ValueTypeName == "Dictionary`2")
                 {

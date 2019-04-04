@@ -71,4 +71,9 @@ namespace ArchPM.NetCore.Tests.TestModels
         public string AlternativeCustomerId { get; set; }
     }
 
+    public class ClassHavingIListInterfaceAsProperty
+    {
+        public IList<ClassHavingAnotherClassAsProperty> IListInterfaceProperty { get; set; }
+    }
+
 }

@@ -6,6 +6,9 @@ namespace ArchPM.NetCore.Tests.TestModels
     public class SampleDataClass
     {
         public List<SampleDataSimpleSubClass> SampleDataSimpleSubClassList { get; set; }
+        public IList<SampleDataSimpleSubClass> SampleDataSimpleSubClassIListInterface { get; set; }
+        public ICollection<SampleDataSimpleSubClass> SampleDataSimpleSubClassICollectionInterface { get; set; }
+        public IEnumerable<SampleDataSimpleSubClass> SampleDataSimpleSubClassIEnumerableInterface { get; set; }
 
         #region Classes
 
@@ -82,4 +85,7 @@ namespace ArchPM.NetCore.Tests.TestModels
 
         public DateTime DateTimeProperty { get; set; }
     }
+
+    
+
 }
