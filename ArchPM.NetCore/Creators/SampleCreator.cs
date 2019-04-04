@@ -91,6 +91,8 @@ namespace ArchPM.NetCore.Creators
                 }
                 else if (p.IsList)
                 {
+                    //this section for interface properties.
+                    //converting them to List<> generic class. changeType variable is required for setValue.
                     bool changeType = true;
                     if (p.ValueType.IsInterface && p.ValueType.IsOnlyGenericList())
                     {
