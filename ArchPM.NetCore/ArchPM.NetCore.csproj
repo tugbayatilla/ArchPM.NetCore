@@ -1,22 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Tugbay Atilla</Authors>
-    <PackageTags>ArchPM, NetCore, Core</PackageTags>
-    <AssemblyVersion>1.0.7.0</AssemblyVersion>
+    <PackageTags>ArchPM, NetCore, Core, net, standard, 2.0, netstandard2.0</PackageTags>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>Custom RequiredAttributes and validator added. Namespaces are fixed</PackageReleaseNotes>
-    <Description>ArchPM .NetCore Core Operations</Description>
-    <FileVersion>1.0.7.0</FileVersion>
+    <PackageReleaseNotes>change the project the to netstandard2.0</PackageReleaseNotes>
+    <Description>ArchPM .NetCore Core Operations for net standard</Description>
+    <FileVersion>2.0.1.0</FileVersion>
     <PackageLicenseUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/tugbayatilla/ArchPM.NetCore</PackageProjectUrl>
-    <PackageIconUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/icon.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/tugbayatilla/ArchPM.NetCore/master/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/tugbayatilla/ArchPM.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>© 2019 Tugbay Atilla</Copyright>
-    <Version>1.0.7</Version>
+    <Version>2.0.1</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -24,5 +24,11 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\ArchPM.NetCore.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System.ComponentModel.Annotations">
+      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.1.0\ref\netcoreapp2.1\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>
