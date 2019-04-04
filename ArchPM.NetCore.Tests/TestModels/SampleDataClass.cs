@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace ArchPM.NetCore.Tests.SampleDataClasses
+namespace ArchPM.NetCore.Tests.TestModels
 {
     public class SampleDataClass
     {
@@ -47,6 +46,8 @@ namespace ArchPM.NetCore.Tests.SampleDataClasses
         public bool? BooleanPropertyNullable { get; set; }
         public string StringProperty { get; set; } = "";
         public string StringPropertyNullable { get; set; } = null;
+        public Guid GuidProperty { get; set; }
+        public Guid GuidPropertyNullable { get; set; } = Guid.Empty;
 
         #endregion
     }

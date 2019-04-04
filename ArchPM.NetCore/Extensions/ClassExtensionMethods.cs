@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 
 namespace ArchPM.NetCore.Extensions
 {
@@ -92,6 +89,9 @@ namespace ArchPM.NetCore.Extensions
     [Obsolete]
     public class CreateSampleDataConfiguration
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateSampleDataConfiguration"/> class.
+        /// </summary>
         public CreateSampleDataConfiguration()
         {
             AlwaysUseBooleanAs = true;

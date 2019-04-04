@@ -1,16 +1,16 @@
-﻿using System;
+﻿using ArchPM.NetCore.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace ArchPM.NetCore.Extensions
+namespace ArchPM.NetCore.Creators
 {
     /// <summary>
     /// 
     /// </summary>
-    [Obsolete("use ArchPM.NetCore.Creators.ObjectCreator instead!")]
-    public static class Creator
+    public static class ObjectCreator
     {
         /// <summary>
         /// 
@@ -103,19 +103,6 @@ namespace ArchPM.NetCore.Extensions
         public static T CreateInstance<T>()
         {
             return (T)CreateInstance(typeof(T)) ;
-        }
-
-        /// <summary>
-        /// Creates and instance and fills it with the with data.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="configuration">The configuration.</param>
-        /// <returns></returns>
-        [Obsolete("use ArchPM.NetCore.Creators.SampleCreator.CreateSample method instead!")]
-        public static T FillWithData<T>(CreateSampleDataConfiguration configuration = null) where T : class
-        {
-            var obj = (T)Creator.CreateInstance(typeof(T));
-            return obj.CreateSampleData(configuration);
         }
 
        

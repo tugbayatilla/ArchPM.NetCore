@@ -3,11 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 
-namespace ArchPM.NetCore.Extensions
+namespace ArchPM.NetCore.Creators
 {
     /// <summary>
     /// 
@@ -58,13 +55,33 @@ namespace ArchPM.NetCore.Extensions
                     }
                     else if (p.ValueType == typeof(DateTime))
                     {
-                        var dateValue = configuration.AlwaysUseDateTimeAs.AddDays(GenerateValueFromName(p.Name));
+                        DateTime dateValue;
+                        switch (configuration.DateTimeAddition)
+                        {
+                            case SampleDateTimeAdditions.AddDays:
+                                dateValue = configuration.AlwaysUseDateTimeAs.AddDays(GenerateValueFromName(p.Name));
+                                break;
+                            case SampleDateTimeAdditions.AddMinutes:
+                                dateValue = configuration.AlwaysUseDateTimeAs.AddMinutes(GenerateValueFromName(p.Name));
+                                break;
+                            case SampleDateTimeAdditions.AddSeconds:
+                                dateValue = configuration.AlwaysUseDateTimeAs.AddSeconds(GenerateValueFromName(p.Name));
+                                break;
+                            default:
+                                dateValue = DateTime.Now;
+                                break;
+                        }
                         obj.SetValue(p.Name, dateValue);
                     }
                     else if (p.ValueType == typeof(byte))
                     {
                         var byteValue = GenerateValueFromName(p.Name) / 128;
                         obj.SetValue(p.Name, byteValue);
+                    }
+                    else if (p.ValueType == typeof(Guid))
+                    {
+                        var guidValue = Guid.Parse("00000000-0000-0000-0000-000000000001");
+                        obj.SetValue(p.Name, guidValue);
                     }
                     else
                     {
@@ -74,7 +91,7 @@ namespace ArchPM.NetCore.Extensions
                 }
                 else if (p.IsList)
                 {
-                    var ins = Creator.CreateInstance(p.ValueType);
+                    var ins = ObjectCreator.CreateInstance(p.ValueType);
                     if (p.ValueType.IsGenericType)
                     {
                         if (ins is IList)
@@ -85,11 +102,11 @@ namespace ArchPM.NetCore.Extensions
                             for (int i = 0; i < 2; i++)
                             {
                                 //create new instance of T
-                                var genericTypeInstance = Creator.CreateInstance(genericType);
+                                var genericTypeInstance = ObjectCreator.CreateInstance(genericType);
                                 configuration.IgnoreRecursion = true;
                                 genericTypeInstance = genericTypeInstance.CreateSample(configuration);
 
-                                if(genericTypeInstance is string)
+                                if (genericTypeInstance is string)
                                 {
                                     genericTypeInstance = $"string_{i}";
                                 }
@@ -107,7 +124,7 @@ namespace ArchPM.NetCore.Extensions
                 }
                 else if (p.IsClass && !p.IsList)
                 {
-                    var ins = Creator.CreateInstance(p.ValueType);
+                    var ins = ObjectCreator.CreateInstance(p.ValueType);
                     if (ins != null)
                     {
                         configuration.IgnoreRecursion = false;
@@ -131,7 +148,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns></returns>
         public static T CreateSample<T>(SampleConfiguration configuration = null) where T : class
         {
-            var obj = (T)Creator.CreateInstance(typeof(T));
+            var obj = (T)ObjectCreator.CreateInstance(typeof(T));
             return obj.CreateSample(configuration);
         }
 
@@ -150,67 +167,6 @@ namespace ArchPM.NetCore.Extensions
             return result;
         }
 
-        /// <summary>
-        /// Configuration object for CraeteSampleData
-        /// </summary>
-        public class SampleConfiguration
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="SampleConfiguration"/> class.
-            /// </summary>
-            public SampleConfiguration()
-            {
-                AlwaysUseBooleanAs = true;
-                AlwaysUseDateTimeAs = DateTime.Now;
-                AlwaysUseNumericPropertiesNameLengthAsValue = true;
-            }
-            /// <summary>
-            /// Gets or sets a value indicating whether [boolean values always].
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> if [boolean values always]; otherwise, <c>false</c>.
-            /// </value>
-            public bool AlwaysUseBooleanAs { get; set; }
-            /// <summary>
-            /// Gets or sets the prefix for string values.
-            /// </summary>
-            /// <value>
-            /// The prefix for string values.
-            /// </value>
-            public string AlwaysUsePrefixForStringAs { get; set; }
-            /// <summary>
-            /// Gets or sets the suffix for string values.
-            /// </summary>
-            /// <value>
-            /// The suffix for string values.
-            /// </value>
-            public string AlwaysUseSuffixForStringAs { get; set; }
 
-            /// <summary>
-            /// Gets or sets a value indicating whether [always use numeric properties name length asvalue].
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> if [always use numeric properties name length asvalue]; otherwise, <c>false</c>.
-            /// </value>
-            public bool AlwaysUseNumericPropertiesNameLengthAsValue { get; set; }
-
-            /// <summary>
-            /// Gets or sets the use date time as.
-            /// </summary>
-            /// <value>
-            /// The use date time as.
-            /// </value>
-            public DateTime AlwaysUseDateTimeAs { get; set; }
-
-            /// <summary>
-            /// Gets or sets a value indicating whether [ignore recursion].
-            /// </summary>
-            /// <value>
-            ///   <c>true</c> if [ignore recursion]; otherwise, <c>false</c>.
-            /// </value>
-            public bool IgnoreRecursion { get; set; } = false;
-
-            internal List<string> KeyValueContainer = new List<string>();
-        }
     }
 }
