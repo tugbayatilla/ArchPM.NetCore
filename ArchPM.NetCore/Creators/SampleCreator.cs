@@ -21,13 +21,13 @@ namespace ArchPM.NetCore.Creators
         /// <param name="obj">The object.</param>
         /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
-        public static T CreateSample<T>(this T obj, SampleConfiguration configuration = null)
+        public static T CreateSample<T>(this T obj, SampleCreatorConfiguration configuration = null)
             where T : class
         {
             //obj.ThrowExceptionIfNull<ArgumentNullException>(nameof(obj));
             if (configuration == null)
             {
-                configuration = new SampleConfiguration();
+                configuration = new SampleCreatorConfiguration();
             }
             if (!configuration.IgnoreRecursion)
             {
@@ -60,7 +60,7 @@ namespace ArchPM.NetCore.Creators
                     else if (p.ValueType == typeof(DateTime))
                     {
                         DateTime dateValue;
-                        switch (configuration.DateTimeAddition)
+                        switch (configuration.AlwaysUseDateTimeAddition)
                         {
                             case SampleDateTimeAdditions.AddDays:
                                 dateValue = configuration.AlwaysUseDateTimeAs.AddDays(GenerateValueFromName(p.Name));
@@ -72,7 +72,7 @@ namespace ArchPM.NetCore.Creators
                                 dateValue = configuration.AlwaysUseDateTimeAs.AddSeconds(GenerateValueFromName(p.Name));
                                 break;
                             default:
-                                dateValue = DateTime.Now;
+                                dateValue = configuration.AlwaysUseDateTimeAs;
                                 break;
                         }
                         obj.SetValue(p.Name, dateValue);
@@ -160,7 +160,7 @@ namespace ArchPM.NetCore.Creators
         /// <typeparam name="T"></typeparam>
         /// <param name="configuration">The configuration.</param>
         /// <returns></returns>
-        public static T CreateSample<T>(SampleConfiguration configuration = null) where T : class
+        public static T CreateSample<T>(SampleCreatorConfiguration configuration = null) where T : class
         {
             var obj = (T)ObjectCreator.CreateInstance(typeof(T));
             return obj.CreateSample(configuration);

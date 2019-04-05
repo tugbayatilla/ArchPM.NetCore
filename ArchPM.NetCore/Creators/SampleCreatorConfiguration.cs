@@ -7,16 +7,13 @@ namespace ArchPM.NetCore.Creators
     /// <summary>
     /// Configuration object for CraeteSampleData
     /// </summary>
-    public class SampleConfiguration
+    public class SampleCreatorConfiguration
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SampleConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="SampleCreatorConfiguration"/> class.
         /// </summary>
-        public SampleConfiguration()
+        public SampleCreatorConfiguration()
         {
-            AlwaysUseBooleanAs = true;
-            AlwaysUseDateTimeAs = DateTime.Now;
-            AlwaysUseNumericPropertiesNameLengthAsValue = true;
         }
         /// <summary>
         /// Gets or sets a value indicating whether [boolean values always].
@@ -24,7 +21,7 @@ namespace ArchPM.NetCore.Creators
         /// <value>
         ///   <c>true</c> if [boolean values always]; otherwise, <c>false</c>.
         /// </value>
-        public bool AlwaysUseBooleanAs { get; set; }
+        public bool AlwaysUseBooleanAs { get; set; } = true;
         /// <summary>
         /// Gets or sets the prefix for string values.
         /// </summary>
@@ -46,7 +43,7 @@ namespace ArchPM.NetCore.Creators
         /// <value>
         ///   <c>true</c> if [always use numeric properties name length asvalue]; otherwise, <c>false</c>.
         /// </value>
-        public bool AlwaysUseNumericPropertiesNameLengthAsValue { get; set; }
+        public bool AlwaysUseNumericPropertiesNameLengthAsValue { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the use date time as.
@@ -54,7 +51,7 @@ namespace ArchPM.NetCore.Creators
         /// <value>
         /// The use date time as.
         /// </value>
-        public DateTime AlwaysUseDateTimeAs { get; set; }
+        public DateTime AlwaysUseDateTimeAs { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Gets or sets the date time addition.
@@ -62,7 +59,7 @@ namespace ArchPM.NetCore.Creators
         /// <value>
         /// The date time addition.
         /// </value>
-        public SampleDateTimeAdditions DateTimeAddition { get; set; } = SampleDateTimeAdditions.AddDays;
+        public SampleDateTimeAdditions AlwaysUseDateTimeAddition { get; set; } = SampleDateTimeAdditions.None;
 
         /// <summary>
         /// Gets or sets a value indicating whether [ignore recursion].
@@ -80,6 +77,10 @@ namespace ArchPM.NetCore.Creators
     /// </summary>
     public enum SampleDateTimeAdditions
     {
+        /// <summary>
+        /// The none
+        /// </summary>
+        None,
         /// <summary>
         /// The add days
         /// </summary>

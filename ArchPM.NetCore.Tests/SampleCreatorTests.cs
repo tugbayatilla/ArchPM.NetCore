@@ -22,7 +22,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_create_and_fill_when_having_ilist_interface_property()
         {
             var now = DateTime.Now;
-            var instance = SampleCreator.CreateSample<ClassHavingIListInterfaceAsProperty>(new SampleConfiguration()
+            var instance = SampleCreator.CreateSample<ClassHavingIListInterfaceAsProperty>(new SampleCreatorConfiguration()
             {
                 AlwaysUseDateTimeAs = now
             });
@@ -35,9 +35,10 @@ namespace ArchPM.NetCore.Tests
         public void Should_create_and_fill_company()
         {
             var now = DateTime.Now;
-            var instance = SampleCreator.CreateSample<Company>(new SampleConfiguration()
+            var instance = SampleCreator.CreateSample<Company>(new SampleCreatorConfiguration()
             {
-                AlwaysUseDateTimeAs = now
+                AlwaysUseDateTimeAs = now,
+                AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays
             });
 
             instance.Should().NotBeNull();
@@ -54,7 +55,9 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_primitive_values()
         {
             var now = DateTime.Now;
-            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreatorConfiguration() {
+                AlwaysUseDateTimeAs = now,
+                AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays });
 
             sample.Should().NotBeNull();
             sample.BooleanProperty.Should().BeTrue();
@@ -119,7 +122,8 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_inherited_sub_class_property()
         {
             var now = DateTime.Now;
-            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreatorConfiguration() { AlwaysUseDateTimeAs = now,
+                AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays });
 
             sample.SampleDataInheritedSubClass.Should().NotBeNull();
             sample.SampleDataInheritedSubClass.DateTimeProperty.Should().Be(now.AddDays(1650));
@@ -129,7 +133,8 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_primitive_constructor_sub_class_property()
         {
             var now = DateTime.Now;
-            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreatorConfiguration() { AlwaysUseDateTimeAs = now,
+                AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays });
 
             sample.SampleDataPrimitiveConstructorSubClass.Should().NotBeNull();
             sample.SampleDataPrimitiveConstructorSubClass.DateTimeProperty.Should().Be(now.AddDays(1650));
@@ -139,7 +144,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_fill_generic_list_property()
         {
             var now = DateTime.Now;
-            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleConfiguration() { AlwaysUseDateTimeAs = now });
+            var sample = SampleCreator.CreateSample<SampleDataClass>(new SampleCreatorConfiguration() { AlwaysUseDateTimeAs = now });
 
             sample.SampleDataSimpleSubClassList.Should().NotBeNull();
             sample.SampleDataSimpleSubClassList.Count.Should().Be(2);
@@ -227,7 +232,7 @@ namespace ArchPM.NetCore.Tests
         public void Should_create_sample_data_with_config(string prefix, string suffix, string result)
         {
             var instance = SampleCreator.CreateSample< ClassHavingNoArguments>(
-                new SampleConfiguration()
+                new SampleCreatorConfiguration()
                 {
                     AlwaysUsePrefixForStringAs = prefix,
                     AlwaysUseSuffixForStringAs = suffix
