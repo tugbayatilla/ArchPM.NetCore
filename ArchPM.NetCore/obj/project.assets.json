@@ -30,11 +30,12 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
+      "sha512": "bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
         ".nupkg.metadata",
+        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -178,32 +179,30 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\tatilla.ext\\.nuget\\packages\\": {},
+    "C:\\Users\\Tugbay\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "2.0.4",
+    "version": "2.0.5",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tatilla.ext\\source\\repos\\_old\\ArchPM.NetCore\\ArchPM.NetCore\\ArchPM.NetCore.csproj",
+      "projectUniqueName": "C:\\Users\\Tugbay\\source\\personal\\ArchPM.NetCore\\ArchPM.NetCore\\ArchPM.NetCore.csproj",
       "projectName": "ArchPM.NetCore",
-      "projectPath": "C:\\Users\\tatilla.ext\\source\\repos\\_old\\ArchPM.NetCore\\ArchPM.NetCore\\ArchPM.NetCore.csproj",
-      "packagesPath": "C:\\Users\\tatilla.ext\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tatilla.ext\\source\\repos\\_old\\ArchPM.NetCore\\ArchPM.NetCore\\obj\\",
+      "projectPath": "C:\\Users\\Tugbay\\source\\personal\\ArchPM.NetCore\\ArchPM.NetCore\\ArchPM.NetCore.csproj",
+      "packagesPath": "C:\\Users\\Tugbay\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Tugbay\\source\\personal\\ArchPM.NetCore\\ArchPM.NetCore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\tatilla.ext\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\ServiceFabricSDK.config"
+        "C:\\Users\\Tugbay\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netstandard2.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\Microsoft SDKs\\Service Fabric\\packages": {},
         "https://api.nuget.org/v3/index.json": {},
         "https://igus-integrations.pkgs.visualstudio.com/_packaging/iAPI/nuget/v3/index.json": {}
       },
@@ -229,10 +228,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

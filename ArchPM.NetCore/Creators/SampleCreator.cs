@@ -9,6 +9,7 @@ namespace ArchPM.NetCore.Creators
     /// <summary>
     /// 
     /// </summary>
+    [Obsolete("Use SampleBuilder instead!")]
     public static class SampleCreator
     {
         /// <summary>
