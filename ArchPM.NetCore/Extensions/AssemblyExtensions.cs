@@ -8,7 +8,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class AssemblyExtensionMethods
+    public static class AssemblyExtensions
     {
         /// <summary>
         /// Gets the provider.
@@ -25,7 +25,7 @@ namespace ArchPM.NetCore.Extensions
                 if (!type.IsClass) continue;
                 if (type.IsAbstract) continue;
                 if (type.Name.Contains("<") || type.Name.Contains(">")) continue;
-                if (type.GetInterfaces().Contains(typeof(T)) || TypeExtensionMethods.RecursivlyCheckBaseType(type, typeof(T)))
+                if (type.GetInterfaces().Contains(typeof(T)) || TypeExtensions.RecursivlyCheckBaseType(type, typeof(T)))
                 {
                     Type result = type;
                     if (type.ContainsGenericParameters)

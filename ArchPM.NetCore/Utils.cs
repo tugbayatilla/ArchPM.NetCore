@@ -13,7 +13,7 @@ namespace ArchPM.NetCore
         /// <summary>
         /// The lock
         /// </summary>
-        static readonly Object _lock = new object();
+        private static readonly object Lock = new object();
 
         /// <summary>
         /// Creates the unique number.
@@ -26,10 +26,10 @@ namespace ArchPM.NetCore
                 now = DateTime.Now;
             }
 
-            UInt64 result = default(UInt64);
-            lock (_lock)
+            var result = default(UInt64);
+            lock (Lock)
             {
-                var unique = String.Format("{0:yyyyMMddHHmmssffffff}", now);
+                var unique = $"{now:yyyyMMddHHmmssffffff}";
                 result = Convert.ToUInt64(unique);
             }
             return result;
@@ -43,24 +43,21 @@ namespace ArchPM.NetCore
         /// <returns></returns>
         public static IEnumerable<Assembly> GetAssembliesInDirectory(String directoryPath = "", SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
-            if (String.IsNullOrEmpty(directoryPath))
+            if (string.IsNullOrEmpty(directoryPath))
                 directoryPath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "bin"); // note: don't use CurrentEntryAssembly or anything like that.
 
-            DirectoryInfo directory = new DirectoryInfo(directoryPath);
-            if (directory.Exists)
+            var directory = new DirectoryInfo(directoryPath);
+            if (!directory.Exists) yield break;
+
+            var files = directory.GetFiles("*.dll", searchOption);
+
+            foreach (var file in files)
             {
-                FileInfo[] files = directory.GetFiles("*.dll", searchOption);
-
-                foreach (FileInfo file in files)
-                {
-                    // Load the file into the application domain.
-                    AssemblyName assemblyName = AssemblyName.GetAssemblyName(file.FullName);
-                    Assembly assembly = AppDomain.CurrentDomain.Load(assemblyName);
-                    yield return assembly;
-                }
+                // Load the file into the application domain.
+                var assemblyName = AssemblyName.GetAssemblyName(file.FullName);
+                var assembly = AppDomain.CurrentDomain.Load(assemblyName);
+                yield return assembly;
             }
-
-            yield break;
         }
 
         /// <summary>
@@ -70,12 +67,12 @@ namespace ArchPM.NetCore
         /// <returns>
         /// True: Directory, False:File
         /// </returns>
-        public static Boolean IsDirectory(String path)
+        public static bool IsDirectory(string path)
         {
             //false means it's a file
-            Boolean result = false;
+            var result = false;
             // get the file attributes for file or directory
-            FileAttributes attr = File.GetAttributes(path);
+            var attr = File.GetAttributes(path);
 
             //detect whether its a directory
             if ((attr & FileAttributes.Directory) == FileAttributes.Directory)

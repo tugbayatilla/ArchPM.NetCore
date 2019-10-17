@@ -8,7 +8,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class ReflectionExtensionMethods
+    public static class ReflectionExtensions
     {
         /// <summary>
         /// Collects the properties.
@@ -20,19 +20,19 @@ namespace ArchPM.NetCore.Extensions
         public static IEnumerable<PropertyDTO> CollectProperties(this Type entityType, Func<PropertyDTO, Boolean> predicate = null)
         {
             if (entityType == null)
-                throw new ArgumentNullException("entityType");
+                throw new ArgumentNullException(nameof(entityType));
             if (entityType.Name == "Void")
                 return new List<PropertyDTO>();
             if (entityType.Module.Name == "mscorlib.dll")
                 return new List<PropertyDTO>();
 
-            Object entity = null;
             try
             {
-                entity = Activator.CreateInstance(entityType);
+                var entity = Activator.CreateInstance(entityType);
                 return CollectProperties(entity, predicate);
             }
-            catch {
+            catch
+            {
                 return new List<PropertyDTO>();
             }
         }
@@ -48,9 +48,9 @@ namespace ArchPM.NetCore.Extensions
         public static IEnumerable<PropertyDTO> CollectProperties<T>(this T entity, Func<PropertyDTO, Boolean> predicate = null)
         {
             if (entity == null)
-                throw new ArgumentNullException("entity");
+                throw new ArgumentNullException(nameof(entity));
 
-            PropertyInfo[] properties = entity.GetType().GetProperties();
+            var properties = entity.GetType().GetProperties();
 
             foreach (var property in properties)
             {
@@ -62,10 +62,6 @@ namespace ArchPM.NetCore.Extensions
                     if (predicate(entityProperty))
                     {
                         yield return entityProperty;
-                    }
-                    else
-                    {
-                        continue;
                     }
                 }
                 else
@@ -247,7 +243,7 @@ namespace ArchPM.NetCore.Extensions
             {
                 entityProperty.Nullable = true;
             }
-            if(entity.GetType().IsClass && !entityProperty.IsPrimitive)
+            if (entity.GetType().IsClass && !entityProperty.IsPrimitive)
             {
                 entityProperty.IsClass = true;
             }

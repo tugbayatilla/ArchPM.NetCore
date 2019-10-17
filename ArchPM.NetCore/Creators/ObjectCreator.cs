@@ -18,66 +18,23 @@ namespace ArchPM.NetCore.Creators
         /// <typeparam name="T"></typeparam>
         /// <param name="args">The arguments.</param>
         /// <returns></returns>
-        internal delegate T ObjectActivator<T>(params object[] args);
-        /// <summary>
-        /// Gets the activator.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="ctor">The ctor.</param>
-        /// <returns></returns>
-        internal static ObjectActivator<T> GetActivator<T>(ConstructorInfo ctor)
-        {
-            //taken from rogerjohansson.blog
-            Type type = ctor.DeclaringType;
-            ParameterInfo[] paramsInfo = ctor.GetParameters();
-
-            //create a single param of type object[]
-            ParameterExpression param = Expression.Parameter(typeof(object[]), "args");
-
-            Expression[] argsExp = new Expression[paramsInfo.Length];
-
-            //pick each arg from the params array 
-            //and create a typed expression of them
-            for (int i = 0; i < paramsInfo.Length; i++)
-            {
-                Expression index = Expression.Constant(i);
-                Type paramType = paramsInfo[i].ParameterType;
-
-                Expression paramAccessorExp = Expression.ArrayIndex(param, index);
-                Expression paramCastExp = Expression.Convert(paramAccessorExp, paramType);
-
-                argsExp[i] = paramCastExp;
-            }
-
-            //make a NewExpression that calls the
-            //ctor with the args we just created
-            NewExpression newExp = Expression.New(ctor, argsExp);
-
-            //create a lambda with the New
-            //Expression as body and our param object[] as arg
-            LambdaExpression lambda = Expression.Lambda(typeof(ObjectActivator<T>), newExp, param);
-
-            //compile it
-            ObjectActivator<T> compiled = (ObjectActivator<T>)lambda.Compile();
-            return compiled;
-        }
-
+        private delegate T ObjectActivator<T>(params object[] args);
 
         /// <summary>
         /// Creates the instance.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        public static Object CreateInstance(Type type)
+        public static object CreateInstance(Type type)
         {
-            Object instance = null;
+            object instance = null;
             if (type.ContainsGenericParameters)
             {
                 type = type.MakeGenericType(type.GenericTypeArguments);
             }
 
-            List<Object> constructorArguments = new List<object>();
-            ConstructorInfo ctorInfo = type.GetConstructors().FirstOrDefault();
+            var constructorArguments = new List<object>();
+            var ctorInfo = type.GetConstructors().FirstOrDefault();
             if (ctorInfo != null)
             {
                 var ctorParametersInfo = ctorInfo.GetParameters();
@@ -86,7 +43,7 @@ namespace ArchPM.NetCore.Creators
                     constructorArguments.Add(info.ParameterType.GetDefault());
                 }
 
-                ObjectActivator<Object> createdActivator = GetActivator<Object>(ctorInfo);
+                var createdActivator = GetActivator<object>(ctorInfo);
                 //create an instance:
                 instance = createdActivator(constructorArguments.ToArray());
             }
@@ -106,6 +63,47 @@ namespace ArchPM.NetCore.Creators
             return (T)CreateInstance(typeof(T)) ;
         }
 
-       
+        /// <summary>
+        /// Gets the activator.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ctor">The ctor.</param>
+        /// <returns></returns>
+        private static ObjectActivator<T> GetActivator<T>(ConstructorInfo ctor)
+        {
+            //taken from rogerjohansson.blog
+            var paramsInfo = ctor.GetParameters();
+
+            //create a single param of type object[]
+            var param = Expression.Parameter(typeof(object[]), "args");
+
+            var argsExp = new Expression[paramsInfo.Length];
+
+            //pick each arg from the params array 
+            //and create a typed expression of them
+            for (var i = 0; i < paramsInfo.Length; i++)
+            {
+                Expression index = Expression.Constant(i);
+                var paramType = paramsInfo[i].ParameterType;
+
+                Expression paramAccessorExp = Expression.ArrayIndex(param, index);
+                Expression paramCastExp = Expression.Convert(paramAccessorExp, paramType);
+
+                argsExp[i] = paramCastExp;
+            }
+
+            //make a NewExpression that calls the
+            //ctor with the args we just created
+            var newExp = Expression.New(ctor, argsExp);
+
+            //create a lambda with the New
+            //Expression as body and our param object[] as arg
+            var lambda = Expression.Lambda(typeof(ObjectActivator<T>), newExp, param);
+
+            //compile it
+            var compiled = (ObjectActivator<T>)lambda.Compile();
+            return compiled;
+        }
+
     }
 }

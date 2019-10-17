@@ -7,7 +7,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class EnumExtensionMethods
+    public static class EnumExtensions
     {
         /// <summary>
         /// Gets the name.

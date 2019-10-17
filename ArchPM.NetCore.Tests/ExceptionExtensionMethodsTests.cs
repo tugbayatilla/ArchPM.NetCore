@@ -9,7 +9,7 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_exception_when_object_is_null()
         {
-            Object obj = null;
+            object obj = null;
 
             var ex = Assert.Throws<Exception>(()=> {
                 obj.ThrowExceptionIf(p => p == null);
@@ -21,7 +21,7 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_exception_when_predicate_is_null()
         {
-            Object obj = null;
+            object obj = null;
 
             var ex = Assert.Throws<Exception>(() => {
                 obj.ThrowExceptionIf(null);
@@ -31,7 +31,7 @@ namespace ArchPM.NetCore.Tests
         }
 
         [Fact]
-        public void Should_throw_givenexception_when_object_is_null()
+        public void Should_throw_given_exception_when_object_is_null()
         {
             Object obj = null;
 
@@ -55,7 +55,7 @@ namespace ArchPM.NetCore.Tests
         }
 
         [Fact]
-        public void Should_throw_givenexception_with_given_message_when_object_is_null()
+        public void Should_throw_given_exception_with_given_message_when_object_is_null()
         {
             Object obj = null;
 

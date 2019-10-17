@@ -1,11 +1,11 @@
-﻿using ArchPM.NetCore.Extensions;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ArchPM.NetCore.Creators;
+using ArchPM.NetCore.Extensions;
 
-namespace ArchPM.NetCore.Samples
+namespace ArchPM.NetCore.Builders
 {
     /// <summary>
     /// Creates samples

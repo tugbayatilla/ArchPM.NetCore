@@ -12,6 +12,7 @@ packages/
 *.ko
 *.obj
 *.elf
+*.ncrunchproject
 
 # Linker output
 *.ilk

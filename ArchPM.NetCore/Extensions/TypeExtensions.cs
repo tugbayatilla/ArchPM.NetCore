@@ -8,7 +8,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class TypeExtensionMethods
+    public static class TypeExtensions
     {
         /// <summary>
         /// Gets the default.

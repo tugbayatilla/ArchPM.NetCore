@@ -1,8 +1,8 @@
 ﻿using System;
+using ArchPM.NetCore.Builders;
 using Xunit;
 using FluentAssertions;
 using ArchPM.NetCore.Tests.TestModels;
-using ArchPM.NetCore.Samples;
 
 namespace ArchPM.NetCore.Tests
 {

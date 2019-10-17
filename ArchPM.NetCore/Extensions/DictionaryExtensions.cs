@@ -8,7 +8,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class DictionaryExtensionMethods
+    public static class DictionaryExtensions
     {
         /// <summary>
         /// Finds the key by value.

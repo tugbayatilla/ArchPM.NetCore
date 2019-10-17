@@ -8,7 +8,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class ListExtensionMethods
+    public static class ListExtensions
     {
         /// <summary>
         /// Fors the each.

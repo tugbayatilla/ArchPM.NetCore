@@ -5,7 +5,7 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class ConvertionExtensionMethods
+    public static class ConvertionExtensions
     {
         /// <summary>
         /// Tries the convert to given type
@@ -14,16 +14,16 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="obj">The expression.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static T TryToConvert<T>(this Object obj, T defaultValue)
+        public static T TryToConvert<T>(this object obj, T defaultValue)
         {
             if (obj == null)
                 return defaultValue;
 
-            String nullable = "Nullable`1";
+            const string nullable = "Nullable`1";
 
             var fullName = typeof(T).FullName;
             var name = typeof(T).Name;
-            Object result = defaultValue;
+            object result = defaultValue;
 
             try
             {
@@ -127,16 +127,16 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="type">The type.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns></returns>
-        public static Object TryToConvert(this Object obj, Type type, Object defaultValue)
+        public static object TryToConvert(this object obj, Type type, object defaultValue)
         {
             if (obj == null)
                 return defaultValue;
 
-            String nullable = "Nullable`1";
+            const String nullable = "Nullable`1";
 
             var fullName = type.FullName;
             var name = type.Name;
-            Object result = defaultValue;
+            object result = defaultValue;
 
             try
             {

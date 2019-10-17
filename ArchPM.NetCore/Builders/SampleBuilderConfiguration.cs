@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace ArchPM.NetCore.Creators
+namespace ArchPM.NetCore.Builders
 {
     /// <summary>
-    /// Configuration object for CraeteSampleData
+    /// Sample Builder Configuration
     /// </summary>
-    public class SampleCreatorConfiguration
+    public class SampleBuilderConfiguration
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SampleCreatorConfiguration"/> class.
-        /// </summary>
-        public SampleCreatorConfiguration()
-        {
-        }
         /// <summary>
         /// Gets or sets a value indicating whether [boolean values always].
         /// </summary>
@@ -22,6 +15,15 @@ namespace ArchPM.NetCore.Creators
         ///   <c>true</c> if [boolean values always]; otherwise, <c>false</c>.
         /// </value>
         public bool AlwaysUseBooleanAs { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the collection count.
+        /// </summary>
+        /// <value>
+        /// The collection count.
+        /// </value>
+        public int CollectionCount { get; set; } = 2;
+
         /// <summary>
         /// Gets or sets the prefix for string values.
         /// </summary>
