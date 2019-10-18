@@ -5,12 +5,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace ArchPM.NetCore.Creators
+namespace ArchPM.NetCore.Builders
 {
     /// <summary>
     /// 
     /// </summary>
-    public static class ObjectCreator
+    public static class ObjectBuilder
     {
         /// <summary>
         /// 
@@ -18,7 +18,7 @@ namespace ArchPM.NetCore.Creators
         /// <typeparam name="T"></typeparam>
         /// <param name="args">The arguments.</param>
         /// <returns></returns>
-        private delegate T ObjectActivator<T>(params object[] args);
+        private delegate T ObjectActivator<out T>(params object[] args);
 
         /// <summary>
         /// Creates the instance.
@@ -47,8 +47,6 @@ namespace ArchPM.NetCore.Creators
                 //create an instance:
                 instance = createdActivator(constructorArguments.ToArray());
             }
-
-
 
             return instance;
         }

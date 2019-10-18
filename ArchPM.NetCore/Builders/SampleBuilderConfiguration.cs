@@ -43,7 +43,7 @@ namespace ArchPM.NetCore.Builders
         /// Gets or sets a value indicating whether [always use numeric properties name length asvalue].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [always use numeric properties name length asvalue]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [always use numeric properties name length as value]; otherwise, <c>false</c>.
         /// </value>
         public bool AlwaysUseNumericPropertiesNameLengthAsValue { get; set; } = true;
 
@@ -71,7 +71,7 @@ namespace ArchPM.NetCore.Builders
         /// </value>
         public bool IgnoreRecursion { get; set; } = false;
 
-        internal List<string> KeyValueContainer = new List<string>();
+        internal readonly List<string> KeyValueContainer = new List<string>();
     }
 
     /// <summary>

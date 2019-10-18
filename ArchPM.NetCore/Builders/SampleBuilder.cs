@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ArchPM.NetCore.Creators;
 using ArchPM.NetCore.Extensions;
 
 namespace ArchPM.NetCore.Builders
@@ -63,7 +62,30 @@ namespace ArchPM.NetCore.Builders
             return result;
         }
 
-        
+        /// <summary>
+        /// Creates the specified configuration.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="config">The configuration.</param>
+        /// <returns></returns>
+        public static T Create<T>(SampleBuilderConfiguration config) where T : class
+        {
+            var result = SampleBuilder<T>.Init().SetConfiguration(config).Build().Result;
+            return result;
+        }
+
+        /// <summary>
+        /// Creates the specified configure sample action.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="configureSampleAction">The configure sample action.</param>
+        /// <param name="config">The configuration.</param>
+        /// <returns></returns>
+        public static T Create<T>(Action<T> configureSampleAction, SampleBuilderConfiguration config) where T : class
+        {
+            var result = SampleBuilder<T>.Init().SetConfiguration(config).ConfigureSample(configureSampleAction).Build().Result;
+            return result;
+        }
 
     }
 
@@ -104,7 +126,7 @@ namespace ArchPM.NetCore.Builders
         /// <param name="configuration">The configuration.</param>
         public SampleBuilder(T obj = null, SampleBuilderConfiguration configuration = null)
         {
-            Result = obj ?? (T)ObjectCreator.CreateInstance(typeof(T));
+            Result = obj ?? (T)ObjectBuilder.CreateInstance(typeof(T));
             SetConfiguration(configuration);
         }
 
@@ -247,7 +269,7 @@ namespace ArchPM.NetCore.Builders
                         changeType = false;
                     }
 
-                    var ins = ObjectCreator.CreateInstance(p.ValueType);
+                    var ins = ObjectBuilder.CreateInstance(p.ValueType);
 
                     if (p.ValueType.IsGenericType)
                     {
@@ -259,7 +281,7 @@ namespace ArchPM.NetCore.Builders
                             for (var i = 0; i < Configuration.CollectionCount; i++)
                             {
                                 //create new instance of T
-                                var genericTypeInstance = ObjectCreator.CreateInstance(genericType);
+                                var genericTypeInstance = ObjectBuilder.CreateInstance(genericType);
                                 Configuration.IgnoreRecursion = true;
                                 genericTypeInstance = genericTypeInstance.CreateSample(Configuration);
 
@@ -278,11 +300,12 @@ namespace ArchPM.NetCore.Builders
                 }
                 else if (p.ValueTypeName == "Dictionary`2")
                 {
-                    throw new NotImplementedException();
+                    var ins = ObjectBuilder.CreateInstance(p.ValueType);
+                    Result.SetValue(p.Name, ins); //todo: must be filled with data!
                 }
                 else if (p.IsClass && !p.IsList)
                 {
-                    var ins = ObjectCreator.CreateInstance(p.ValueType);
+                    var ins = ObjectBuilder.CreateInstance(p.ValueType);
                     if (ins != null)
                     {
                         Configuration.IgnoreRecursion = false;
