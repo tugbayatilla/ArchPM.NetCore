@@ -26,7 +26,7 @@ namespace ArchPM.NetCore
                 now = DateTime.Now;
             }
 
-            var result = default(UInt64);
+            var result = default(ulong);
             lock (Lock)
             {
                 var unique = $"{now:yyyyMMddHHmmssffffff}";
@@ -41,7 +41,7 @@ namespace ArchPM.NetCore
         /// <param name="directoryPath">The directory path.</param>
         /// <param name="searchOption">The search option.</param>
         /// <returns></returns>
-        public static IEnumerable<Assembly> GetAssembliesInDirectory(String directoryPath = "", SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        public static IEnumerable<Assembly> GetAssembliesInDirectory(string directoryPath = "", SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
             if (string.IsNullOrEmpty(directoryPath))
                 directoryPath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "bin"); // note: don't use CurrentEntryAssembly or anything like that.

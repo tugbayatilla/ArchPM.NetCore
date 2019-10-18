@@ -1,7 +1,7 @@
-﻿using Xunit;
+﻿using ArchPM.NetCore.Builders;
+using Xunit;
 using FluentAssertions;
 using ArchPM.NetCore.Tests.TestModels;
-using ArchPM.NetCore.Creators;
 
 namespace ArchPM.NetCore.Tests
 {
@@ -10,7 +10,7 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_create_instance_class_having_arguments()
         {
-            var cls = ObjectCreator.CreateInstance<ClassHavingArguments>();
+            var cls = ObjectBuilder.CreateInstance<ClassHavingArguments>();
 
             cls.Should().NotBeNull();
         }
@@ -18,7 +18,7 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_create_instance_class_having_no_arguments()
         {
-            var cls = ObjectCreator.CreateInstance<ClassHavingNoArguments>();
+            var cls = ObjectBuilder.CreateInstance<ClassHavingNoArguments>();
 
             cls.Should().NotBeNull();
         }

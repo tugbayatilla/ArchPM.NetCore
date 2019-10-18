@@ -17,7 +17,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">entityType</exception>
-        public static IEnumerable<PropertyDTO> CollectProperties(this Type entityType, Func<PropertyDTO, Boolean> predicate = null)
+        public static IEnumerable<PropertyDTO> CollectProperties(this Type entityType, Func<PropertyDTO, bool> predicate = null)
         {
             if (entityType == null)
                 throw new ArgumentNullException(nameof(entityType));
@@ -45,7 +45,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">entity</exception>
-        public static IEnumerable<PropertyDTO> CollectProperties<T>(this T entity, Func<PropertyDTO, Boolean> predicate = null)
+        public static IEnumerable<PropertyDTO> CollectProperties<T>(this T entity, Func<PropertyDTO, bool> predicate = null)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
@@ -80,7 +80,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is dot net pirimitive] [the specified system type]; otherwise, <c>false</c>.
         /// </returns>
-        public static Boolean IsDotNetPirimitive(this Type systemType, Boolean acceptNullables = true)
+        public static bool IsDotNetPirimitive(this Type systemType, bool acceptNullables = true)
         {
             if (acceptNullables)
             {
@@ -91,7 +91,7 @@ namespace ArchPM.NetCore.Extensions
                 }
             }
 
-            if (systemType == typeof(String)
+            if (systemType == typeof(string)
                 || systemType == typeof(Char)
                 || systemType == typeof(Byte)
                 || systemType == typeof(Int32)
@@ -103,7 +103,7 @@ namespace ArchPM.NetCore.Extensions
                 || systemType == typeof(Double)
                 || systemType == typeof(Decimal)
                 || systemType == typeof(DateTime)
-                || systemType == typeof(Boolean)
+                || systemType == typeof(bool)
                 || systemType == typeof(Guid)
                 || systemType == typeof(Enum)
                 || systemType == typeof(uint)
@@ -129,7 +129,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is generic nullable] [the specified property]; otherwise, <c>false</c>.
         /// </returns>
-        public static Boolean IsGenericNullable(this PropertyInfo property)
+        public static bool IsGenericNullable(this PropertyInfo property)
         {
             return property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
         }
@@ -140,9 +140,9 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="expando">The expando.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="propertyValue">The property value.</param>
-        public static void AddProperty(this ExpandoObject expando, String propertyName, Object propertyValue)
+        public static void AddProperty(this ExpandoObject expando, string propertyName, object propertyValue)
         {
-            var expandoDict = expando as IDictionary<String, Object>;
+            var expandoDict = expando as IDictionary<string, object>;
             if (expandoDict.ContainsKey(propertyName))
                 expandoDict[propertyName] = propertyValue;
             else
@@ -227,8 +227,8 @@ namespace ArchPM.NetCore.Extensions
                 entityProperty.Value = null;
                 entityProperty.Nullable = true;
             }
-            //String is reference type, it can be null
-            if (entityProperty.ValueType == typeof(String))
+            //string is reference type, it can be null
+            if (entityProperty.ValueType == typeof(string))
             {
                 entityProperty.Nullable = true;
             }
@@ -257,7 +257,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is enum or is base enum] [the specified type]; otherwise, <c>false</c>.
         /// </returns>
-        internal static Boolean IsEnumOrIsBaseEnum(Type type)
+        internal static bool IsEnumOrIsBaseEnum(Type type)
         {
             return type.IsEnum || (type.BaseType != null && type.BaseType == typeof(Enum));
         }

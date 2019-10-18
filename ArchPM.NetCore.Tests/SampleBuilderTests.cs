@@ -9,6 +9,48 @@ namespace ArchPM.NetCore.Tests
     public class SampleBuilderTests
     {
         [Fact]
+        public void Should_dictionary_initialized()
+        {
+            var config = new SampleBuilderConfiguration(){CollectionCount = 2};
+            //Act
+            var p1 = SampleBuilder.Create<SampleDataWithDictionary>(config);
+
+            //Assert
+            p1.DictionaryProperty.Should().NotBeNull();
+            //p1.DictionaryProperty.Should().HaveCount(config.CollectionCount);
+        }
+
+
+        [Fact]
+        public void Should_use_same_config_and_equal()
+        {
+            //Arrange
+            var config = new SampleBuilderConfiguration() { AlwaysUseDateTimeAs = DateTime.Now };
+
+            //Act
+            var p1 = SampleBuilder.Create<SampleDataClassForEquality>(config);
+            var p2 = SampleBuilder.Create<SampleDataClassForEquality>(config);
+
+            //Assert
+            p1.Should().Be(p2);
+        }
+
+        [Fact]
+        public void Should_use_same_config_and__not_equal()
+        {
+            //Arrange
+            var config = new SampleBuilderConfiguration() { AlwaysUseDateTimeAs = DateTime.Now };
+
+            //Act
+            var p1 = SampleBuilder.Create<SampleDataClassForEquality>(config);
+            var p2 = SampleBuilder.Create<SampleDataClassForEquality>(p => p.IntValue = -1, config);
+
+            //Assert
+            p1.Should().NotBe(p2);
+        }
+
+
+        [Fact]
         public void Should_run_extension_method()
         {
             var cls = new ClassHavingEnumProperty();
@@ -42,6 +84,16 @@ namespace ArchPM.NetCore.Tests
         }
 
         [Fact]
+        public void Should_create_private_constructor_property_be_null()
+        {
+            var instance = SampleBuilder.Create<SampleDataClass>();
+
+            instance.Should().NotBeNull();
+            instance.SampleDataPrivateConstructorSubClass.Should().BeNull();
+        }
+
+
+        [Fact]
         public void Should_create_and_fill_company()
         {
             var now = DateTime.Now;
@@ -68,7 +120,7 @@ namespace ArchPM.NetCore.Tests
             var sample = SampleBuilder.Create<SampleDataClass>(null, p =>
             {
                 p.AlwaysUseDateTimeAs = now;
-                p.AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays;
+                p.AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddMinutes;
             });
 
             sample.Should().NotBeNull();
@@ -78,8 +130,8 @@ namespace ArchPM.NetCore.Tests
             sample.ByteProperty.Should().Be(1273 / 128);
             sample.BytePropertyNullable.Should().Be(2088 / 128);
 
-            sample.DateTimeProperty.Should().Be(now.AddDays(1650)); //adds days according to name
-            sample.DateTimePropertyNullable.Should().Be(now.AddDays(2465));
+            sample.DateTimeProperty.Should().Be(now.AddMinutes(1650)); //adds days according to name
+            sample.DateTimePropertyNullable.Should().Be(now.AddMinutes(2465));
 
             sample.DecimalProperty.Should().Be(1556); //number is calculated according to name
             sample.DecimalPropertyNullable.Should().Be(2371);
@@ -137,22 +189,22 @@ namespace ArchPM.NetCore.Tests
             var sample = SampleBuilder.Create<SampleDataClass>(null, p =>
             {
                 p.AlwaysUseDateTimeAs = now;
-                p.AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays;
+                p.AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddSeconds;
             });
 
             sample.SampleDataInheritedSubClass.Should().NotBeNull();
-            sample.SampleDataInheritedSubClass.DateTimeProperty.Should().Be(now.AddDays(1650));
+            sample.SampleDataInheritedSubClass.DateTimeProperty.Should().Be(now.AddSeconds(1650));
         }
 
         [Fact]
         public void Should_fill_primitive_constructor_sub_class_property()
         {
             var now = DateTime.Now;
-            var sample = SampleBuilder.Create<SampleDataClass>(null,p =>
-            {
-                p.AlwaysUseDateTimeAs = now;
-                p.AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays;
-            });
+            var sample = SampleBuilder.Create<SampleDataClass>(null, p =>
+             {
+                 p.AlwaysUseDateTimeAs = now;
+                 p.AlwaysUseDateTimeAddition = SampleDateTimeAdditions.AddDays;
+             });
 
             sample.SampleDataPrimitiveConstructorSubClass.Should().NotBeNull();
             sample.SampleDataPrimitiveConstructorSubClass.DateTimeProperty.Should().Be(now.AddDays(1650));
@@ -249,15 +301,15 @@ namespace ArchPM.NetCore.Tests
         public void Should_create_sample_data_with_config(string prefix, string suffix, string result)
         {
             var instance = SampleBuilder.Create<ClassHavingNoArguments>(null,
-                p=>
+                p =>
                 {
                     p.AlwaysUsePrefixForStringAs = prefix;
                     p.AlwaysUseSuffixForStringAs = suffix;
                 });
 
             instance.Priority.Should().Be(866);
-            instance.Type.Should().Be(String.Format(result, nameof(instance.Type)));
-            instance.Value.Should().Be(String.Format(result, nameof(instance.Value)));
+            instance.Type.Should().Be(string.Format(result, nameof(instance.Type)));
+            instance.Value.Should().Be(string.Format(result, nameof(instance.Value)));
         }
 
     }

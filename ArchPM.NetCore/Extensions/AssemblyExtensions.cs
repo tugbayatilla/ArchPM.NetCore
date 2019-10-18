@@ -17,7 +17,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="currentAssembly">The current assembly.</param>
         /// <param name="constructorArguments">The constructor arguments.</param>
         /// <returns></returns>
-        public static IEnumerable<T> GetProvider<T>(this Assembly currentAssembly, params Object[] constructorArguments)
+        public static IEnumerable<T> GetProvider<T>(this Assembly currentAssembly, params object[] constructorArguments)
         {
             var types = currentAssembly.GetTypes();
             foreach (var type in types)
@@ -25,7 +25,7 @@ namespace ArchPM.NetCore.Extensions
                 if (!type.IsClass) continue;
                 if (type.IsAbstract) continue;
                 if (type.Name.Contains("<") || type.Name.Contains(">")) continue;
-                if (type.GetInterfaces().Contains(typeof(T)) || TypeExtensions.RecursivlyCheckBaseType(type, typeof(T)))
+                if (type.GetInterfaces().Contains(typeof(T)) || TypeExtensions.RecursivelyCheckBaseType(type, typeof(T)))
                 {
                     Type result = type;
                     if (type.ContainsGenericParameters)

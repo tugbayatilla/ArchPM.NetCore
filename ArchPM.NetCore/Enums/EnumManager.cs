@@ -16,9 +16,9 @@ namespace ArchPM.NetCore.Enums
         /// <param name="type">The type.</param>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        public static String GetEnumDescription(Type type, String name)
+        public static string GetEnumDescription(Type type, string name)
         {
-            String result = name;
+            string result = name;
             var attributes = type.GetField(name).GetCustomAttributes<EnumDescriptionAttribute>(false).ToList();
 
             //if no lang, then get first desctiption
@@ -61,7 +61,7 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static String GetDescription(String value)
+        public static string GetDescription(string value)
         {
             var t = Parse(value);
 
@@ -73,10 +73,10 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="e"></param>
         /// <returns></returns>
-        public static String GetDescription(T e)
+        public static string GetDescription(T e)
         {
             Type type = typeof(T);
-            String name = e.ToString();
+            string name = e.ToString();
 
             var result = EnumManager.GetEnumDescription(type, name);
             return result;
@@ -87,10 +87,10 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static String GetDescription(Int32 value)
+        public static string GetDescription(Int32 value)
         {
             Type type = typeof(T);
-            String name = System.Enum.GetName(type, value);
+            string name = System.Enum.GetName(type, value);
 
             var result = EnumManager.GetEnumDescription(type, name);
             return result;
@@ -108,7 +108,7 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static String GetName(Int32 value)
+        public static string GetName(Int32 value)
         {
             return System.Enum.GetName(typeof(T), value);
         }
@@ -118,7 +118,7 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="e">The e.</param>
         /// <returns></returns>
-        public static String GetName(T e)
+        public static string GetName(T e)
         {
             return System.Enum.GetName(typeof(T), e);
         }
@@ -126,13 +126,13 @@ namespace ArchPM.NetCore.Enums
         /// <summary>
         /// Gets the value. 
         /// </summary>
-        /// <typeparam name="U">Dont use String as Type!</typeparam>
+        /// <typeparam name="U">Dont use string as Type!</typeparam>
         /// <param name="e">The e.</param>
         /// <returns></returns>
         public static U GetValue<U>(T e)
         {
-            if (typeof(U) == typeof(String))
-                throw new Exception("Dont use String as Type! Use GetValueAsString method instead!");
+            if (typeof(U) == typeof(string))
+                throw new Exception("Dont use string as Type! Use GetValueAsString method instead!");
 
             return (U)typeof(T).GetField(e.ToString()).GetValue(e);
         }
@@ -142,7 +142,7 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="e">The e.</param>
         /// <returns></returns>
-        public static String GetValueAsString(T e)
+        public static string GetValueAsString(T e)
         {
             return Convert.ToString((Int32)typeof(T).GetField(e.ToString()).GetValue(e));
         }
@@ -155,16 +155,16 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="hasExcluded">if set to <c>true</c> [has excluded].</param>
         /// <returns></returns>
-        public static IEnumerable<EnumResult> GetList(Boolean hasExcluded = false)
+        public static IEnumerable<EnumResult> GetList(bool hasExcluded = false)
         {
             List<EnumResult> result = new List<EnumResult>();
 
             Type type = typeof(T);
-            foreach (String name in Enum.GetNames(type))
+            foreach (string name in Enum.GetNames(type))
             {
                 FieldInfo fi = type.GetField(name);
 
-                String desc = String.Empty;
+                string desc = string.Empty;
                 //can only 1 StringValueAttribute
                 var attribute = fi.GetCustomAttributes<EnumDescriptionAttribute>(false).FirstOrDefault();
                 //exist and not exluded internally and externally
@@ -188,7 +188,7 @@ namespace ArchPM.NetCore.Enums
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static T Parse(String value)
+        public static T Parse(string value)
         {
             return (T)System.Enum.Parse(typeof(T), value, true);
         }

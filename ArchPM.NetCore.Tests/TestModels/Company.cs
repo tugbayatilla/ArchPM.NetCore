@@ -28,22 +28,22 @@ namespace ArchPM.NetCore.Tests.TestModels
 
     public class MainBranch : Branch
     {
-        public Boolean HasBuilding { get; set; }
+        public bool HasBuilding { get; set; }
     }
 
     public class Employee
     {
-        public String Name { get; set; }
+        public string Name { get; set; }
         public Company Company { get; set; }
     }
 
     public class Address
     {
-        public Address(String name)
+        public Address(string name)
         {
             Name = name;
         }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace ArchPM.NetCore.Enums
         /// <value>
         /// The description.
         /// </value>
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -21,7 +21,7 @@ namespace ArchPM.NetCore.Enums
         /// <value>
         /// The name.
         /// </value>
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the value.

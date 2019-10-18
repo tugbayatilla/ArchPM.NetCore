@@ -17,7 +17,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <param name="exception">The exception.</param>
         /// <exception cref="Exception"></exception>
-        public static void ThrowExceptionIf<T>(this T obj, Func<T, Boolean> predicate, Exception exception = null)
+        public static void ThrowExceptionIf<T>(this T obj, Func<T, bool> predicate, Exception exception = null)
         {
             if (exception == null)
             {
@@ -41,31 +41,10 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <param name="message">The message.</param>
         /// <exception cref="Exception"></exception>
-        public static void ThrowExceptionIf<T>(this T obj, Func<T, Boolean> predicate, String message)
+        public static void ThrowExceptionIf<T>(this T obj, Func<T, bool> predicate, string message)
         {
             ThrowExceptionIf(obj, predicate, new Exception(message));
         }
-
-        ///// <summary>
-        ///// Throws the exception if null.
-        ///// </summary>
-        ///// <param name="obj">The object.</param>
-        ///// <param name="exception">The exception.</param>
-        //public static void ThrowExceptionIfNull(this Object obj, Exception exception = null)
-        //{
-        //    obj.ThrowExceptionIf(p => p == null, exception);
-        //}
-
-        ///// <summary>
-        ///// Throws the exception if null.
-        ///// </summary>
-        ///// <typeparam name="T"></typeparam>
-        ///// <param name="obj">The object.</param>
-        ///// <param name="message">The message.</param>
-        //public static void ThrowExceptionIfNull<T>(this T obj, String message)
-        //{
-        //    obj.ThrowExceptionIf(p => p == null, new Exception(message));
-        //}
 
         /// <summary>
         /// Throws the exception if null.
@@ -73,9 +52,9 @@ namespace ArchPM.NetCore.Extensions
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">The object.</param>
         /// <param name="message">The message.</param>
-        public static void ThrowExceptionIfNull<T>(this Object obj, String message = "") where T : Exception
+        public static void ThrowExceptionIfNull<T>(this object obj, string message = "") where T : Exception
         {
-            if (String.IsNullOrEmpty(message))
+            if (string.IsNullOrEmpty(message))
             {
                 message = "";
             }
@@ -92,22 +71,26 @@ namespace ArchPM.NetCore.Extensions
         }
 
         /// <summary>
-        /// Gets all exception messages seperated by \r\n
+        /// Gets all exception messages
         /// </summary>
         /// <param name="ex">The ex.</param>
-        /// <param name="showMessageTypeAsHeader">if set to <c>true</c> [show message type as header].</param>
-        /// <param name="messageSeperator"></param>
+        /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
-        public static String GetAllMessages(this Exception ex, Boolean showMessageTypeAsHeader = true, String messageSeperator = "\r\n")
+        public static string GetAllMessages(this Exception ex, Func<Exception, string> predicate = null)
         {
-            String message = "";
-            if (showMessageTypeAsHeader)
-                message = String.Format("[{0}]:", ex.GetType().Name);
+            var message = string.Empty;
 
-            message += ex.Message;
+            if (ex == null)
+            {
+                return message;
+            }
+
+            message = predicate == null ? $"[{ex.GetType().Name}]:{ex.Message}\r\n" : predicate.Invoke(ex);
 
             if (ex.InnerException != null)
-                message += String.Concat(messageSeperator, GetAllMessages(ex.InnerException, showMessageTypeAsHeader));
+            {
+                message += GetAllMessages(ex.InnerException, predicate);
+            }
 
             return message;
         }
@@ -119,18 +102,20 @@ namespace ArchPM.NetCore.Extensions
         /// <returns></returns>
         public static IEnumerable<Exception> GetAllExceptions(this Exception ex)
         {
-            if (ex != null)
-                yield return ex;
-            if (ex.InnerException != null)
+            while (true)
             {
-                foreach (var item in GetAllExceptions(ex.InnerException))
+                if (ex != null)
                 {
-                    yield return item;
+                    yield return ex;
                 }
 
-            }
+                if (ex?.InnerException == null)
+                {
+                    yield break;
+                }
 
-            yield break;
+                ex = ex.InnerException;
+            }
         }
     }
 }

@@ -100,15 +100,15 @@ namespace ArchPM.NetCore.Extensions
                     DateTime.TryParse(obj.ToString(), out DateTime temp);
                     result = temp;
                 }
-                else if (name == "Boolean" || (name == nullable && fullName.Contains("System.Boolean")))
+                else if (name == "bool" || (name == nullable && fullName.Contains("System.Boolean")))
                 {
-                    Boolean.TryParse(obj.ToString(), out bool temp);
+                    bool.TryParse(obj.ToString(), out bool temp);
                     result = temp;
                 }
-                else if (name == "String" || (name == nullable && fullName.Contains("System.String")))
+                else if (name == "string" || (name == nullable && fullName.Contains("System.String")))
                 {
-                    String temp = Convert.ToString(obj);
-                    if (!String.IsNullOrEmpty(temp))
+                    string temp = Convert.ToString(obj);
+                    if (!string.IsNullOrEmpty(temp))
                         result = temp;
                 }
             }
@@ -132,7 +132,7 @@ namespace ArchPM.NetCore.Extensions
             if (obj == null)
                 return defaultValue;
 
-            const String nullable = "Nullable`1";
+            const string nullable = "Nullable`1";
 
             var fullName = type.FullName;
             var name = type.Name;
@@ -213,15 +213,15 @@ namespace ArchPM.NetCore.Extensions
                     DateTime.TryParse(obj.ToString(), out DateTime temp);
                     result = temp;
                 }
-                else if (name == "Boolean" || (name == nullable && fullName.Contains("System.Boolean")))
+                else if (name == "bool" || (name == nullable && fullName.Contains("System.Boolean")))
                 {
-                    Boolean.TryParse(obj.ToString(), out bool temp);
+                    bool.TryParse(obj.ToString(), out bool temp);
                     result = temp;
                 }
-                else if (name == "String" || (name == nullable && fullName.Contains("System.String")))
+                else if (name == "string" || (name == nullable && fullName.Contains("System.String")))
                 {
-                    String temp = Convert.ToString(obj);
-                    if (!String.IsNullOrEmpty(temp))
+                    string temp = Convert.ToString(obj);
+                    if (!string.IsNullOrEmpty(temp))
                         result = temp;
                 }
             }
@@ -239,9 +239,9 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="obj"></param>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static Object TryToConvert(this Object obj, Type type)
+        public static object TryToConvert(this object obj, Type type)
         {
-            Object defaultValue = null;
+            object defaultValue = null;
             if (type.IsValueType)
             {
                 defaultValue = Activator.CreateInstance(type);
@@ -255,7 +255,7 @@ namespace ArchPM.NetCore.Extensions
         /// </summary>
         /// <param name="obj">The expression.</param>
         /// <returns></returns>
-        public static Boolean IsNumeric(this Object obj)
+        public static bool IsNumeric(this object obj)
         {
             bool isNum = Double.TryParse(Convert.ToString(obj), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out double retNum);
             return isNum;

@@ -357,7 +357,7 @@
             <summary>
             Gets the value. 
             </summary>
-            <typeparam name="U">Dont use String as Type!</typeparam>
+            <typeparam name="U">Dont use string as Type!</typeparam>
             <param name="e">The e.</param>
             <returns></returns>
         </member>
@@ -662,7 +662,7 @@
             <summary>
             Craetes the sample data.
             Every Property value contains its name as a value such as Surname = "Surname" if it is a string,
-            Boolean values always will be true, if config says otherwise
+            bool values always will be true, if config says otherwise
             </summary>
             <typeparam name="T"></typeparam>
             <param name="obj">The object.</param>
@@ -851,7 +851,7 @@
         </member>
         <member name="M:ArchPM.NetCore.Extensions.EnumExtensionMethods.GetValueAsString(System.Enum)">
             <summary>
-            Get value as String
+            Get value as string
             </summary>
             <param name="obj"></param>
             <returns></returns>

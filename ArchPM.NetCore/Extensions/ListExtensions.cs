@@ -56,7 +56,7 @@ namespace ArchPM.NetCore.Extensions
         /// <summary>
         /// The defined list names
         /// </summary>
-        public static List<String> DefinedListNames = new List<string>() {
+        public static List<string> DefinedListNames = new List<string>() {
             nameof(ArrayList), "LinkedList`1", nameof(Queue), "Queue`1", nameof(Stack), "Stack`1",
             "ICollection`1", "ICollection", "IEnumerable", "IEnumerable`1", "Enumerable",
             "IReadOnlyCollection`1", "IReadOnlyList`1", "IList`1","IList","List`1", "WhereSelectListIterator`2" };
@@ -64,7 +64,7 @@ namespace ArchPM.NetCore.Extensions
         /// <summary>
         /// The defined only generic list names
         /// </summary>
-        public static List<String> DefinedOnlyGenericListNames = new List<string>() {
+        public static List<string> DefinedOnlyGenericListNames = new List<string>() {
             
             "ICollection`1", "IEnumerable`1", "IList`1", "List`1"};
 
@@ -75,7 +75,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if the specified type is list; otherwise, <c>false</c>.
         /// </returns>
-        public static Boolean IsList(this Type type)
+        public static bool IsList(this Type type)
         {
             return
                 (type.ReflectedType != null && DefinedListNames.Contains(type.ReflectedType.Name)
@@ -89,7 +89,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is only generic list] [the specified type]; otherwise, <c>false</c>.
         /// </returns>
-        public static Boolean IsOnlyGenericList(this Type type)
+        public static bool IsOnlyGenericList(this Type type)
         {
             return
                 (type.ReflectedType != null && DefinedOnlyGenericListNames.Contains(type.ReflectedType.Name)

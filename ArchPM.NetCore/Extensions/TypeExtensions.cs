@@ -52,7 +52,7 @@ namespace ArchPM.NetCore.Extensions
         /// </returns>
         public static bool IsNullableType(this Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="type"></param>
         /// <param name="constructorArguments"></param>
         /// <returns></returns>
-        public static T CreateInstanceAndCast<T>(this Type type, params Object[] constructorArguments)
+        public static T CreateInstanceAndCast<T>(this Type type, params object[] constructorArguments)
         {
             if (type.ContainsGenericParameters)
             {
@@ -86,23 +86,16 @@ namespace ArchPM.NetCore.Extensions
         }
 
         /// <summary>
-        /// Recursivlies the type of the check base.
+        /// Recursively the type of the check base.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="checkType">Type of the check.</param>
         /// <returns></returns>
-        internal static Boolean RecursivlyCheckBaseType(Type type, Type checkType)
+        internal static bool RecursivelyCheckBaseType(Type type, Type checkType)
         {
             if (type != null)
             {
-                if (type == checkType)
-                {
-                    return true;
-                }
-                else
-                {
-                    return RecursivlyCheckBaseType(type.BaseType, checkType);
-                }
+                return type == checkType || RecursivelyCheckBaseType(type.BaseType, checkType);
             }
             else
             {

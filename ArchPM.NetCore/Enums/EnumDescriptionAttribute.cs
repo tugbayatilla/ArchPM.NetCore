@@ -15,7 +15,7 @@ namespace ArchPM.NetCore.Enums
         /// <value>
         /// The description.
         /// </value>
-        public String Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets and Sets it is excluded for not
@@ -23,13 +23,13 @@ namespace ArchPM.NetCore.Enums
         /// <value>
         ///   <c>true</c> if exclude; otherwise, <c>false</c>.
         /// </value>
-        public Boolean Exclude { get; set; }
+        public bool Exclude { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumDescriptionAttribute"/> class.
         /// </summary>
         /// <param name="description">The description.</param>
-        public EnumDescriptionAttribute(String description)
+        public EnumDescriptionAttribute(string description)
         {
             this.Description = description;
             this.Exclude = false;

@@ -14,24 +14,24 @@ namespace ArchPM.NetCore.Extensions
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
-        public static String GetDescription(this Enum obj)
+        public static string GetDescription(this Enum obj)
         {
-            String result = String.Empty;
+            string result = string.Empty;
             if (obj != null)
             {
                 Type type = obj.GetType();
-                String name = obj.ToString();
+                string name = obj.ToString();
                 result = EnumManager.GetEnumDescription(type, name);
             }
             return result;
         }
 
         /// <summary>
-        /// Get value as String
+        /// Get value as string
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static String GetValueAsString(this Enum obj)
+        public static string GetValueAsString(this Enum obj)
         {
             Type type = obj.GetType();
 
@@ -43,7 +43,7 @@ namespace ArchPM.NetCore.Extensions
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
-        public static String GetName(this Enum obj)
+        public static string GetName(this Enum obj)
         {
             return Enum.GetName(obj.GetType(), obj);
         }
@@ -95,11 +95,11 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="type">The type.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static Boolean Has<T>(this System.Enum type, T value)
+        public static bool Has<T>(this System.Enum type, T value)
         {
             try
             {
-                return (((Int32)(Object)type & (Int32)(Object)value) == (Int32)(Object)value);
+                return (((Int32)(object)type & (Int32)(object)value) == (Int32)(object)value);
             }
             catch
             {
@@ -116,11 +116,11 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is] [the specified value]; otherwise, <c>false</c>.
         /// </returns>
-        public static Boolean Is<T>(this System.Enum type, T value)
+        public static bool Is<T>(this System.Enum type, T value)
         {
             try
             {
-                return (Int32)(Object)type == (Int32)(Object)value;
+                return (Int32)(object)type == (Int32)(object)value;
             }
             catch
             {

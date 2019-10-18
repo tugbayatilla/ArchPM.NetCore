@@ -17,7 +17,7 @@ namespace ArchPM.NetCore.Extensions
         /// The name.
         /// </value>
         [XmlAttribute]
-        public String Name { get; internal set; }
+        public string Name { get; internal set; }
 
         /// <summary>
         /// Gets the value.
@@ -26,7 +26,7 @@ namespace ArchPM.NetCore.Extensions
         /// The value.
         /// </value>
         [XmlElement(IsNullable = true)]
-        public Object Value { get; internal set; }
+        public object Value { get; internal set; }
 
         /// <summary>
         /// Gets the type of the value.
@@ -35,7 +35,7 @@ namespace ArchPM.NetCore.Extensions
         /// The type of the value.
         /// </value>
         [XmlAttribute]
-        public String ValueTypeName { get; internal set; }
+        public string ValueTypeName { get; internal set; }
 
         /// <summary>
         /// Gets the value type of.
@@ -53,7 +53,7 @@ namespace ArchPM.NetCore.Extensions
         ///   <c>true</c> if nullable; otherwise, <c>false</c>.
         /// </value>
         [XmlAttribute]
-        public Boolean Nullable { get; set; } //there is a reason to make set as public
+        public bool Nullable { get; set; } //there is a reason to make set as public
 
         /// <summary>
         /// Gets a value indicating whether this <see cref="PropertyDTO" /> is .net primitive type such as string, int, decimal etc.
@@ -62,7 +62,7 @@ namespace ArchPM.NetCore.Extensions
         ///   <c>true</c> if .net primitive type; otherwise, <c>false</c>.
         /// </value>
         [XmlIgnore]
-        public Boolean IsPrimitive { get; internal set; }
+        public bool IsPrimitive { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is class.
@@ -71,13 +71,13 @@ namespace ArchPM.NetCore.Extensions
         ///   <c>true</c> if this instance is class; otherwise, <c>false</c>.
         /// </value>
         [XmlIgnore]
-        public Boolean IsClass { get; internal set; }
+        public bool IsClass { get; internal set; }
 
         /// <summary>
         /// Gets the property whether is enum or not
         /// </summary>
         [XmlIgnore]
-        public Boolean IsEnum { get; internal set; }
+        public bool IsEnum { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether this instance is list.
@@ -86,7 +86,7 @@ namespace ArchPM.NetCore.Extensions
         ///   <c>true</c> if this instance is list; otherwise, <c>false</c>.
         /// </value>
         [XmlIgnore]
-        public Boolean IsList { get; internal set; }
+        public bool IsList { get; internal set; }
 
         /// <summary>
         /// Gets defined attribute types
@@ -102,7 +102,7 @@ namespace ArchPM.NetCore.Extensions
         /// </returns>
         public override string ToString()
         {
-            return String.Format("{0} [{1}] [{2}]", this.Name, this.ValueTypeName, this.Nullable ? "Nullable" : "");
+            return string.Format("{0} [{1}] [{2}]", this.Name, this.ValueTypeName, this.Nullable ? "Nullable" : "");
         }
     }
 }

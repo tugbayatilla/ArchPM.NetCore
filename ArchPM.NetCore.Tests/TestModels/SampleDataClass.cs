@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ArchPM.NetCore.Tests.TestModels
 {
-    public class SampleDataClass
+    internal class SampleDataClass
     {
         public List<SampleDataSimpleSubClass> SampleDataSimpleSubClassList { get; set; }
         public IList<SampleDataSimpleSubClass> SampleDataSimpleSubClassIListInterface { get; set; }
@@ -55,19 +55,19 @@ namespace ArchPM.NetCore.Tests.TestModels
         #endregion
     }
 
-    public class SampleDataSimpleSubClass
+    internal class SampleDataSimpleSubClass
     {
         public int IntProperty { get; set; }
         public string StringProperty { get; set; }
         public string NoSetterProperty { get; }
     }
 
-    public class SampleDataInheritedSubClass : SampleDataSimpleSubClass
+    internal class SampleDataInheritedSubClass : SampleDataSimpleSubClass
     {
         public DateTime DateTimeProperty { get; set; }
     }
 
-    public class SampleDataPrimitiveConstructorSubClass 
+    internal class SampleDataPrimitiveConstructorSubClass 
     {
         public SampleDataPrimitiveConstructorSubClass(DateTime dateTime)
         {
@@ -77,15 +77,35 @@ namespace ArchPM.NetCore.Tests.TestModels
         public DateTime DateTimeProperty { get; set; }
     }
 
-    public class SampleDataPrivateConstructorSubClass
+    /// <summary>
+    /// 
+    /// </summary>
+    internal class SampleDataPrivateConstructorSubClass
     {
         private SampleDataPrivateConstructorSubClass()
         {
         }
-
-        public DateTime DateTimeProperty { get; set; }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    // ReSharper disable once ClassNeverInstantiated.Global
+    internal class SampleDataClassForEquality
+    {
+        public int IntValue { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return this.IntValue == (obj as SampleDataClassForEquality)?.IntValue;
+        }
+
+    }
+
+    internal class SampleDataWithDictionary
+    {
+        public Dictionary<object,object> DictionaryProperty { get; set; }
+    }
     
 
 }

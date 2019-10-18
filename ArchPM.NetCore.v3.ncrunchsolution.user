@@ -1,15 +1,16 @@
 ﻿<SolutionConfiguration>
   <Settings>
-    <AutoEnable>False</AutoEnable>
+    <AutoEnable>True</AutoEnable>
     <CurrentEngineMode>Run all tests automatically [Global]</CurrentEngineMode>
+    <StatusIndicatorSplitterDistance>349</StatusIndicatorSplitterDistance>
     <TestsWindowMenuOptions>
       <VerticalSplitMenuOption>false</VerticalSplitMenuOption>
       <ShowPassingTestsMenuOption>true</ShowPassingTestsMenuOption>
-      <ShowFailingTestsMenuOption>false</ShowFailingTestsMenuOption>
+      <ShowFailingTestsMenuOption>true</ShowFailingTestsMenuOption>
       <ShowUnexecutedTestsMenuOption>false</ShowUnexecutedTestsMenuOption>
       <ShowIgnoredTestsMenuOption>true</ShowIgnoredTestsMenuOption>
     </TestsWindowMenuOptions>
-    <TestsWindowSplitterDistance>285</TestsWindowSplitterDistance>
+    <TestsWindowSplitterDistance>185</TestsWindowSplitterDistance>
     <TestsWindowTreeLayout>
       <Column>
         <Name>Status</Name>
