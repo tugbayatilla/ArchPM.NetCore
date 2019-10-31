@@ -33,7 +33,7 @@ namespace ArchPM.NetCore.Tests
         {
             TimeUtilities
                 .WaitUntilAsync(() => false,
-                    p => { p.ThrowTimeExceptionWhenTimeoutReached = false; }).GetAwaiter().GetResult();
+                    p => { p.ThrowTimeoutException = false; }).GetAwaiter().GetResult();
 
         }
 

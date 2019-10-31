@@ -25,6 +25,6 @@
         /// <value>
         ///   <c>true</c> if [throw time exception when timeout reached]; otherwise, <c>false</c>.
         /// </value>
-        public bool ThrowTimeExceptionWhenTimeoutReached { get; set; } = true;
+        public bool ThrowTimeoutException { get; set; } = true;
     }
 }

@@ -33,9 +33,9 @@ namespace ArchPM.NetCore.Utilities
 
             if (waitTask != await Task.WhenAny(waitTask, Task.Delay(config.Timeout)))
             {
-                if (config.ThrowTimeExceptionWhenTimeoutReached)
+                if (config.ThrowTimeoutException)
                 {
-                    throw new TimeoutException();
+                    throw new TimeoutException($"The operation has timed out. Timeout:{config.Timeout}ms.");
                 }
             }
 
