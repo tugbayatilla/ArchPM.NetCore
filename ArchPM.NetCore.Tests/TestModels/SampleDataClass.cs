@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace ArchPM.NetCore.Tests.TestModels
 {
@@ -23,24 +24,24 @@ namespace ArchPM.NetCore.Tests.TestModels
 
         public int IntProperty { get; set; }
         public int? IntPropertyNullable { get; set; }
-        public Int16 Int16Property { get; set; }
-        public Int16? Int16PropertyNullable { get; set; }
-        public Int64 Int64Property { get; set; }
-        public Int64? Int64PropertyNullable { get; set; }
+        public short Int16Property { get; set; }
+        public short? Int16PropertyNullable { get; set; }
+        public long Int64Property { get; set; }
+        public long? Int64PropertyNullable { get; set; }
         public uint UIntProperty { get; set; }
         public uint? UIntPropertyNullable { get; set; }
-        public UInt16 UInt16Property { get; set; }
-        public UInt16? UInt16PropertyNullable { get; set; }
-        public UInt64 UInt64Property { get; set; }
-        public UInt64? UInt64PropertyNullable { get; set; }
+        public ushort UInt16Property { get; set; }
+        public ushort? UInt16PropertyNullable { get; set; }
+        public ulong UInt64Property { get; set; }
+        public ulong? UInt64PropertyNullable { get; set; }
         public decimal DecimalProperty { get; set; }
         public decimal? DecimalPropertyNullable { get; set; }
         public float FloatProperty { get; set; }
         public float? FloatPropertyNullable { get; set; }
         public double DoubleProperty { get; set; }
         public double? DoublePropertyNullable { get; set; }
-        public Single SingleProperty { get; set; }
-        public Single? SinglePropertyNullable { get; set; }
+        public float SingleProperty { get; set; }
+        public float? SinglePropertyNullable { get; set; }
         public byte ByteProperty { get; set; }
         public byte? BytePropertyNullable { get; set; }
         public DateTime DateTimeProperty { get; set; }
@@ -59,6 +60,8 @@ namespace ArchPM.NetCore.Tests.TestModels
     {
         public int IntProperty { get; set; }
         public string StringProperty { get; set; }
+        // ReSharper disable once UnusedMember.Global
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
         public string NoSetterProperty { get; }
     }
 
@@ -71,7 +74,7 @@ namespace ArchPM.NetCore.Tests.TestModels
     {
         public SampleDataPrimitiveConstructorSubClass(DateTime dateTime)
         {
-            this.DateTimeProperty = dateTime;
+            DateTimeProperty = dateTime;
         }
 
         public DateTime DateTimeProperty { get; set; }
@@ -97,9 +100,19 @@ namespace ArchPM.NetCore.Tests.TestModels
 
         public override bool Equals(object obj)
         {
-            return this.IntValue == (obj as SampleDataClassForEquality)?.IntValue;
+            return IntValue == (obj as SampleDataClassForEquality)?.IntValue;
         }
 
+        protected bool Equals(SampleDataClassForEquality other)
+        {
+            return IntValue == other.IntValue;
+        }
+
+        public override int GetHashCode()
+        {
+            // ReSharper disable once NonReadonlyMemberInGetHashCode
+            return IntValue.GetHashCode();
+        }
     }
 
     internal class SampleDataWithDictionary

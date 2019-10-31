@@ -31,8 +31,8 @@ namespace ArchPM.NetCore.Tests.TestModels
     {
         public ClassHavingArguments(string type, string value)
         {
-            this.Type = type;
-            this.Value = value;
+            Type = type;
+            Value = value;
         }
 
         public string Type { get; set; }
@@ -73,6 +73,7 @@ namespace ArchPM.NetCore.Tests.TestModels
 
     public class ClassHavingIListInterfaceAsProperty
     {
+        // ReSharper disable once InconsistentNaming
         public IList<ClassHavingAnotherClassAsProperty> IListInterfaceProperty { get; set; }
     }
 

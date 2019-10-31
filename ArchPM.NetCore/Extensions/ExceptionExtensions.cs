@@ -17,7 +17,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <param name="exception">The exception.</param>
         /// <exception cref="Exception"></exception>
-        public static void ThrowExceptionIf<T>(this T obj, Func<T, bool> predicate, Exception exception = null)
+        public static void ThrowExceptionIf<T>(this T obj, Func<T, bool> predicate, Exception exception = null) //todo: try to get defined name of the T
         {
             if (exception == null)
             {

@@ -31,8 +31,8 @@ namespace ArchPM.NetCore.Enums
         /// <param name="description">The description.</param>
         public EnumDescriptionAttribute(string description)
         {
-            this.Description = description;
-            this.Exclude = false;
+            Description = description;
+            Exclude = false;
         }
 
        

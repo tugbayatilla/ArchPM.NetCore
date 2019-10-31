@@ -20,11 +20,19 @@ namespace ArchPM.NetCore.Extensions
         public static IEnumerable<PropertyDTO> CollectProperties(this Type entityType, Func<PropertyDTO, bool> predicate = null)
         {
             if (entityType == null)
+            {
                 throw new ArgumentNullException(nameof(entityType));
+            }
+
             if (entityType.Name == "Void")
+            {
                 return new List<PropertyDTO>();
+            }
+
             if (entityType.Module.Name == "mscorlib.dll")
+            {
                 return new List<PropertyDTO>();
+            }
 
             try
             {
@@ -48,7 +56,9 @@ namespace ArchPM.NetCore.Extensions
         public static IEnumerable<PropertyDTO> CollectProperties<T>(this T entity, Func<PropertyDTO, bool> predicate = null)
         {
             if (entity == null)
+            {
                 throw new ArgumentNullException(nameof(entity));
+            }
 
             var properties = entity.GetType().GetProperties();
 
@@ -92,16 +102,16 @@ namespace ArchPM.NetCore.Extensions
             }
 
             if (systemType == typeof(string)
-                || systemType == typeof(Char)
-                || systemType == typeof(Byte)
-                || systemType == typeof(Int32)
-                || systemType == typeof(Int64)
-                || systemType == typeof(Int16)
+                || systemType == typeof(char)
+                || systemType == typeof(byte)
+                || systemType == typeof(int)
+                || systemType == typeof(long)
+                || systemType == typeof(short)
                 || systemType == typeof(float)
                 || systemType == typeof(long)
                 || systemType == typeof(short)
-                || systemType == typeof(Double)
-                || systemType == typeof(Decimal)
+                || systemType == typeof(double)
+                || systemType == typeof(decimal)
                 || systemType == typeof(DateTime)
                 || systemType == typeof(bool)
                 || systemType == typeof(Guid)
@@ -144,9 +154,13 @@ namespace ArchPM.NetCore.Extensions
         {
             var expandoDict = expando as IDictionary<string, object>;
             if (expandoDict.ContainsKey(propertyName))
+            {
                 expandoDict[propertyName] = propertyValue;
+            }
             else
+            {
                 expandoDict.Add(propertyName, propertyValue);
+            }
         }
 
         /// <summary>
@@ -160,26 +174,26 @@ namespace ArchPM.NetCore.Extensions
         public static void SetValue<T>(this T obj, string propertyName, object propertyVal, bool appyChangeType = true)
         {
             //find out the type
-            Type type = obj.GetType();
+            var type = obj.GetType();
 
             //get the property information based on the type
-            PropertyInfo propertyInfo = type.GetProperty(propertyName);
-
-            //find the property type
-            Type propertyType = propertyInfo.PropertyType;
+            var propertyInfo = type.GetProperty(propertyName);
 
             //Convert.ChangeType does not handle conversion to nullable types
             //if the property type is nullable, we need to get the underlying type of the property
-            var targetType = propertyInfo.PropertyType.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
-
-            if (appyChangeType)
+            if (propertyInfo != null)
             {
-                //Returns an System.Object with the specified System.Type and whose value is
-                //equivalent to the specified object.
-                propertyVal = Convert.ChangeType(propertyVal, targetType);
+                var targetType = propertyInfo.PropertyType.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
+
+                if (appyChangeType)
+                {
+                    //Returns an System.Object with the specified System.Type and whose value is
+                    //equivalent to the specified object.
+                    propertyVal = Convert.ChangeType(propertyVal, targetType ?? throw new InvalidOperationException());
+                }
             }
 
-            if (propertyInfo.CanWrite)
+            if (propertyInfo != null && propertyInfo.CanWrite)
             {
                 //Set the value of the property
                 propertyInfo.SetValue(obj, propertyVal, null);
@@ -196,6 +210,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="entity">The entity.</param>
         /// <param name="property">The property.</param>
         /// <returns></returns>
+        // ReSharper disable once InconsistentNaming
         internal static PropertyDTO ConvertPropertyInfoToPropertyDTO<T>(this T entity, PropertyInfo property)
         {
             var entityProperty = new PropertyDTO
@@ -216,7 +231,7 @@ namespace ArchPM.NetCore.Extensions
 
             if (property.IsGenericNullable())
             {
-                entityProperty.ValueTypeName = Nullable.GetUnderlyingType(property.PropertyType).Name;
+                entityProperty.ValueTypeName = Nullable.GetUnderlyingType(property.PropertyType)?.Name;
                 entityProperty.ValueType = Nullable.GetUnderlyingType(property.PropertyType);
                 entityProperty.Nullable = true;
             }

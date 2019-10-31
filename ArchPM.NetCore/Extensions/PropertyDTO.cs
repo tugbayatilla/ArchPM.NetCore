@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+// ReSharper disable All
 
 namespace ArchPM.NetCore.Extensions
 {
@@ -47,7 +48,10 @@ namespace ArchPM.NetCore.Extensions
         public Type ValueType { get; internal set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="PropertyDTO"/> is nullable.
+        /// Gets or sets a value indicating whether this <see>
+        ///     <cref>PropertyDTO</cref>
+        /// </see>
+        /// is nullable.
         /// </summary>
         /// <value>
         ///   <c>true</c> if nullable; otherwise, <c>false</c>.
@@ -102,7 +106,7 @@ namespace ArchPM.NetCore.Extensions
         /// </returns>
         public override string ToString()
         {
-            return string.Format("{0} [{1}] [{2}]", this.Name, this.ValueTypeName, this.Nullable ? "Nullable" : "");
+            return string.Format("{0} [{1}] [{2}]", Name, ValueTypeName, Nullable ? "Nullable" : "");
         }
     }
 }

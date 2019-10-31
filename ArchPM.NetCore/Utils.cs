@@ -19,14 +19,14 @@ namespace ArchPM.NetCore
         /// Creates the unique number.
         /// </summary>
         /// <returns></returns>
-        public static UInt64 CreateUniqueNumber(DateTime? now = null)
+        public static ulong CreateUniqueNumber(DateTime? now = null)
         {
             if(!now.HasValue)
             {
                 now = DateTime.Now;
             }
 
-            var result = default(ulong);
+            ulong result;
             lock (Lock)
             {
                 var unique = $"{now:yyyyMMddHHmmssffffff}";
@@ -44,10 +44,15 @@ namespace ArchPM.NetCore
         public static IEnumerable<Assembly> GetAssembliesInDirectory(string directoryPath = "", SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
             if (string.IsNullOrEmpty(directoryPath))
-                directoryPath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "bin"); // note: don't use CurrentEntryAssembly or anything like that.
+            {
+                directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bin"); // note: don't use CurrentEntryAssembly or anything like that.
+            }
 
             var directory = new DirectoryInfo(directoryPath);
-            if (!directory.Exists) yield break;
+            if (!directory.Exists)
+            {
+                yield break;
+            }
 
             var files = directory.GetFiles("*.dll", searchOption);
 

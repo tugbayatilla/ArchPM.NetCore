@@ -22,9 +22,21 @@ namespace ArchPM.NetCore.Extensions
             var types = currentAssembly.GetTypes();
             foreach (var type in types)
             {
-                if (!type.IsClass) continue;
-                if (type.IsAbstract) continue;
-                if (type.Name.Contains("<") || type.Name.Contains(">")) continue;
+                if (!type.IsClass)
+                {
+                    continue;
+                }
+
+                if (type.IsAbstract)
+                {
+                    continue;
+                }
+
+                if (type.Name.Contains("<") || type.Name.Contains(">"))
+                {
+                    continue;
+                }
+
                 if (type.GetInterfaces().Contains(typeof(T)) || TypeExtensions.RecursivelyCheckBaseType(type, typeof(T)))
                 {
                     Type result = type;
@@ -51,9 +63,17 @@ namespace ArchPM.NetCore.Extensions
             var types = currentAssembly.GetTypes();
             foreach (var type in types)
             {
-                if (!type.IsClass) continue;
-                if (type.IsAbstract) continue;
-                if (type.GetInterfaces().Contains(typeof(T)) || type.BaseType.Name == typeof(T).Name)
+                if (!type.IsClass)
+                {
+                    continue;
+                }
+
+                if (type.IsAbstract)
+                {
+                    continue;
+                }
+
+                if (type.BaseType != null && (type.GetInterfaces().Contains(typeof(T)) || type.BaseType.Name == typeof(T).Name))
                 {
                     yield return type;
                 }

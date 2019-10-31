@@ -63,7 +63,6 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_fill_class_having_enum_property()
         {
-            var now = DateTime.Now;
             var sample = SampleBuilder.Create<ClassHavingEnumProperty>(p => p.SampleEnumProperty = ClassHavingEnumProperty.SampleEnum.Value2);
 
             sample.SampleEnumProperty.Should().Be(ClassHavingEnumProperty.SampleEnum.Value2);
@@ -174,7 +173,6 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_fill_simple_sub_class_property()
         {
-            var now = DateTime.Now;
             var sample = SampleBuilder.Create<SampleDataClass>();
 
             sample.SampleDataSimpleSubClass.Should().NotBeNull();

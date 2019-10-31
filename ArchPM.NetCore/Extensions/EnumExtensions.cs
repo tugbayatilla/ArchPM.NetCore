@@ -35,7 +35,7 @@ namespace ArchPM.NetCore.Extensions
         {
             Type type = obj.GetType();
 
-            return Convert.ToString((Int32)type.GetField(obj.ToString()).GetValue(obj));
+            return Convert.ToString((int)type.GetField(obj.ToString()).GetValue(obj));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace ArchPM.NetCore.Extensions
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <returns></returns>
-        public static Int32 GetValue(this Enum obj)
+        public static int GetValue(this Enum obj)
         {
             return Convert.ToInt32(obj);
         }
@@ -84,8 +84,12 @@ namespace ArchPM.NetCore.Extensions
         public static IEnumerable<Enum> ToArray(this Enum obj)
         {
             foreach (Enum value in Enum.GetValues(obj.GetType()))
+            {
                 if (obj.HasFlag(value))
+                {
                     yield return value;
+                }
+            }
         }
 
         /// <summary>
@@ -95,11 +99,11 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="type">The type.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public static bool Has<T>(this System.Enum type, T value)
+        public static bool Has<T>(this Enum type, T value)
         {
             try
             {
-                return (((Int32)(object)type & (Int32)(object)value) == (Int32)(object)value);
+                return (((int)(object)type & (int)(object)value) == (int)(object)value);
             }
             catch
             {
@@ -116,11 +120,11 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is] [the specified value]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool Is<T>(this System.Enum type, T value)
+        public static bool Is<T>(this Enum type, T value)
         {
             try
             {
-                return (Int32)(object)type == (Int32)(object)value;
+                return (int)(object)type == (int)(object)value;
             }
             catch
             {

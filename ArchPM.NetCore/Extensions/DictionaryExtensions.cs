@@ -23,9 +23,13 @@ namespace ArchPM.NetCore.Extensions
         {
             dictionary.ThrowExceptionIfNull<ArgumentNullException>(nameof(dictionary));
 
-            foreach (KeyValuePair<TKey, TValue> pair in dictionary)
+            foreach (var pair in dictionary)
+            {
                 if (value.Equals(pair.Value))
+                {
                     return pair.Key;
+                }
+            }
 
             throw new Exception("the value is not found in the dictionary");
         }
@@ -60,12 +64,12 @@ namespace ArchPM.NetCore.Extensions
         /// <returns></returns>
         public static T ToObject<T>(this IDictionary<string, object> source) where T : class, new()
         {
-            T someObject = new T();
-            Type someObjectType = someObject.GetType();
+            var someObject = new T();
+            var someObjectType = someObject.GetType();
 
-            foreach (KeyValuePair<string, object> item in source)
+            foreach (var item in source)
             {
-                someObjectType.GetProperty(item.Key).SetValue(someObject, item.Value, null);
+                someObjectType.GetProperty(item.Key)?.SetValue(someObject, item.Value, null);
             }
 
             return someObject;

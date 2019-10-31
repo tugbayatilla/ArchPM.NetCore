@@ -17,7 +17,9 @@ namespace ArchPM.NetCore.Extensions
         public static T TryToConvert<T>(this object obj, T defaultValue)
         {
             if (obj == null)
+            {
                 return defaultValue;
+            }
 
             const string nullable = "Nullable`1";
 
@@ -27,89 +29,130 @@ namespace ArchPM.NetCore.Extensions
 
             try
             {
-                if (name == "Decimal" || (name == nullable && fullName.Contains("System.Decimal")))
+                switch (name)
                 {
-                    if (IsNumeric(obj))
+                    case "Decimal":
+                    case nullable when fullName != null && fullName.Contains("System.Decimal"):
                     {
-                        result = Convert.ToDecimal(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToDecimal(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Double" || (name == nullable && fullName.Contains("System.Decimal")))
-                {
-                    if (IsNumeric(obj))
+                    case "Double":
+                    case nullable when fullName != null && fullName.Contains("System.Decimal"):
                     {
-                        result = Convert.ToDouble(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToDouble(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Int16" || (name == nullable && fullName.Contains("System.Int16")))
-                {
-                    if (IsNumeric(obj))
+                    case "Int16":
+                    case nullable when fullName != null && fullName.Contains("System.Int16"):
                     {
-                        result = Convert.ToInt16(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToInt16(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Int32" || (name == nullable && fullName.Contains("System.Int32")))
-                {
-                    if (IsNumeric(obj))
+                    case "Int32":
+                    case nullable when fullName != null && fullName.Contains("System.Int32"):
                     {
-                        result = Convert.ToInt32(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToInt32(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Int64" || (name == nullable && fullName.Contains("System.Int64")))
-                {
-                    if (IsNumeric(obj))
+                    case "Int64":
+                    case nullable when fullName != null && fullName.Contains("System.Int64"):
                     {
-                        result = Convert.ToInt64(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToInt64(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "UInt16" || (name == nullable && fullName.Contains("System.UInt16")))
-                {
-                    if (IsNumeric(obj))
+                    case "UInt16":
+                    case nullable when fullName != null && fullName.Contains("System.UInt16"):
                     {
-                        result = Convert.ToUInt16(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToUInt16(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "UInt32" || (name == nullable && fullName.Contains("System.UInt32")))
-                {
-                    if (IsNumeric(obj))
+                    case "UInt32":
+                    case nullable when fullName != null && fullName.Contains("System.UInt32"):
                     {
-                        result = Convert.ToUInt32(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToUInt32(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "UInt64" || (name == nullable && fullName.Contains("System.UInt64")))
-                {
-                    if (IsNumeric(obj))
+                    case "UInt64":
+                    case nullable when fullName != null && fullName.Contains("System.UInt64"):
                     {
-                        result = Convert.ToUInt64(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToUInt64(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Single" || (name == nullable && fullName.Contains("System.Single")))
-                {
-                    if (IsNumeric(obj))
+                    case "Single":
+                    case nullable when fullName != null && fullName.Contains("System.Single"):
                     {
-                        result = Convert.ToSingle(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToSingle(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Byte" || (name == nullable && fullName.Contains("System.Byte")))
-                {
-                    Byte.TryParse(obj.ToString(), out byte temp);
-                    result = temp;
-                }
-                else if (name == "DateTime" || (name == nullable && fullName.Contains("System.DateTime")))
-                {
-                    DateTime.TryParse(obj.ToString(), out DateTime temp);
-                    result = temp;
-                }
-                else if (name == "bool" || (name == nullable && fullName.Contains("System.Boolean")))
-                {
-                    bool.TryParse(obj.ToString(), out bool temp);
-                    result = temp;
-                }
-                else if (name == "string" || (name == nullable && fullName.Contains("System.String")))
-                {
-                    string temp = Convert.ToString(obj);
-                    if (!string.IsNullOrEmpty(temp))
+                    case "Byte":
+                    case nullable when fullName != null && fullName.Contains("System.Byte"):
+                    {
+                        byte.TryParse(obj.ToString(), out var temp);
                         result = temp;
+                        break;
+                    }
+                    case "DateTime":
+                    case nullable when fullName != null && fullName.Contains("System.DateTime"):
+                    {
+                        DateTime.TryParse(obj.ToString(), out var temp);
+                        result = temp;
+                        break;
+                    }
+                    case "bool":
+                    case nullable when fullName != null && fullName.Contains("System.Boolean"):
+                    {
+                        bool.TryParse(obj.ToString(), out var temp);
+                        result = temp;
+                        break;
+                    }
+                    case "string":
+                    case nullable when fullName != null && fullName.Contains("System.String"):
+                    {
+                        var temp = Convert.ToString(obj);
+                        if (!string.IsNullOrEmpty(temp))
+                        {
+                            result = temp;
+                        }
+
+                        break;
+                    }
                 }
             }
             catch
@@ -130,7 +173,9 @@ namespace ArchPM.NetCore.Extensions
         public static object TryToConvert(this object obj, Type type, object defaultValue)
         {
             if (obj == null)
+            {
                 return defaultValue;
+            }
 
             const string nullable = "Nullable`1";
 
@@ -140,89 +185,130 @@ namespace ArchPM.NetCore.Extensions
 
             try
             {
-                if (name == "Decimal" || (name == nullable && fullName.Contains("System.Decimal")))
+                switch (name)
                 {
-                    if (IsNumeric(obj))
+                    case "Decimal":
+                    case nullable when fullName != null && fullName.Contains("System.Decimal"):
                     {
-                        result = Convert.ToDecimal(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToDecimal(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Double" || (name == nullable && fullName.Contains("System.Decimal")))
-                {
-                    if (IsNumeric(obj))
+                    case "Double":
+                    case nullable when fullName != null && fullName.Contains("System.Decimal"):
                     {
-                        result = Convert.ToDouble(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToDouble(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Int16" || (name == nullable && fullName.Contains("System.Int16")))
-                {
-                    if (IsNumeric(obj))
+                    case "Int16":
+                    case nullable when fullName != null && fullName.Contains("System.Int16"):
                     {
-                        result = Convert.ToInt16(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToInt16(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Int32" || (name == nullable && fullName.Contains("System.Int32")))
-                {
-                    if (IsNumeric(obj))
+                    case "Int32":
+                    case nullable when fullName != null && fullName.Contains("System.Int32"):
                     {
-                        result = Convert.ToInt32(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToInt32(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Int64" || (name == nullable && fullName.Contains("System.Int64")))
-                {
-                    if (IsNumeric(obj))
+                    case "Int64":
+                    case nullable when fullName != null && fullName.Contains("System.Int64"):
                     {
-                        result = Convert.ToInt64(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToInt64(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "UInt16" || (name == nullable && fullName.Contains("System.UInt16")))
-                {
-                    if (IsNumeric(obj))
+                    case "UInt16":
+                    case nullable when fullName != null && fullName.Contains("System.UInt16"):
                     {
-                        result = Convert.ToUInt16(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToUInt16(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "UInt32" || (name == nullable && fullName.Contains("System.UInt32")))
-                {
-                    if (IsNumeric(obj))
+                    case "UInt32":
+                    case nullable when fullName != null && fullName.Contains("System.UInt32"):
                     {
-                        result = Convert.ToUInt32(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToUInt32(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "UInt64" || (name == nullable && fullName.Contains("System.UInt64")))
-                {
-                    if (IsNumeric(obj))
+                    case "UInt64":
+                    case nullable when fullName != null && fullName.Contains("System.UInt64"):
                     {
-                        result = Convert.ToUInt64(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToUInt64(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Single" || (name == nullable && fullName.Contains("System.Single")))
-                {
-                    if (IsNumeric(obj))
+                    case "Single":
+                    case nullable when fullName != null && fullName.Contains("System.Single"):
                     {
-                        result = Convert.ToSingle(obj.ToString());
+                        if (IsNumeric(obj))
+                        {
+                            result = Convert.ToSingle(obj.ToString());
+                        }
+
+                        break;
                     }
-                }
-                else if (name == "Byte" || (name == nullable && fullName.Contains("System.Byte")))
-                {
-                    Byte.TryParse(obj.ToString(), out byte temp);
-                    result = temp;
-                }
-                else if (name == "DateTime" || (name == nullable && fullName.Contains("System.DateTime")))
-                {
-                    DateTime.TryParse(obj.ToString(), out DateTime temp);
-                    result = temp;
-                }
-                else if (name == "bool" || (name == nullable && fullName.Contains("System.Boolean")))
-                {
-                    bool.TryParse(obj.ToString(), out bool temp);
-                    result = temp;
-                }
-                else if (name == "string" || (name == nullable && fullName.Contains("System.String")))
-                {
-                    string temp = Convert.ToString(obj);
-                    if (!string.IsNullOrEmpty(temp))
+                    case "Byte":
+                    case nullable when fullName != null && fullName.Contains("System.Byte"):
+                    {
+                        byte.TryParse(obj.ToString(), out var temp);
                         result = temp;
+                        break;
+                    }
+                    case "DateTime":
+                    case nullable when fullName != null && fullName.Contains("System.DateTime"):
+                    {
+                        DateTime.TryParse(obj.ToString(), out var temp);
+                        result = temp;
+                        break;
+                    }
+                    case "bool":
+                    case nullable when fullName != null && fullName.Contains("System.Boolean"):
+                    {
+                        bool.TryParse(obj.ToString(), out var temp);
+                        result = temp;
+                        break;
+                    }
+                    case "string":
+                    case nullable when fullName != null && fullName.Contains("System.String"):
+                    {
+                        var temp = Convert.ToString(obj);
+                        if (!string.IsNullOrEmpty(temp))
+                        {
+                            result = temp;
+                        }
+
+                        break;
+                    }
                 }
             }
             catch
@@ -257,7 +343,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns></returns>
         public static bool IsNumeric(this object obj)
         {
-            bool isNum = Double.TryParse(Convert.ToString(obj), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out double retNum);
+            var isNum = double.TryParse(Convert.ToString(obj), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out var _);
             return isNum;
         }
     }

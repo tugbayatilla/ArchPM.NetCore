@@ -1,5 +1,6 @@
 using ArchPM.NetCore.Extensions;
 using System;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -19,8 +20,9 @@ namespace ArchPM.NetCore.Tests
         public void GetAllExceptions_Should_not_return_null()
         {
             var exceptionList = ((Exception) null).GetAllExceptions();
-            exceptionList.Should().NotBeNull();
-            exceptionList.Should().BeEmpty();
+            var exceptions = exceptionList.ToList();
+            exceptions.Should().NotBeNull();
+            exceptions.Should().BeEmpty();
         }
 
         [Fact]
@@ -51,22 +53,18 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_exception_when_object_is_null()
         {
-            object obj = null;
-
             var ex = Assert.Throws<Exception>(()=> {
-                obj.ThrowExceptionIf(p => p == null);
+                ((object) null).ThrowExceptionIf(p => p == null);
             });
 
-            Assert.Equal($"An object '{nameof(obj)}' instance can't be null", ex.Message);
+            Assert.Equal($"An object 'obj' instance can't be null", ex.Message);
         }
 
         [Fact]
         public void Should_throw_exception_when_predicate_is_null()
         {
-            object obj = null;
-
             var ex = Assert.Throws<Exception>(() => {
-                obj.ThrowExceptionIf(null);
+                ((object) null).ThrowExceptionIf(null);
             });
 
             Assert.Equal("ThrowExceptionIf ExtensionMethod first parameter predicate is null!", ex.Message);
@@ -75,10 +73,8 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_given_exception_when_object_is_null()
         {
-            object obj = null;
-
             var ex = Assert.Throws<ArgumentException>(() => {
-                obj.ThrowExceptionIf(p => p == null, new ArgumentException(nameof(obj)));
+                ((object) null).ThrowExceptionIf(p => p == null, new ArgumentException("obj"));
             });
 
             Assert.Equal("obj", ex.Message);
@@ -87,10 +83,8 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_argument_null_exception_when_object_is_null_while_calling_ThrowExceptionIfNull()
         {
-            object obj2 = null;
-
             var ex = Assert.Throws<ArgumentNullException>(() => {
-                obj2.ThrowExceptionIfNull<ArgumentNullException>();
+                ((object) null).ThrowExceptionIfNull<ArgumentNullException>();
             });
 
             Assert.Equal($"Value cannot be null.", ex.Message);
@@ -99,10 +93,8 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_given_exception_with_given_message_when_object_is_null()
         {
-            object obj = null;
-
             var ex = Assert.Throws<StackOverflowException>(() => {
-                obj.ThrowExceptionIfNull<StackOverflowException>("this is silly but works!");
+                ((object) null).ThrowExceptionIfNull<StackOverflowException>("this is silly but works!");
             });
 
             Assert.Equal("this is silly but works!", ex.Message);
@@ -111,10 +103,8 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_exception_when_object_is_string_and_null()
         {
-            string obj = null;
-
             var ex = Assert.Throws<StackOverflowException>(() => {
-                obj.ThrowExceptionIfNull<StackOverflowException>("string is null");
+                ((string) null).ThrowExceptionIfNull<StackOverflowException>("string is null");
             });
 
             Assert.Equal("string is null", ex.Message);
@@ -122,7 +112,7 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_throw_exception_when_object_is_string_and_null_or_empty()
         {
-            string obj = "";
+            var obj = "";
 
             var ex = Assert.Throws<StackOverflowException>(() => {
                 obj.ThrowExceptionIfNull<StackOverflowException>("string is null");

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ArchPM.NetCore.Enums
+﻿namespace ArchPM.NetCore.Enums
 {
     /// <summary>
     /// 
@@ -29,6 +27,6 @@ namespace ArchPM.NetCore.Enums
         /// <value>
         /// The value.
         /// </value>
-        public Int32 Value { get; set; }
+        public int Value { get; set; }
     }
 }

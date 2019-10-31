@@ -200,7 +200,9 @@ namespace ArchPM.NetCore.Builders
             properties.ModifyEach(p =>
             {
                 if (Configuration.KeyValueContainer.Contains(p.ValueType.FullName))
+                {
                     return p;
+                }
 
 
                 if (p.IsPrimitive)
@@ -331,10 +333,10 @@ namespace ArchPM.NetCore.Builders
         /// <returns></returns>
         protected int GenerateValueFromName(string name)
         {
-            int result = 0;
+            var result = 0;
             foreach (var item in name)
             {
-                result += (int)item;
+                result += item;
             }
 
             return result;
