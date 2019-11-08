@@ -2,7 +2,7 @@
 using ArchPM.NetCore.Utilities;
 using Xunit;
 
-namespace ArchPM.NetCore.Tests
+namespace ArchPM.NetCore.Tests.UtilitiesTests
 {
     public class TimeUtilitiesTests
     {

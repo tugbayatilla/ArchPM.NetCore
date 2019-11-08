@@ -1101,7 +1101,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">entity</exception>
         </member>
-        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsDotNetPirimitive(System.Type,System.Boolean)">
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsDotNetPrimitive(System.Type,System.Boolean)">
             <summary>
             Determines whether [is dot net pirimitive].
             </summary>

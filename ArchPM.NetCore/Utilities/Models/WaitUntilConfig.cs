@@ -1,4 +1,5 @@
-﻿namespace ArchPM.NetCore.Utilities
+﻿// ReSharper disable once CheckNamespace
+namespace ArchPM.NetCore.Utilities
 {
     /// <summary>
     /// 
