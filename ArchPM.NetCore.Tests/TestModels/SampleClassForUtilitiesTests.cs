@@ -4,7 +4,7 @@ namespace ArchPM.NetCore.Tests.TestModels
     /// <summary>
     /// 
     /// </summary>
-    public class SampleClassUtilities
+    public class SampleClassForUtilitiesTests
     {
         public const string ConstantName = nameof(ConstantName);
         public const float ConstantFloat = 3.14f;

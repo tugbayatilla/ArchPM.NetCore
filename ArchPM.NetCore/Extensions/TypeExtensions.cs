@@ -56,6 +56,21 @@ namespace ArchPM.NetCore.Extensions
         }
 
         /// <summary>
+        /// Gets the type of the nullable.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public static Type GetType(Type type)
+        {
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+            {
+                return Nullable.GetUnderlyingType(type);
+            }
+
+            return type;
+        }
+
+        /// <summary>
         /// Gets the constants values.
         /// </summary>
         /// <typeparam name="T"></typeparam>

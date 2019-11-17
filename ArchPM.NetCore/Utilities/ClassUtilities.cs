@@ -15,12 +15,12 @@ namespace ArchPM.NetCore.Utilities
         /// <summary>
         /// Gets the name of the item by.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TEntity"></typeparam>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        public static ClassItem GetItemByName<T>(string name) where T : class
+        public static ClassItem GetItemByName<TEntity>(string name) where TEntity : class
         {
-            var instance = ObjectBuilder.CreateInstance(typeof(T)) as T;
+            var instance = ObjectBuilder.CreateInstance(typeof(TEntity)) as TEntity;
             instance.ThrowExceptionIfNull<NullReferenceException>(nameof(instance));
 
             return instance.GetItemByName(name);
@@ -29,31 +29,49 @@ namespace ArchPM.NetCore.Utilities
         /// <summary>
         /// Gets the name of the item by.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TEntity"></typeparam>
         /// <param name="entity">The entity.</param>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        public static ClassItem GetItemByName<T>(this T entity, string name) where T : class
+        public static ClassItem GetItemByName<TEntity>(this TEntity entity, string name) where TEntity : class
         {
             return entity.GetItems().FirstOrDefault(p => p.Name == name);
         }
 
         /// <summary>
+        /// Gets the name of the item by.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <typeparam name="TFilter">The type of the filter.</typeparam>
+        /// <param name="entity">The entity.</param>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        public static ClassItem<TFilter> GetItemByName<TEntity, TFilter>(this TEntity entity, string name) where TEntity : class
+        {
+            return entity.GetItems<TEntity,TFilter>().FirstOrDefault(p => p.Name == name);
+        }
+
+
+        /// <summary>
         /// Gets the items.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
         /// <param name="entity">The entity.</param>
+        /// <param name="filterTypes">The filter types.</param>
         /// <returns></returns>
-        public static List<ClassItem> GetItems<T>(this T entity) where T : class
+        public static List<ClassItem> GetItems<TEntity>(this TEntity entity, params Type[] filterTypes) where TEntity : class
         {
-            entity.ThrowExceptionIfNull<ArgumentNullException>(nameof(entity));
-
             var result = new List<ClassItem>();
-            var type = typeof(T);
+            var type = typeof(TEntity);
 
             var fields = type
             .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly);
+
+            if (filterTypes.Any())
+            {
+                fields = fields.Where(p => filterTypes.Contains(p.FieldType));
+            }
 
             fields.ForEach(field =>
             {
@@ -63,21 +81,26 @@ namespace ArchPM.NetCore.Utilities
                     ValueType = field.FieldType,
                     Value = field.GetRawConstantValue(),
                     ItemType = ClassItemType.Constant,
-                    Nullable = IsValueType(field.FieldType)
+                    Nullable = field.FieldType.IsValueType()
                 };
                 result.Add(item);
             });
 
             var properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(p => p.CanRead);
+            if (filterTypes.Any())
+            {
+                properties = properties.Where(p => filterTypes.Contains(p.PropertyType));
+            }
+
             properties.ForEach(property =>
             {
                 var item = new ClassItem()
                 {
                     Name = property.Name,
                     ValueType = property.PropertyType,
-                    Value = property.GetValue(entity, null),
+                    Value = entity != null ? property.GetValue(entity, null) : null,
                     ItemType = ClassItemType.Property,
-                    Nullable = IsValueType(property.PropertyType)
+                    Nullable = property.PropertyType.IsValueType()
                 };
 
                 result.Add(item);
@@ -86,23 +109,32 @@ namespace ArchPM.NetCore.Utilities
             return result;
         }
 
+
         /// <summary>
-        /// Determines whether [is dot net primitive] [the specified accept nullable types].
+        /// Gets the items.
         /// </summary>
-        /// <param name="systemType">Type of the system.</param>
-        /// <param name="acceptNullableTypes">if set to <c>true</c> [accept nullable types].</param>
-        /// <returns>
-        ///   <c>true</c> if [is dot net primitive] [the specified accept nullable types]; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsValueType(this Type systemType, bool acceptNullableTypes = true)
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <typeparam name="TFilter">The type of the filter.</typeparam>
+        /// <param name="entity">The entity.</param>
+        /// <returns></returns>
+        public static List<ClassItem<TFilter>> GetItems<TEntity, TFilter>(this TEntity entity) where TEntity : class
         {
-            if (acceptNullableTypes && systemType.Name == "Nullable`1")
+            var result = new List<ClassItem<TFilter>>();
+
+            var classItems = GetItems(entity, typeof(TFilter));
+            foreach (var classItem in classItems)
             {
-                var nullableSystemType = systemType.GetGenericArguments()[0];
-                return IsValueType(nullableSystemType, false);
+                result.Add(new ClassItem<TFilter>()
+                {
+                    Nullable = classItem.Nullable,
+                    Name = classItem.Name,
+                    Value = (TFilter)classItem.Value,
+                    ItemType = classItem.ItemType,
+                    ValueType = classItem.ValueType
+                });
             }
 
-            return systemType.IsValueType;
+            return result;
         }
 
     }

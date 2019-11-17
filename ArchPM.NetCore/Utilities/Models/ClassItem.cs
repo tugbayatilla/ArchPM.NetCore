@@ -6,7 +6,16 @@ namespace ArchPM.NetCore.Utilities
     /// <summary>
     /// 
     /// </summary>
-    public class ClassItem
+    /// <seealso>
+    ///     <cref>ArchPM.NetCore.Utilities.ClassItem{System.Object}</cref>
+    /// </seealso>
+    public class ClassItem: ClassItem<object>
+    { }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ClassItem<T>
     {
         /// <summary>
         /// Gets or sets the name.
@@ -22,7 +31,7 @@ namespace ArchPM.NetCore.Utilities
         /// <value>
         /// The value.
         /// </value>
-        public object Value { get; set; }
+        public T Value { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the value.
