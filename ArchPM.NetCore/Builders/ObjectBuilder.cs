@@ -40,7 +40,14 @@ namespace ArchPM.NetCore.Builders
                 var ctorParametersInfo = ctorInfo.GetParameters();
                 foreach (var info in ctorParametersInfo)
                 {
-                    constructorArguments.Add(info.ParameterType.GetDefault());
+                    if (info.ParameterType.IsClass)
+                    {
+                        constructorArguments.Add(CreateInstance(info.ParameterType));
+                    }
+                    else
+                    {
+                        constructorArguments.Add(info.ParameterType.GetDefault());
+                    }
                 }
 
                 var createdActivator = GetActivator<object>(ctorInfo);

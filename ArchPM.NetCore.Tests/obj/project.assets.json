@@ -1143,7 +1143,7 @@
           "build/netcoreapp1.0/xunit.runner.visualstudio.props": {}
         }
       },
-      "ArchPM.NetCore/2.0.9": {
+      "ArchPM.NetCore/2.0.10": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "compile": {
@@ -4236,7 +4236,7 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "ArchPM.NetCore/2.0.9": {
+    "ArchPM.NetCore/2.0.10": {
       "type": "project",
       "path": "../ArchPM.NetCore/ArchPM.NetCore.csproj",
       "msbuildProject": "../ArchPM.NetCore/ArchPM.NetCore.csproj"
@@ -4244,7 +4244,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
-      "ArchPM.NetCore >= 2.0.9",
+      "ArchPM.NetCore >= 2.0.10",
       "FluentAssertions >= 5.9.0",
       "Microsoft.NET.Test.Sdk >= 16.3.0",
       "Microsoft.NETCore.App >= 2.1.0",
@@ -4283,6 +4283,7 @@
       },
       "frameworks": {
         "netcoreapp2.1": {
+          "targetAlias": "netcoreapp2.1",
           "projectReferences": {
             "C:\\Users\\Tugbay\\source\\personal\\ArchPM.NetCore\\ArchPM.NetCore\\ArchPM.NetCore.csproj": {
               "projectPath": "C:\\Users\\Tugbay\\source\\personal\\ArchPM.NetCore\\ArchPM.NetCore\\ArchPM.NetCore.csproj"
@@ -4298,6 +4299,7 @@
     },
     "frameworks": {
       "netcoreapp2.1": {
+        "targetAlias": "netcoreapp2.1",
         "dependencies": {
           "FluentAssertions": {
             "target": "Package",
@@ -4338,7 +4340,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -48,7 +48,7 @@ namespace ArchPM.NetCore.Utilities
         /// <returns></returns>
         public static ClassItem<TFilter> GetItemByName<TEntity, TFilter>(this TEntity entity, string name) where TEntity : class
         {
-            return entity.GetItems<TEntity,TFilter>().FirstOrDefault(p => p.Name == name);
+            return entity.GetItems<TEntity, TFilter>().FirstOrDefault(p => p.Name == name);
         }
 
 
@@ -137,5 +137,43 @@ namespace ArchPM.NetCore.Utilities
             return result;
         }
 
+
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="obj">The object.</param>
+        /// <param name="propertyName">Name of the property.</param>
+        /// <param name="propertyVal">The property value.</param>
+        /// <param name="applyChangeType">if set to <c>true</c> [change type]. if you explicitly change the type of the property then set as false</param>
+        public static void SetValue<TEntity>(this TEntity obj, string propertyName, object propertyVal, bool applyChangeType = true) where TEntity : class
+        {
+            //find out the type
+            var type = obj.GetType();
+
+            //get the property information based on the type
+            var propertyInfo = type.GetProperty(propertyName);
+
+            //Convert.ChangeType does not handle conversion to nullable types
+            //if the property type is nullable, we need to get the underlying type of the property
+            if (propertyInfo != null)
+            {
+                var targetType = propertyInfo.PropertyType.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
+
+                if (applyChangeType)
+                {
+                    //Returns an System.Object with the specified System.Type and whose value is
+                    //equivalent to the specified object.
+                    propertyVal = Convert.ChangeType(propertyVal, targetType ?? throw new InvalidOperationException());
+                }
+            }
+
+            if (propertyInfo != null && propertyInfo.CanWrite)
+            {
+                //Set the value of the property
+                propertyInfo.SetValue(obj, propertyVal, null);
+            }
+
+        }
     }
 }

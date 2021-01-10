@@ -309,6 +309,17 @@ namespace ArchPM.NetCore.Tests
             instance.Type.Should().Be(string.Format(result, nameof(instance.Type)));
             instance.Value.Should().Be(string.Format(result, nameof(instance.Value)));
         }
+        
+        [Fact]
+        public void Should_be_create_new_sample_with_constructor()
+        {
+            //Arrange
+            //Act
+            var p1 = SampleBuilder.Create<SampleUser>();
+
+            //Assert
+            p1.Should().NotBeNull();
+        }
 
     }
 }
