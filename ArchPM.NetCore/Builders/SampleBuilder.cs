@@ -311,7 +311,7 @@ namespace ArchPM.NetCore.Builders
                     if (ins != null)
                     {
                         Configuration.IgnoreRecursion = false;
-                        ins = ins.CreateSample(Configuration);
+                        ins = ins.CreateSample(Configuration);//todo: before create an instance , check if there is a loop
                     }
 
                     Result.SetValue(p.Name, ins);

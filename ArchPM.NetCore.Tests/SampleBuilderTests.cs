@@ -3,6 +3,7 @@ using ArchPM.NetCore.Builders;
 using Xunit;
 using FluentAssertions;
 using ArchPM.NetCore.Tests.TestModels;
+using ArchPM.NetCore.Tests.TestModels.ComplexItem;
 
 namespace ArchPM.NetCore.Tests
 {
@@ -316,6 +317,17 @@ namespace ArchPM.NetCore.Tests
             //Arrange
             //Act
             var p1 = SampleBuilder.Create<SampleUser>();
+
+            //Assert
+            p1.Should().NotBeNull();
+        }
+        
+        [Fact]
+        public void Should_be_create_new_instance_of_complex_class()
+        {
+            //Arrange
+            //Act
+            var p1 = SampleBuilder.Create<ComplexClass>();
 
             //Assert
             p1.Should().NotBeNull();
