@@ -320,6 +320,24 @@ namespace ArchPM.NetCore.Tests
             //Assert
             p1.Should().NotBeNull();
         }
+        
+        [Fact]
+        public void Should_be_recursive_list_property_must_be_filled()
+        {
+            //Arrange
+            //Act
+            var p1 = SampleBuilder.Create<SampleRecursiveListClass.A>();
+
+            //Assert
+            p1.Should().NotBeNull();
+            p1.Ref_B.Ref_C.Ref_A_list.Should().NotBeNull();
+            p1.Ref_B.Ref_C.Ref_A_list.Count.Should().Be(2);
+            p1.Ref_B.Ref_C.Ref_A_list[0].Should().NotBeNull();
+            p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Should().NotBeNull();
+            p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Ref_C.Should().NotBeNull();
+            p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Ref_C.Ref_A_list.Should().NotBeNull();
+            p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Ref_C.Ref_A_list[0].Should().NotBeNull();
+        }
 
     }
 }

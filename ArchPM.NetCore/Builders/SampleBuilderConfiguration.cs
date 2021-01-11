@@ -72,6 +72,8 @@ namespace ArchPM.NetCore.Builders
         public bool IgnoreRecursion { get; set; } = false;
 
         internal readonly List<string> KeyValueContainer = new List<string>();
+        
+        internal readonly List<object> PreviouslyCreatedInstances = new List<object>();
     }
 
     /// <summary>

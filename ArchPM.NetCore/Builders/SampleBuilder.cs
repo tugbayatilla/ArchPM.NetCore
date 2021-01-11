@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ArchPM.NetCore.Extensions;
+using ArchPM.NetCore.Utilities;
 
 namespace ArchPM.NetCore.Builders
 {
@@ -211,15 +212,15 @@ namespace ArchPM.NetCore.Builders
                     {
                         var name = string.Concat(Configuration.AlwaysUsePrefixForStringAs, p.Name,
                             Configuration.AlwaysUseSuffixForStringAs);
-                        Result.SetValue(p.Name, name);
+                        ReflectionExtensions.SetValue(Result, p.Name, name);
                     }
                     else if (p.IsEnum)
                     {
-                        Result.SetValue(p.Name, 0, false);
+                        ReflectionExtensions.SetValue(Result, p.Name, 0, false);
                     }
                     else if (p.ValueType == typeof(bool))
                     {
-                        Result.SetValue(p.Name, Configuration.AlwaysUseBooleanAs);
+                        ReflectionExtensions.SetValue(Result, p.Name, Configuration.AlwaysUseBooleanAs);
                     }
                     else if (p.ValueType == typeof(DateTime))
                     {
@@ -240,31 +241,31 @@ namespace ArchPM.NetCore.Builders
                                 break;
                         }
 
-                        Result.SetValue(p.Name, dateValue);
+                        ReflectionExtensions.SetValue(Result, p.Name, dateValue);
                     }
                     else if (p.ValueType == typeof(byte))
                     {
                         var byteValue = GenerateValueFromName(p.Name) / 128;
-                        Result.SetValue(p.Name, byteValue);
+                        ReflectionExtensions.SetValue(Result, p.Name, byteValue);
                     }
                     else if (p.ValueType == typeof(Guid))
                     {
                         var guidValue = Guid.Parse("00000000-0000-0000-0000-000000000001");
-                        Result.SetValue(p.Name, guidValue);
+                        ReflectionExtensions.SetValue(Result, p.Name, guidValue);
                     }
                     else
                     {
                         var length = Configuration.AlwaysUseNumericPropertiesNameLengthAsValue
                             ? GenerateValueFromName(p.Name)
                             : 0;
-                        Result.SetValue(p.Name, length);
+                        ReflectionExtensions.SetValue(Result, p.Name, length);
                     }
                 }
                 else if (p.IsList)
                 {
                     //this section for interface properties.
                     //converting them to List<> generic class. changeType variable is required for setValue.
-                    bool changeType = true;
+                    var changeType = true;
                     if (p.ValueType.IsInterface && p.ValueType.IsOnlyGenericList())
                     {
                         p.ValueType = typeof(List<>).MakeGenericType(p.ValueType.GenericTypeArguments);
@@ -282,39 +283,66 @@ namespace ArchPM.NetCore.Builders
 
                             for (var i = 0; i < Configuration.CollectionCount; i++)
                             {
-                                //create new instance of T
-                                var genericTypeInstance = ObjectBuilder.CreateInstance(genericType);
-                                Configuration.IgnoreRecursion = true;
-                                genericTypeInstance = genericTypeInstance.CreateSample(Configuration);
 
-                                if (genericTypeInstance is string)
+                                var previouslyCreatedInstance =
+                                    Configuration.PreviouslyCreatedInstances.FirstOrDefault(
+                                        pci => pci.GetType() == genericType
+                                    );
+
+                                if (previouslyCreatedInstance == null)
                                 {
-                                    genericTypeInstance = $"string_{i}";
+                                    //create new instance of T
+                                    var genericTypeInstance =
+                                        ObjectBuilder.CreateInstance(genericType);
+                                    
+                                    if (!(genericTypeInstance is string))
+                                    {
+                                        Configuration.PreviouslyCreatedInstances.Add(
+                                            genericTypeInstance
+                                        );
+                                    }
+
+                                    Configuration.IgnoreRecursion = true;
+                                    genericTypeInstance =
+                                        genericTypeInstance.CreateSample(Configuration);
+
+                                    if (genericTypeInstance is string)
+                                    {
+                                        genericTypeInstance = $"string_{i}";
+                                    }
+
+                                    //add into the T
+                                    ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { genericTypeInstance });
+                                }
+                                else
+                                {
+                                    ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { previouslyCreatedInstance });
                                 }
 
-                                //add into the T
-                                ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { genericTypeInstance });
+
                             }
                         }
                     }
 
-                    Result.SetValue(p.Name, ins, changeType);
+                    ReflectionExtensions.SetValue(Result, p.Name, ins, changeType);
                 }
                 else if (p.ValueTypeName == "Dictionary`2")
                 {
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
-                    Result.SetValue(p.Name, ins); //todo: must be filled with data!
+                    Configuration.PreviouslyCreatedInstances.Add(ins);
+                    ReflectionExtensions.SetValue(Result, p.Name, ins); //todo: must be filled with data!
                 }
                 else if (p.IsClass && !p.IsList)
                 {
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
+                    Configuration.PreviouslyCreatedInstances.Add(ins);
                     if (ins != null)
                     {
                         Configuration.IgnoreRecursion = false;
                         ins = ins.CreateSample(Configuration);
                     }
 
-                    Result.SetValue(p.Name, ins);
+                    ReflectionExtensions.SetValue(Result, p.Name, ins);
                 }
 
                 return p;
