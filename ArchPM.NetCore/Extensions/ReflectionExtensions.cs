@@ -141,7 +141,7 @@ namespace ArchPM.NetCore.Extensions
         /// </returns>
         public static bool IsGenericNullable(this PropertyInfo property)
         {
-            return property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition().Equals(typeof(Nullable<>));
+            return property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="obj">The object.</param>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="propertyVal">The property value.</param>
-        /// <param name="appyChangeType">if set to <c>true</c> [change type]. if you explicitly change the type of the property then set as false</param>
-        public static void SetValue<T>(this T obj, string propertyName, object propertyVal, bool appyChangeType = true)
+        /// <param name="applyChangeType">if set to <c>true</c> [change type]. if you explicitly change the type of the property then set as false</param>
+        public static void SetValue<T>(this T obj, string propertyName, object propertyVal, bool applyChangeType = true)
         {
             //find out the type
             var type = obj.GetType();
@@ -185,7 +185,7 @@ namespace ArchPM.NetCore.Extensions
             {
                 var targetType = propertyInfo.PropertyType.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
 
-                if (appyChangeType)
+                if (applyChangeType)
                 {
                     //Returns an System.Object with the specified System.Type and whose value is
                     //equivalent to the specified object.
@@ -250,6 +250,7 @@ namespace ArchPM.NetCore.Extensions
             entityProperty.IsPrimitive = entityProperty.ValueType.IsDotNetPirimitive();
             entityProperty.IsEnum = IsEnumOrIsBaseEnum(entityProperty.ValueType);
             entityProperty.IsList = entityProperty.ValueType.IsList();
+            entityProperty.IsArray = entityProperty.ValueType?.IsArray ?? false;
             if (entityProperty.IsList)
             {
                 entityProperty.Nullable = true;
@@ -272,7 +273,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is enum or is base enum] [the specified type]; otherwise, <c>false</c>.
         /// </returns>
-        internal static bool IsEnumOrIsBaseEnum(Type type)
+        internal static bool IsEnumOrIsBaseEnum(this Type type)
         {
             return type.IsEnum || (type.BaseType != null && type.BaseType == typeof(Enum));
         }

@@ -10,7 +10,7 @@
       <ShowUnexecutedTestsMenuOption>false</ShowUnexecutedTestsMenuOption>
       <ShowIgnoredTestsMenuOption>true</ShowIgnoredTestsMenuOption>
     </TestsWindowMenuOptions>
-    <TestsWindowSplitterDistance>-1%</TestsWindowSplitterDistance>
+    <TestsWindowSplitterDistance>50%</TestsWindowSplitterDistance>
     <TestsWindowTreeLayout>
       <Column>
         <Name>Status</Name>

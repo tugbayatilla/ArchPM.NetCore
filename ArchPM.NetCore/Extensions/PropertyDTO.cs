@@ -93,6 +93,15 @@ namespace ArchPM.NetCore.Extensions
         public bool IsList { get; internal set; }
 
         /// <summary>
+        /// Gets a value indicating whether this instance is array.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is array; otherwise, <c>false</c>.
+        /// </value>
+        [XmlIgnore]
+        public bool IsArray { get; internal set; }
+
+        /// <summary>
         /// Gets defined attribute types
         /// </summary>
         [XmlIgnore]

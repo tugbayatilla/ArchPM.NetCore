@@ -274,8 +274,8 @@ namespace ArchPM.NetCore.Tests
             instance.City.Should().Be(nameof(instance.City));
             instance.CountryIsoAlpha2Code.Should().Be(nameof(instance.CountryIsoAlpha2Code));
             instance.AdditionalLines.Count.Should().Be(2);
-            instance.AdditionalLines[0].Should().Be("string_0");
-            instance.AdditionalLines[1].Should().Be("string_1");
+            instance.AdditionalLines[0].Should().Be("AdditionalLines_0");
+            instance.AdditionalLines[1].Should().Be("AdditionalLines_1");
         }
 
         [Fact]
@@ -286,8 +286,8 @@ namespace ArchPM.NetCore.Tests
             instance.Address.Should().NotBeNull();
             instance.Address.Name.Should().Be(nameof(instance.Address.Name));
             instance.Address.AdditionalLines.Count.Should().Be(2);
-            instance.Address.AdditionalLines[0].Should().Be("string_0");
-            instance.Address.AdditionalLines[1].Should().Be("string_1");
+            instance.Address.AdditionalLines[0].Should().Be("AdditionalLines_0");
+            instance.Address.AdditionalLines[1].Should().Be("AdditionalLines_1");
 
         }
 
@@ -365,6 +365,37 @@ namespace ArchPM.NetCore.Tests
             p1.Should().NotBeNull();
             p1.SampleNullableEnum.Should().Be(SampleNullableEnum.OnlyItem2);
         }
+        
+        [Fact]
+        public void Should_create_sample_for_SampleEnumNoElementClass()
+        {
+            //Arrange
+            //Act
+            var p1 = SampleBuilder.Create<SampleEnumNoElementClass>();
 
+            //Assert
+            p1.Should().NotBeNull();
+            p1.SampleEnumNoElementEnumProperty.Should().Be(0);
+        }
+        
+        [Fact]
+        public void Should_create_sample_for_SampleArrayPropertyClass()
+        {
+            //Arrange
+            //Act
+            var p1 = SampleBuilder.Create<SampleArrayPropertyClass>();
+
+            //Assert
+            p1.Should().NotBeNull();
+            p1.BoolArray.Should().NotBeNull();
+            p1.BoolArray.Length.Should().Be(2);
+            p1.BoolArray[0].Should().BeTrue();
+            
+            p1.SampleDataClassArray.Should().NotBeNull();
+            p1.SampleDataClassArray.Length.Should().Be(2);
+            p1.SampleDataClassArray[0].BooleanProperty.Should().BeTrue();
+
+            p1.Recursive_A.Should().NotBeNull();
+        }
     }
 }

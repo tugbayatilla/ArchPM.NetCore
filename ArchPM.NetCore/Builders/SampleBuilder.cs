@@ -204,64 +204,52 @@ namespace ArchPM.NetCore.Builders
                 {
                     return p;
                 }
-
-
                 if (p.IsPrimitive)
                 {
-                    if (p.ValueType == typeof(string))
+                    var value = GetResultIfPrimitive(p.ValueType, p.Name);
+                    if (value != default)
                     {
-                        var name = string.Concat(Configuration.AlwaysUsePrefixForStringAs, p.Name,
-                            Configuration.AlwaysUseSuffixForStringAs);
-                        ReflectionExtensions.SetValue(Result, p.Name, name);
+                        ReflectionExtensions.SetValue(Result, p.Name, value);
                     }
-                    else if (p.IsEnum)
-                    {
-                        var tempEnum = Enum.GetValues(p.ValueType);
-                        var firstItemInEnum = tempEnum.GetValue(Configuration.AlwaysPickEnumItemIndex);
-                        ReflectionExtensions.SetValue(Result, p.Name, firstItemInEnum, false);
-                    }
-                    else if (p.ValueType == typeof(bool))
-                    {
-                        ReflectionExtensions.SetValue(Result, p.Name, Configuration.AlwaysUseBooleanAs);
-                    }
-                    else if (p.ValueType == typeof(DateTime))
-                    {
-                        DateTime dateValue;
-                        switch (Configuration.AlwaysUseDateTimeAddition)
-                        {
-                            case SampleDateTimeAdditions.AddDays:
-                                dateValue = Configuration.AlwaysUseDateTimeAs.AddDays(GenerateValueFromName(p.Name));
-                                break;
-                            case SampleDateTimeAdditions.AddMinutes:
-                                dateValue = Configuration.AlwaysUseDateTimeAs.AddMinutes(GenerateValueFromName(p.Name));
-                                break;
-                            case SampleDateTimeAdditions.AddSeconds:
-                                dateValue = Configuration.AlwaysUseDateTimeAs.AddSeconds(GenerateValueFromName(p.Name));
-                                break;
-                            default:
-                                dateValue = Configuration.AlwaysUseDateTimeAs;
-                                break;
-                        }
+                }
+                else if (p.IsArray)
+                {
+                    var elementType = p.ValueType.GetElementType();
+                    var ins = Activator.CreateInstance(
+                        p.ValueType, new object[] { Configuration.CollectionCount }
+                    );
 
-                        ReflectionExtensions.SetValue(Result, p.Name, dateValue);
-                    }
-                    else if (p.ValueType == typeof(byte))
+                    for (var i = 0; i < Configuration.CollectionCount; i++)
                     {
-                        var byteValue = GenerateValueFromName(p.Name) / 128;
-                        ReflectionExtensions.SetValue(Result, p.Name, byteValue);
+                        var previouslyCreatedInstance =
+                            Configuration.PreviouslyCreatedInstances.FirstOrDefault(
+                                pci => pci.GetType() == elementType
+                            );
+
+                        if (previouslyCreatedInstance == null)
+                        {
+                            var value = GetResultIfPrimitive(elementType, p.Name);
+                            if (value != default)
+                            {
+                                if (value is string)
+                                {
+                                    value += $"_{i}";
+                                }
+
+                                ((Array)ins).SetValue(value, i);
+                            }
+                            else
+                            {
+                                var value1 = GetResultIfOnlyClass(elementType);
+                                ((Array)ins).SetValue(value1, i);
+                            }
+                        }
+                        else
+                        {
+                            ((Array)ins).SetValue(previouslyCreatedInstance, i);
+                        }
                     }
-                    else if (p.ValueType == typeof(Guid))
-                    {
-                        var guidValue = Guid.Parse("00000000-0000-0000-0000-000000000001");
-                        ReflectionExtensions.SetValue(Result, p.Name, guidValue);
-                    }
-                    else
-                    {
-                        var length = Configuration.AlwaysUseNumericPropertiesNameLengthAsValue
-                            ? GenerateValueFromName(p.Name)
-                            : 0;
-                        ReflectionExtensions.SetValue(Result, p.Name, length);
-                    }
+                    ReflectionExtensions.SetValue(Result, p.Name, ins, false);
                 }
                 else if (p.IsList)
                 {
@@ -293,39 +281,29 @@ namespace ArchPM.NetCore.Builders
 
                                 if (previouslyCreatedInstance == null)
                                 {
-                                    //create new instance of T
-                                    var genericTypeInstance =
-                                        ObjectBuilder.CreateInstance(genericType);
-                                    
-                                    if (!(genericTypeInstance is string))
+                                    var value = GetResultIfPrimitive(genericType, p.Name);
+                                    if (value != default)
                                     {
-                                        Configuration.PreviouslyCreatedInstances.Add(
-                                            genericTypeInstance
-                                        );
+                                        if (value is string)
+                                        {
+                                            value += $"_{i}";
+                                        }
+                                        //add into the T
+                                        ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { value });
                                     }
-
-                                    Configuration.IgnoreRecursion = true;
-                                    genericTypeInstance =
-                                        genericTypeInstance.CreateSample(Configuration);
-
-                                    if (genericTypeInstance is string)
+                                    else
                                     {
-                                        genericTypeInstance = $"string_{i}";
+                                        var value1 = GetResultIfOnlyClass(genericType);
+                                        ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { value1 });
                                     }
-
-                                    //add into the T
-                                    ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { genericTypeInstance });
                                 }
                                 else
                                 {
                                     ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { previouslyCreatedInstance });
                                 }
-
-
                             }
                         }
                     }
-
                     ReflectionExtensions.SetValue(Result, p.Name, ins, changeType);
                 }
                 else if (p.ValueTypeName == "Dictionary`2")
@@ -334,16 +312,9 @@ namespace ArchPM.NetCore.Builders
                     Configuration.PreviouslyCreatedInstances.Add(ins);
                     ReflectionExtensions.SetValue(Result, p.Name, ins); //todo: must be filled with data!
                 }
-                else if (p.IsClass && !p.IsList)
+                else if (p.IsClass && !p.IsList && !p.IsArray)
                 {
-                    var ins = ObjectBuilder.CreateInstance(p.ValueType);
-                    Configuration.PreviouslyCreatedInstances.Add(ins);
-                    if (ins != null)
-                    {
-                        Configuration.IgnoreRecursion = false;
-                        ins = ins.CreateSample(Configuration);
-                    }
-
+                    var ins = GetResultIfOnlyClass(p.ValueType);
                     ReflectionExtensions.SetValue(Result, p.Name, ins);
                 }
 
@@ -355,13 +326,105 @@ namespace ArchPM.NetCore.Builders
             return this;
         }
 
+        private object GetResultIfOnlyClass(Type propertyValueType)
+        {
+            var previouslyCreatedInstance =
+                Configuration.PreviouslyCreatedInstances.FirstOrDefault(
+                    pci => pci.GetType() == propertyValueType
+                );
+
+            if (previouslyCreatedInstance != null)
+            {
+                return previouslyCreatedInstance;
+            }
+
+            var ins = ObjectBuilder.CreateInstance(propertyValueType);
+            if (ins != null)
+            {
+                Configuration.PreviouslyCreatedInstances.Add(ins);
+                Configuration.IgnoreRecursion = false;
+                ins = ins.CreateSample(Configuration);
+            }
+            return ins;
+
+        }
+
+        private object GetResultIfPrimitive(Type propertyValueType, string propertyName)
+        {
+            if (!propertyValueType.IsDotNetPirimitive())
+            {
+                return default;
+            }
+
+            if (propertyValueType == typeof(string))
+            {
+                var name = string.Concat(Configuration.AlwaysUsePrefixForStringAs, propertyName,
+                    Configuration.AlwaysUseSuffixForStringAs);
+                return name;
+            }
+            else if (propertyValueType.IsEnumOrIsBaseEnum())
+            {
+                var tempEnum = Enum.GetValues(propertyValueType);
+                if (tempEnum.Length > 0)
+                {
+                    var firstItemInEnum =
+                        tempEnum.GetValue(Configuration.AlwaysPickEnumItemIndex);
+                    return firstItemInEnum;
+                }
+            }
+            else if (propertyValueType == typeof(bool))
+            {
+                return Configuration.AlwaysUseBooleanAs;
+            }
+            else if (propertyValueType == typeof(DateTime))
+            {
+                DateTime dateValue;
+                switch (Configuration.AlwaysUseDateTimeAddition)
+                {
+                    case SampleDateTimeAdditions.AddDays:
+                        dateValue = Configuration.AlwaysUseDateTimeAs.AddDays(GenerateValueFromName(propertyName));
+                        break;
+                    case SampleDateTimeAdditions.AddMinutes:
+                        dateValue = Configuration.AlwaysUseDateTimeAs.AddMinutes(GenerateValueFromName(propertyName));
+                        break;
+                    case SampleDateTimeAdditions.AddSeconds:
+                        dateValue = Configuration.AlwaysUseDateTimeAs.AddSeconds(GenerateValueFromName(propertyName));
+                        break;
+                    default:
+                        dateValue = Configuration.AlwaysUseDateTimeAs;
+                        break;
+                }
+
+                return dateValue;
+            }
+            else if (propertyValueType == typeof(byte))
+            {
+                var byteValue = GenerateValueFromName(propertyName) / 128;
+                return (byte)byteValue;
+            }
+            else if (propertyValueType == typeof(Guid))
+            {
+                var guidValue = Guid.Parse("00000000-0000-0000-0000-000000000001");
+                return guidValue;
+            }
+            else
+            {
+                var length = Configuration.AlwaysUseNumericPropertiesNameLengthAsValue
+                    ? GenerateValueFromName(propertyName)
+                    : 0;
+                return length;
+            }
+
+            return default;
+        }
+
 
         /// <summary>
         /// Generates the name of the value from.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        protected int GenerateValueFromName(string name)
+        private int GenerateValueFromName(string name)
         {
             var result = 0;
             foreach (var item in name)
