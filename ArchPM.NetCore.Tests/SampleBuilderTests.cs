@@ -338,6 +338,33 @@ namespace ArchPM.NetCore.Tests
             p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Ref_C.Ref_A_list.Should().NotBeNull();
             p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Ref_C.Ref_A_list[0].Should().NotBeNull();
         }
+        
+        [Fact]
+        public void Should_be_nullable_enum_class_be_filled()
+        {
+            //Arrange
+            //Act
+            var p1 = SampleBuilder.Create<SampleNullableEnumClass>();
+
+            //Assert
+            p1.Should().NotBeNull();
+            p1.SampleNullableEnum.Should().Be(SampleNullableEnum.OnlyItem);
+        }
+        
+        [Fact]
+        public void Should_be_nullable_enum_class_be_filled_and_enum_index_1_picked()
+        {
+            //Arrange
+            //Act
+            var p1 = SampleBuilder.Create<SampleNullableEnumClass>(new SampleBuilderConfiguration()
+            {
+                AlwaysPickEnumItemIndex = 1
+            });
+
+            //Assert
+            p1.Should().NotBeNull();
+            p1.SampleNullableEnum.Should().Be(SampleNullableEnum.OnlyItem2);
+        }
 
     }
 }

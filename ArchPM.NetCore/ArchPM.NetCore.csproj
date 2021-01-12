@@ -4,19 +4,19 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Tugbay Atilla</Authors>
     <PackageTags>ArchPM, NetCore, Core, net, standard, 2.0, netstandard2.0</PackageTags>
-    <AssemblyVersion>2.0.11.0</AssemblyVersion>
+    <AssemblyVersion>2.0.12.0</AssemblyVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>SampleCreator, same object in list recursively solved</PackageReleaseNotes>
+    <PackageReleaseNotes>SampleCreator, nullable enum support added</PackageReleaseNotes>
     <Description>ArchPM .NetCore Core Operations for net standard</Description>
-    <FileVersion>2.0.11.0</FileVersion>
+    <FileVersion>2.0.12.0</FileVersion>
     <PackageLicenseUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/tugbayatilla/ArchPM.NetCore</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/tugbayatilla/ArchPM.NetCore/master/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/tugbayatilla/ArchPM.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>© 2019 Tugbay Atilla</Copyright>
-    <Version>2.0.11</Version>
+    <Version>2.0.12</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>

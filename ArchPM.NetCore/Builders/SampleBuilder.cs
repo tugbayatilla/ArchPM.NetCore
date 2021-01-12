@@ -216,7 +216,9 @@ namespace ArchPM.NetCore.Builders
                     }
                     else if (p.IsEnum)
                     {
-                        ReflectionExtensions.SetValue(Result, p.Name, 0, false);
+                        var tempEnum = Enum.GetValues(p.ValueType);
+                        var firstItemInEnum = tempEnum.GetValue(Configuration.AlwaysPickEnumItemIndex);
+                        ReflectionExtensions.SetValue(Result, p.Name, firstItemInEnum, false);
                     }
                     else if (p.ValueType == typeof(bool))
                     {

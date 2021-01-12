@@ -64,6 +64,15 @@ namespace ArchPM.NetCore.Builders
         public SampleDateTimeAdditions AlwaysUseDateTimeAddition { get; set; } = SampleDateTimeAdditions.None;
 
         /// <summary>
+        /// Gets or sets the index of the always pick enum item.
+        /// </summary>
+        /// <value>
+        /// The index of the always pick enum item.
+        /// </value>
+        public int AlwaysPickEnumItemIndex { get; set; } = 0;
+
+        
+        /// <summary>
         /// Gets or sets a value indicating whether [ignore recursion].
         /// </summary>
         /// <value>
