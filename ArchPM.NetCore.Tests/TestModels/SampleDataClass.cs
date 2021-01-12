@@ -118,6 +118,7 @@ namespace ArchPM.NetCore.Tests.TestModels
     internal class SampleDataWithDictionary
     {
         public Dictionary<object,object> DictionaryProperty { get; set; }
+        public Dictionary<string,int> DictionaryStringIntProperty { get; set; }
     }
     
 

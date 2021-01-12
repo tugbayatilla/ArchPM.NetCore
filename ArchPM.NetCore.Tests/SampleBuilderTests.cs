@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ArchPM.NetCore.Builders;
 using Xunit;
 using FluentAssertions;
@@ -11,13 +12,15 @@ namespace ArchPM.NetCore.Tests
         [Fact]
         public void Should_dictionary_initialized()
         {
-            var config = new SampleBuilderConfiguration(){CollectionCount = 2};
+            var config = new SampleBuilderConfiguration() { CollectionCount = 2 };
             //Act
             var p1 = SampleBuilder.Create<SampleDataWithDictionary>(config);
 
             //Assert
             p1.DictionaryProperty.Should().NotBeNull();
             //p1.DictionaryProperty.Should().HaveCount(config.CollectionCount);
+            //p1.DictionaryProperty.Keys.First().Should().Be(0);
+            //p1.DictionaryProperty.Keys.Last().Should().Be(1);
         }
 
 
@@ -309,7 +312,7 @@ namespace ArchPM.NetCore.Tests
             instance.Type.Should().Be(string.Format(result, nameof(instance.Type)));
             instance.Value.Should().Be(string.Format(result, nameof(instance.Value)));
         }
-        
+
         [Fact]
         public void Should_be_create_new_sample_with_constructor()
         {
@@ -320,7 +323,7 @@ namespace ArchPM.NetCore.Tests
             //Assert
             p1.Should().NotBeNull();
         }
-        
+
         [Fact]
         public void Should_be_recursive_list_property_must_be_filled()
         {
@@ -338,7 +341,7 @@ namespace ArchPM.NetCore.Tests
             p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Ref_C.Ref_A_list.Should().NotBeNull();
             p1.Ref_B.Ref_C.Ref_A_list[0].Ref_B.Ref_C.Ref_A_list[0].Should().NotBeNull();
         }
-        
+
         [Fact]
         public void Should_be_nullable_enum_class_be_filled()
         {
@@ -350,7 +353,7 @@ namespace ArchPM.NetCore.Tests
             p1.Should().NotBeNull();
             p1.SampleNullableEnum.Should().Be(SampleNullableEnum.OnlyItem);
         }
-        
+
         [Fact]
         public void Should_be_nullable_enum_class_be_filled_and_enum_index_1_picked()
         {
@@ -365,7 +368,7 @@ namespace ArchPM.NetCore.Tests
             p1.Should().NotBeNull();
             p1.SampleNullableEnum.Should().Be(SampleNullableEnum.OnlyItem2);
         }
-        
+
         [Fact]
         public void Should_create_sample_for_SampleEnumNoElementClass()
         {
@@ -377,7 +380,7 @@ namespace ArchPM.NetCore.Tests
             p1.Should().NotBeNull();
             p1.SampleEnumNoElementEnumProperty.Should().Be(0);
         }
-        
+
         [Fact]
         public void Should_create_sample_for_SampleArrayPropertyClass()
         {
@@ -390,7 +393,7 @@ namespace ArchPM.NetCore.Tests
             p1.BoolArray.Should().NotBeNull();
             p1.BoolArray.Length.Should().Be(2);
             p1.BoolArray[0].Should().BeTrue();
-            
+
             p1.SampleDataClassArray.Should().NotBeNull();
             p1.SampleDataClassArray.Length.Should().Be(2);
             p1.SampleDataClassArray[0].BooleanProperty.Should().BeTrue();

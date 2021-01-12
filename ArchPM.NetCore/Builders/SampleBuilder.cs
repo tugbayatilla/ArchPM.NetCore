@@ -218,37 +218,7 @@ namespace ArchPM.NetCore.Builders
                     var ins = Activator.CreateInstance(
                         p.ValueType, new object[] { Configuration.CollectionCount }
                     );
-
-                    for (var i = 0; i < Configuration.CollectionCount; i++)
-                    {
-                        var previouslyCreatedInstance =
-                            Configuration.PreviouslyCreatedInstances.FirstOrDefault(
-                                pci => pci.GetType() == elementType
-                            );
-
-                        if (previouslyCreatedInstance == null)
-                        {
-                            var value = GetResultIfPrimitive(elementType, p.Name);
-                            if (value != default)
-                            {
-                                if (value is string)
-                                {
-                                    value += $"_{i}";
-                                }
-
-                                ((Array)ins).SetValue(value, i);
-                            }
-                            else
-                            {
-                                var value1 = GetResultIfOnlyClass(elementType);
-                                ((Array)ins).SetValue(value1, i);
-                            }
-                        }
-                        else
-                        {
-                            ((Array)ins).SetValue(previouslyCreatedInstance, i);
-                        }
-                    }
+                    CreateSamplesIntoCollectionInstance(ins, p.Name, elementType);
                     ReflectionExtensions.SetValue(Result, p.Name, ins, false);
                 }
                 else if (p.IsList)
@@ -262,54 +232,16 @@ namespace ArchPM.NetCore.Builders
                         changeType = false;
                     }
 
+                    var genericType = p.ValueType.GetGenericArguments()[0];
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
-
-                    if (p.ValueType.IsGenericType)
-                    {
-                        if (ins is IList)
-                        {
-                            //find out generic T type
-                            var genericType = p.ValueType.GetGenericArguments()[0];
-
-                            for (var i = 0; i < Configuration.CollectionCount; i++)
-                            {
-
-                                var previouslyCreatedInstance =
-                                    Configuration.PreviouslyCreatedInstances.FirstOrDefault(
-                                        pci => pci.GetType() == genericType
-                                    );
-
-                                if (previouslyCreatedInstance == null)
-                                {
-                                    var value = GetResultIfPrimitive(genericType, p.Name);
-                                    if (value != default)
-                                    {
-                                        if (value is string)
-                                        {
-                                            value += $"_{i}";
-                                        }
-                                        //add into the T
-                                        ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { value });
-                                    }
-                                    else
-                                    {
-                                        var value1 = GetResultIfOnlyClass(genericType);
-                                        ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { value1 });
-                                    }
-                                }
-                                else
-                                {
-                                    ins.GetType().GetMethod("Add")?.Invoke(ins, new[] { previouslyCreatedInstance });
-                                }
-                            }
-                        }
-                    }
+                    CreateSamplesIntoCollectionInstance(ins, p.Name, genericType);
                     ReflectionExtensions.SetValue(Result, p.Name, ins, changeType);
                 }
                 else if (p.ValueTypeName == "Dictionary`2")
                 {
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
                     Configuration.PreviouslyCreatedInstances.Add(ins);
+                    //CreateSamplesIntoCollectionInstance(ins, p.Name, p.ValueType);
                     ReflectionExtensions.SetValue(Result, p.Name, ins); //todo: must be filled with data!
                 }
                 else if (p.IsClass && !p.IsList && !p.IsArray)
@@ -326,6 +258,56 @@ namespace ArchPM.NetCore.Builders
             return this;
         }
 
+        private void CreateSamplesIntoCollectionInstance(object instance, string instancePropertyName, Type instanceItemType)
+        {
+            for (var i = 0; i < Configuration.CollectionCount; i++)
+            {
+                var previouslyCreatedInstance =
+                    Configuration.PreviouslyCreatedInstances.FirstOrDefault(
+                        pci => pci.GetType() == instanceItemType
+                    );
+
+                if (previouslyCreatedInstance == null)
+                {
+                    var value = GetResultIfPrimitive(instanceItemType, instancePropertyName);
+                    if (value != default)
+                    {
+                        if (value is string)
+                        {
+                            value += $"_{i}";
+                        }
+                        AddItemIntoCollection(instance, i, value);
+                    }
+                    else
+                    {
+                        var value1 = GetResultIfOnlyClass(instanceItemType);
+                        AddItemIntoCollection(instance, i, value1);
+                    }
+                }
+                else
+                {
+                    AddItemIntoCollection(instance, i, previouslyCreatedInstance);
+                }
+            }
+        }
+
+        private static void AddItemIntoCollection(object instance, int index, object previouslyCreatedInstance)
+        {
+            switch (instance)
+            {
+                case Array instanceArray:
+                    instanceArray.SetValue(previouslyCreatedInstance, index);
+                    break;
+                case IList instanceList:
+                    instanceList.Add(previouslyCreatedInstance);
+                    break;
+                case IDictionary instanceDictionary:
+                    instanceDictionary.Add(index, previouslyCreatedInstance);
+                    break;
+            }
+        }
+
+
         private object GetResultIfOnlyClass(Type propertyValueType)
         {
             var previouslyCreatedInstance =
@@ -339,14 +321,15 @@ namespace ArchPM.NetCore.Builders
             }
 
             var ins = ObjectBuilder.CreateInstance(propertyValueType);
-            if (ins != null)
+            if (ins == null)
             {
-                Configuration.PreviouslyCreatedInstances.Add(ins);
-                Configuration.IgnoreRecursion = false;
-                ins = ins.CreateSample(Configuration);
+                return null;
             }
-            return ins;
 
+            Configuration.PreviouslyCreatedInstances.Add(ins);
+            Configuration.IgnoreRecursion = false;
+            ins = ins.CreateSample(Configuration);
+            return ins;
         }
 
         private object GetResultIfPrimitive(Type propertyValueType, string propertyName)
