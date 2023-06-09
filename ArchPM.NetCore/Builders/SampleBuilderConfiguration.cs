@@ -31,6 +31,7 @@ namespace ArchPM.NetCore.Builders
         /// The prefix for string values.
         /// </value>
         public string AlwaysUsePrefixForStringAs { get; set; }
+
         /// <summary>
         /// Gets or sets the suffix for string values.
         /// </summary>
@@ -69,20 +70,20 @@ namespace ArchPM.NetCore.Builders
         /// <value>
         /// The index of the always pick enum item.
         /// </value>
-        public int AlwaysPickEnumItemIndex { get; set; } = 0;
+        public int AlwaysPickEnumItemIndex { get; set; }
 
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether [ignore recursion].
         /// </summary>
         /// <value>
         ///   <c>true</c> if [ignore recursion]; otherwise, <c>false</c>.
         /// </value>
-        public bool IgnoreRecursion { get; set; } = false;
+        public bool IgnoreRecursion { get; set; }
 
-        internal readonly List<string> KeyValueContainer = new List<string>();
-        
-        internal readonly List<object> PreviouslyCreatedInstances = new List<object>();
+        internal readonly List<string> KeyValueContainer = new();
+
+        internal readonly List<object> PreviouslyCreatedInstances = new();
     }
 
     /// <summary>
@@ -94,14 +95,17 @@ namespace ArchPM.NetCore.Builders
         /// The none
         /// </summary>
         None,
+
         /// <summary>
         /// The add days
         /// </summary>
         AddDays,
+
         /// <summary>
         /// The add minutes
         /// </summary>
         AddMinutes,
+
         /// <summary>
         /// The add seconds
         /// </summary>

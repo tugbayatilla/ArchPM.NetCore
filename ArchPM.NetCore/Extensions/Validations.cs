@@ -6,9 +6,35 @@ namespace ArchPM.NetCore.Extensions
     /// <summary>
     /// 
     /// </summary>
-    public static class ExceptionExtensions
+    public static class Validations
     {
+        /// <summary>
+        /// Ifs the null.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj">The object.</param>
+        /// <param name="action">The action.</param>
+        public static void IfNull<T>(this T obj, Action<T> action)
+        {
+            if (obj == null)
+            {
+                action?.Invoke(default(T));
+            }
+        }
 
+        /// <summary>
+        /// Ifs the not null.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj">The object.</param>
+        /// <param name="action">The action.</param>
+        public static void IfNotNull<T>(this T obj, Action<T> action)
+        {
+            if (obj != null)
+            {
+                action?.Invoke(obj);
+            }
+        }
         /// <summary>
         /// Throws the exception if.
         /// </summary>
@@ -17,7 +43,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <param name="exception">The exception.</param>
         /// <exception cref="Exception"></exception>
-        public static void ThrowExceptionIf<T>(this T obj, Func<T, bool> predicate, Exception exception = null) //todo: try to get defined name of the T
+        public static void ThrowExceptionIf<T>(this T obj, Func<T, bool> predicate, Exception exception = null) 
         {
             if (exception == null)
             {

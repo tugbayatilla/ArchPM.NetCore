@@ -17,7 +17,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">entityType</exception>
-        public static IEnumerable<PropertyDTO> CollectProperties(this Type entityType, Func<PropertyDTO, bool> predicate = null)
+        public static IEnumerable<PropertyInfo> CollectProperties(this Type entityType, Func<PropertyInfo, bool> predicate = null)
         {
             if (entityType == null)
             {
@@ -26,12 +26,12 @@ namespace ArchPM.NetCore.Extensions
 
             if (entityType.Name == "Void")
             {
-                return new List<PropertyDTO>();
+                return new List<PropertyInfo>();
             }
 
             if (entityType.Module.Name == "mscorlib.dll")
             {
-                return new List<PropertyDTO>();
+                return new List<PropertyInfo>();
             }
 
             try
@@ -41,7 +41,7 @@ namespace ArchPM.NetCore.Extensions
             }
             catch
             {
-                return new List<PropertyDTO>();
+                return new List<PropertyInfo>();
             }
         }
 
@@ -53,7 +53,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">entity</exception>
-        public static IEnumerable<PropertyDTO> CollectProperties<T>(this T entity, Func<PropertyDTO, bool> predicate = null)
+        public static IEnumerable<PropertyInfo> CollectProperties<T>(this T entity, Func<PropertyInfo, bool> predicate = null)
         {
             if (entity == null)
             {
@@ -139,29 +139,12 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is generic nullable] [the specified property]; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsGenericNullable(this PropertyInfo property)
+        public static bool IsGenericNullable(this System.Reflection.PropertyInfo property)
         {
             return property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-        /// <summary>
-        /// Adds the property.
-        /// </summary>
-        /// <param name="expando">The expando.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <param name="propertyValue">The property value.</param>
-        public static void AddProperty(this ExpandoObject expando, string propertyName, object propertyValue)
-        {
-            var expandoDict = expando as IDictionary<string, object>;
-            if (expandoDict.ContainsKey(propertyName))
-            {
-                expandoDict[propertyName] = propertyValue;
-            }
-            else
-            {
-                expandoDict.Add(propertyName, propertyValue);
-            }
-        }
+       
 
         /// <summary>
         /// Sets the value.
@@ -211,9 +194,9 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="property">The property.</param>
         /// <returns></returns>
         // ReSharper disable once InconsistentNaming
-        internal static PropertyDTO ConvertPropertyInfoToPropertyDTO<T>(this T entity, PropertyInfo property)
+        private static PropertyInfo ConvertPropertyInfoToPropertyDTO<T>(this T entity, System.Reflection.PropertyInfo property)
         {
-            var entityProperty = new PropertyDTO
+            var entityProperty = new PropertyInfo
             {
                 Name = property.Name
             };

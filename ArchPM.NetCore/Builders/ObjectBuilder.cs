@@ -38,20 +38,12 @@ namespace ArchPM.NetCore.Builders
             if (ctorInfo != null)
             {
                 var ctorParametersInfo = ctorInfo.GetParameters();
-                foreach (var info in ctorParametersInfo)
-                {
-                    if (info.ParameterType.IsClass)
-                    {
-                        constructorArguments.Add(CreateInstance(info.ParameterType));
-                    }
-                    else
-                    {
-                        constructorArguments.Add(info.ParameterType.GetDefault());
-                    }
-                }
+                constructorArguments.AddRange(
+                    ctorParametersInfo.Select(info => info.ParameterType.IsClass
+                        ? CreateInstance(info.ParameterType)
+                        : info.ParameterType.GetDefault()));
 
                 var createdActivator = GetActivator<object>(ctorInfo);
-                //create an instance:
                 instance = createdActivator(constructorArguments.ToArray());
             }
 
@@ -60,8 +52,8 @@ namespace ArchPM.NetCore.Builders
             {
                 instance = Activator.CreateInstance(type);
             }
-            
-            
+
+
             return instance;
         }
 
@@ -72,7 +64,7 @@ namespace ArchPM.NetCore.Builders
         /// <returns></returns>
         public static T CreateInstance<T>()
         {
-            return (T)CreateInstance(typeof(T)) ;
+            return (T)CreateInstance(typeof(T));
         }
 
         /// <summary>
@@ -116,6 +108,5 @@ namespace ArchPM.NetCore.Builders
             var compiled = (ObjectActivator<T>)lambda.Compile();
             return compiled;
         }
-
     }
 }

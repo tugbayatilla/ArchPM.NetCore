@@ -3,27 +3,36 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Authors>Tugbay Atilla</Authors>
-    <PackageTags>ArchPM, NetCore, Core, net, standard, 2.0, netstandard2.0</PackageTags>
+    <PackageTags>.net6, testing</PackageTags>
     <AssemblyVersion>6.0</AssemblyVersion>
+    <FileVersion>6.0</FileVersion>
+    <Version>6.1</Version>
+    
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageReleaseNotes>refactoring. SampleCreator Arrays support implemented</PackageReleaseNotes>
-    <Description>ArchPM .NetCore Core Operations for net standard</Description>
-    <FileVersion>6.0</FileVersion>
-    <PackageLicenseUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageReleaseNotes>simplified</PackageReleaseNotes>
+    <Description>SampleDataBuilder for tests</Description>
+
     <PackageProjectUrl>https://github.com/tugbayatilla/ArchPM.NetCore</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/tugbayatilla/ArchPM.NetCore/master/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/tugbayatilla/ArchPM.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>© 2019 Tugbay Atilla</Copyright>
-    <Version>6.0</Version>
+    
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>C:\Users\tatilla.ext\source\repos\ArchPM.NetCore\ArchPM.NetCore\ArchPM.NetCore.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\icon.png" Pack="true" PackagePath="" />
+    <None Include="..\readme.md" Pack="true" PackagePath="" />
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
 
 </Project>

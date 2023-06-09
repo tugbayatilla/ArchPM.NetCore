@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ArchPM.NetCore.Extensions;
-using ArchPM.NetCore.Utilities;
 
 namespace ArchPM.NetCore.Builders
 {
@@ -20,9 +19,11 @@ namespace ArchPM.NetCore.Builders
         /// <param name="configureSampleAction">The configure sample action.</param>
         /// <param name="configureBuilderAction">The configure builder action.</param>
         /// <returns></returns>
-        public static T CreateSample<T>(this T obj, Action<T> configureSampleAction = null, Action<SampleBuilderConfiguration> configureBuilderAction = null) where T : class
+        public static T CreateSample<T>(this T obj, Action<T> configureSampleAction = null,
+            Action<SampleBuilderConfiguration> configureBuilderAction = null) where T : class
         {
-            var result = SampleBuilder<T>.Init(obj).ConfigureSample(configureSampleAction).ConfigureBuilder(configureBuilderAction).Build().Result;
+            var result = SampleBuilder<T>.Init(obj).ConfigureSample(configureSampleAction)
+                .ConfigureBuilder(configureBuilderAction).Build().Result;
             return result;
         }
 
@@ -57,9 +58,11 @@ namespace ArchPM.NetCore.Builders
         /// <param name="configureSampleAction">The configure sample action.</param>
         /// <param name="configureBuilderAction">The configure builder action.</param>
         /// <returns></returns>
-        public static T Create<T>(Action<T> configureSampleAction, Action<SampleBuilderConfiguration> configureBuilderAction = null) where T : class
+        public static T Create<T>(Action<T> configureSampleAction,
+            Action<SampleBuilderConfiguration> configureBuilderAction = null) where T : class
         {
-            var result = SampleBuilder<T>.Init().ConfigureSample(configureSampleAction).ConfigureBuilder(configureBuilderAction).Build().Result;
+            var result = SampleBuilder<T>.Init().ConfigureSample(configureSampleAction)
+                .ConfigureBuilder(configureBuilderAction).Build().Result;
             return result;
         }
 
@@ -84,10 +87,10 @@ namespace ArchPM.NetCore.Builders
         /// <returns></returns>
         public static T Create<T>(Action<T> configureSampleAction, SampleBuilderConfiguration config) where T : class
         {
-            var result = SampleBuilder<T>.Init().SetConfiguration(config).ConfigureSample(configureSampleAction).Build().Result;
+            var result = SampleBuilder<T>.Init().SetConfiguration(config).ConfigureSample(configureSampleAction).Build()
+                .Result;
             return result;
         }
-
     }
 
     /// <summary>
@@ -102,7 +105,8 @@ namespace ArchPM.NetCore.Builders
         /// <value>
         /// The configuration.
         /// </value>
-        public SampleBuilderConfiguration Configuration { get; private set; } = new SampleBuilderConfiguration();
+        public SampleBuilderConfiguration Configuration { get; private set; } = new();
+
         /// <summary>
         /// Gets the result.
         /// </summary>
@@ -115,6 +119,7 @@ namespace ArchPM.NetCore.Builders
         /// The configure builder action instance
         /// </summary>
         private Action<SampleBuilderConfiguration> _configureBuilderActionInstance;
+
         /// <summary>
         /// The configure sample action instance
         /// </summary>
@@ -195,7 +200,6 @@ namespace ArchPM.NetCore.Builders
         public SampleBuilder<T> Build()
         {
             var properties = Result.CollectProperties().ToList();
-            //calling Pre Configuration Action
             _configureBuilderActionInstance?.Invoke(Configuration);
 
             properties.ModifyEach(p =>
@@ -204,22 +208,23 @@ namespace ArchPM.NetCore.Builders
                 {
                     return p;
                 }
+
                 if (p.IsPrimitive)
                 {
                     var value = GetResultIfPrimitive(p.ValueType, p.Name);
                     if (value != default)
                     {
-                        ReflectionExtensions.SetValue(Result, p.Name, value);
+                        Result.SetValue(p.Name, value);
                     }
                 }
                 else if (p.IsArray)
                 {
                     var elementType = p.ValueType.GetElementType();
-                    var ins = Activator.CreateInstance(
-                        p.ValueType, new object[] { Configuration.CollectionCount }
-                    );
+                    var ins = Activator.CreateInstance(p.ValueType, Configuration.CollectionCount);
+                    
                     CreateSamplesIntoCollectionInstance(ins, p.Name, elementType);
-                    ReflectionExtensions.SetValue(Result, p.Name, ins, false);
+                    
+                    Result.SetValue(p.Name, ins, false);
                 }
                 else if (p.IsList)
                 {
@@ -235,19 +240,21 @@ namespace ArchPM.NetCore.Builders
                     var genericType = p.ValueType.GetGenericArguments()[0];
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
                     CreateSamplesIntoCollectionInstance(ins, p.Name, genericType);
-                    ReflectionExtensions.SetValue(Result, p.Name, ins, changeType);
+                    
+                    Result.SetValue(p.Name, ins, changeType);
                 }
                 else if (p.ValueTypeName == "Dictionary`2")
                 {
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
                     Configuration.PreviouslyCreatedInstances.Add(ins);
-                    //CreateSamplesIntoCollectionInstance(ins, p.Name, p.ValueType);
-                    ReflectionExtensions.SetValue(Result, p.Name, ins); //todo: must be filled with data!
+                    
+                    Result.SetValue(p.Name, ins); 
                 }
                 else if (p.IsClass && !p.IsList && !p.IsArray)
                 {
                     var ins = GetResultIfOnlyClass(p.ValueType);
-                    ReflectionExtensions.SetValue(Result, p.Name, ins);
+                    
+                    Result.SetValue(p.Name, ins);
                 }
 
                 return p;
@@ -258,14 +265,13 @@ namespace ArchPM.NetCore.Builders
             return this;
         }
 
-        private void CreateSamplesIntoCollectionInstance(object instance, string instancePropertyName, Type instanceItemType)
+        private void CreateSamplesIntoCollectionInstance(object instance, string instancePropertyName,
+            Type instanceItemType)
         {
             for (var i = 0; i < Configuration.CollectionCount; i++)
             {
                 var previouslyCreatedInstance =
-                    Configuration.PreviouslyCreatedInstances.FirstOrDefault(
-                        pci => pci.GetType() == instanceItemType
-                    );
+                    Configuration.PreviouslyCreatedInstances.FirstOrDefault(pci => pci.GetType() == instanceItemType);
 
                 if (previouslyCreatedInstance == null)
                 {
@@ -276,6 +282,7 @@ namespace ArchPM.NetCore.Builders
                         {
                             value += $"_{i}";
                         }
+
                         AddItemIntoCollection(instance, i, value);
                     }
                     else
@@ -311,9 +318,7 @@ namespace ArchPM.NetCore.Builders
         private object GetResultIfOnlyClass(Type propertyValueType)
         {
             var previouslyCreatedInstance =
-                Configuration.PreviouslyCreatedInstances.FirstOrDefault(
-                    pci => pci.GetType() == propertyValueType
-                );
+                Configuration.PreviouslyCreatedInstances.FirstOrDefault(pci => pci.GetType() == propertyValueType);
 
             if (previouslyCreatedInstance != null)
             {
@@ -417,6 +422,5 @@ namespace ArchPM.NetCore.Builders
 
             return result;
         }
-
     }
 }

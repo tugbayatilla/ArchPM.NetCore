@@ -32,18 +32,6 @@ namespace ArchPM.NetCore.Extensions
         }
 
         /// <summary>
-        /// Gets the constants.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns></returns>
-        public static IEnumerable<FieldInfo> GetConstants(this Type type)
-        {
-            var fieldInfos = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-
-            return fieldInfos.Where(fi => fi.IsLiteral && !fi.IsInitOnly);
-        }
-
-        /// <summary>
         /// Determines whether [is nullable type] [the specified type].
         /// </summary>
         /// <param name="type">The type.</param>
@@ -54,69 +42,5 @@ namespace ArchPM.NetCore.Extensions
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
-
-        /// <summary>
-        /// Gets the type of the nullable.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns></returns>
-        public static Type GetType(Type type)
-        {
-            if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
-            {
-                return Nullable.GetUnderlyingType(type);
-            }
-
-            return type;
-        }
-
-        /// <summary>
-        /// Gets the constants values.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="type">The type.</param>
-        /// <returns></returns>
-        public static IEnumerable<T> GetConstantsValues<T>(this Type type) where T : class
-        {
-            var fieldInfos = GetConstants(type);
-
-            return fieldInfos.Select(fi => fi.GetRawConstantValue() as T);
-        }
-
-        /// <summary>
-        /// Create and instance and cast
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="type"></param>
-        /// <param name="constructorArguments"></param>
-        /// <returns></returns>
-        public static T CreateInstanceAndCast<T>(this Type type, params object[] constructorArguments)
-        {
-            if (type.ContainsGenericParameters)
-            {
-                type = type.MakeGenericType(typeof(T).GenericTypeArguments);
-            }
-            var instance = (T)Activator.CreateInstance(type, constructorArguments);
-            return instance;
-        }
-
-        /// <summary>
-        /// Recursively the type of the check base.
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="checkType">Type of the check.</param>
-        /// <returns></returns>
-        internal static bool RecursivelyCheckBaseType(Type type, Type checkType)
-        {
-            if (type != null)
-            {
-                return type == checkType || RecursivelyCheckBaseType(type.BaseType, checkType);
-            }
-            else
-            {
-                return false;
-            }
-        }
-
     }
 }
