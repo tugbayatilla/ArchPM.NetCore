@@ -55,6 +55,13 @@ namespace ArchPM.NetCore.Builders
                 instance = createdActivator(constructorArguments.ToArray());
             }
 
+            var isStruct = type.IsValueType && !type.IsPrimitive && !type.IsEnum;
+            if (isStruct)
+            {
+                instance = Activator.CreateInstance(type);
+            }
+            
+            
             return instance;
         }
 

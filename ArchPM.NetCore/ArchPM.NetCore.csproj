@@ -1,22 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Tugbay Atilla</Authors>
     <PackageTags>ArchPM, NetCore, Core, net, standard, 2.0, netstandard2.0</PackageTags>
-    <AssemblyVersion>2.0.13.0</AssemblyVersion>
+    <AssemblyVersion>6.0</AssemblyVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageReleaseNotes>refactoring. SampleCreator Arrays support implemented</PackageReleaseNotes>
     <Description>ArchPM .NetCore Core Operations for net standard</Description>
-    <FileVersion>2.0.13.0</FileVersion>
+    <FileVersion>6.0</FileVersion>
     <PackageLicenseUrl>https://github.com/tugbayatilla/ArchPM.NetCore/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/tugbayatilla/ArchPM.NetCore</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/tugbayatilla/ArchPM.NetCore/master/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/tugbayatilla/ArchPM.NetCore</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>© 2019 Tugbay Atilla</Copyright>
-    <Version>2.0.13</Version>
+    <Version>6.0</Version>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
@@ -29,6 +29,10 @@
     <Reference Include="System.ComponentModel.Annotations">
       <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.netcore.app\2.1.0\ref\netcoreapp2.1\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="NETStandard.Library" Version="2.0.0" />
   </ItemGroup>
 
 </Project>

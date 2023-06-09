@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-
-namespace ArchPM.NetCore.Tests.TestModels
+﻿namespace ArchPM.NetCore.Tests.TestModels
 {
     internal class SampleArrayPropertyClass
     {
