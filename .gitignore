@@ -1,4 +1,7 @@
 .idea/
+.DS_Store
+_NCrunch_*
+*.ncrunch*
 
 # Visual Studio Files
 bin/
