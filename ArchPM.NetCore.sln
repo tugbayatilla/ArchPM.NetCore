@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.329
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchPM.NetCore", "ArchPM.NetCore\ArchPM.NetCore.csproj", "{45549156-063C-45C9-9C36-0630B0C98D18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchPM.NetCore", "ArchPM.NetCore\ArchPM.NetCore.csproj", "{45549156-063C-45C9-9C36-0630B0C98D18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchPM.NetCore.Tests", "ArchPM.NetCore.Tests\ArchPM.NetCore.Tests.csproj", "{FEC0E644-4347-4997-ABAA-7E6F6BDEDFED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArchPM.NetCore.Tests", "ArchPM.NetCore.Tests\ArchPM.NetCore.Tests.csproj", "{FEC0E644-4347-4997-ABAA-7E6F6BDEDFED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
