@@ -19,11 +19,13 @@ namespace ArchPM.NetCore.Builders
         /// <param name="configureSampleAction">The configure sample action.</param>
         /// <param name="configureBuilderAction">The configure builder action.</param>
         /// <returns></returns>
-        public static T CreateSample<T>(this T obj, Action<T> configureSampleAction = null,
-            Action<SampleBuilderConfiguration> configureBuilderAction = null) where T : class
+        public static T CreateSample<T>(this T obj, 
+            Action<T> configureSampleAction = null,
+            Action<SampleBuilderConfiguration> configureBuilderAction = null) 
+            where T : class
         {
             var result = SampleBuilder<T>.Init(obj).ConfigureSample(configureSampleAction)
-                .ConfigureBuilder(configureBuilderAction).Build().Result;
+                .ConfigureBuilder(configureBuilderAction).Build();
             return result;
         }
 
@@ -36,18 +38,7 @@ namespace ArchPM.NetCore.Builders
         /// <returns></returns>
         public static T CreateSample<T>(this T obj, SampleBuilderConfiguration config = null) where T : class
         {
-            var result = SampleBuilder<T>.Init(obj).SetConfiguration(config).ConfigureSample().Build().Result;
-            return result;
-        }
-
-        /// <summary>
-        /// Creates the sample.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T Create<T>() where T : class
-        {
-            var result = SampleBuilder<T>.Init().ConfigureSample().ConfigureBuilder().Build().Result;
+            var result = SampleBuilder<T>.Init(obj).SetConfiguration(config).ConfigureSample().Build();
             return result;
         }
 
@@ -58,11 +49,13 @@ namespace ArchPM.NetCore.Builders
         /// <param name="configureSampleAction">The configure sample action.</param>
         /// <param name="configureBuilderAction">The configure builder action.</param>
         /// <returns></returns>
-        public static T Create<T>(Action<T> configureSampleAction,
-            Action<SampleBuilderConfiguration> configureBuilderAction = null) where T : class
+        public static T Create<T>(
+            Action<T> configureSampleAction = null,
+            Action<SampleBuilderConfiguration> configureBuilderAction = null) 
+            where T : class
         {
             var result = SampleBuilder<T>.Init().ConfigureSample(configureSampleAction)
-                .ConfigureBuilder(configureBuilderAction).Build().Result;
+                .ConfigureBuilder(configureBuilderAction).Build();
             return result;
         }
 
@@ -74,7 +67,7 @@ namespace ArchPM.NetCore.Builders
         /// <returns></returns>
         public static T Create<T>(SampleBuilderConfiguration config) where T : class
         {
-            var result = SampleBuilder<T>.Init().SetConfiguration(config).Build().Result;
+            var result = SampleBuilder<T>.Init().SetConfiguration(config).Build();
             return result;
         }
 
@@ -87,8 +80,7 @@ namespace ArchPM.NetCore.Builders
         /// <returns></returns>
         public static T Create<T>(Action<T> configureSampleAction, SampleBuilderConfiguration config) where T : class
         {
-            var result = SampleBuilder<T>.Init().SetConfiguration(config).ConfigureSample(configureSampleAction).Build()
-                .Result;
+            var result = SampleBuilder<T>.Init().SetConfiguration(config).ConfigureSample(configureSampleAction).Build();
             return result;
         }
     }
@@ -99,6 +91,11 @@ namespace ArchPM.NetCore.Builders
     /// <typeparam name="T"></typeparam>
     public class SampleBuilder<T> where T : class
     {
+        private readonly T _result;
+        private Action<SampleBuilderConfiguration> _configureBuilderActionInstance;
+        private Action<T> _configureSampleActionInstance;
+
+
         /// <summary>
         /// Gets the configuration.
         /// </summary>
@@ -107,24 +104,7 @@ namespace ArchPM.NetCore.Builders
         /// </value>
         public SampleBuilderConfiguration Configuration { get; private set; } = new();
 
-        /// <summary>
-        /// Gets the result.
-        /// </summary>
-        /// <value>
-        /// The result.
-        /// </value>
-        public T Result { get; }
-
-        /// <summary>
-        /// The configure builder action instance
-        /// </summary>
-        private Action<SampleBuilderConfiguration> _configureBuilderActionInstance;
-
-        /// <summary>
-        /// The configure sample action instance
-        /// </summary>
-        private Action<T> _configureSampleActionInstance;
-
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="SampleBuilder{T}"/> class.
         /// </summary>
@@ -132,7 +112,7 @@ namespace ArchPM.NetCore.Builders
         /// <param name="configuration">The configuration.</param>
         public SampleBuilder(T obj = null, SampleBuilderConfiguration configuration = null)
         {
-            Result = obj ?? (T)ObjectBuilder.CreateInstance(typeof(T));
+            _result = obj ?? (T)ObjectBuilder.CreateInstance(typeof(T));
             SetConfiguration(configuration);
         }
 
@@ -172,7 +152,7 @@ namespace ArchPM.NetCore.Builders
         {
             if (!Configuration.IgnoreRecursion)
             {
-                Configuration.KeyValueContainer.Add(Result.GetType().FullName);
+                Configuration.KeyValueContainer.Add(_result.GetType().FullName);
             }
 
             _configureBuilderActionInstance = configAction;
@@ -197,9 +177,9 @@ namespace ArchPM.NetCore.Builders
         /// Builds this instance.
         /// </summary>
         /// <returns></returns>
-        public SampleBuilder<T> Build()
+        public T Build()
         {
-            var properties = Result.CollectProperties().ToList();
+            var properties = _result.CollectProperties().ToList();
             _configureBuilderActionInstance?.Invoke(Configuration);
 
             properties.ModifyEach(p =>
@@ -214,7 +194,7 @@ namespace ArchPM.NetCore.Builders
                     var value = GetResultIfPrimitive(p.ValueType, p.Name);
                     if (value != default)
                     {
-                        Result.SetValue(p.Name, value);
+                        _result.SetValue(p.Name, value);
                     }
                 }
                 else if (p.IsArray)
@@ -224,7 +204,7 @@ namespace ArchPM.NetCore.Builders
                     
                     CreateSamplesIntoCollectionInstance(ins, p.Name, elementType);
                     
-                    Result.SetValue(p.Name, ins, false);
+                    _result.SetValue(p.Name, ins, false);
                 }
                 else if (p.IsList)
                 {
@@ -241,28 +221,28 @@ namespace ArchPM.NetCore.Builders
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
                     CreateSamplesIntoCollectionInstance(ins, p.Name, genericType);
                     
-                    Result.SetValue(p.Name, ins, changeType);
+                    _result.SetValue(p.Name, ins, changeType);
                 }
                 else if (p.ValueTypeName == "Dictionary`2")
                 {
                     var ins = ObjectBuilder.CreateInstance(p.ValueType);
                     Configuration.PreviouslyCreatedInstances.Add(ins);
                     
-                    Result.SetValue(p.Name, ins); 
+                    _result.SetValue(p.Name, ins); 
                 }
                 else if (p.IsClass && !p.IsList && !p.IsArray)
                 {
                     var ins = GetResultIfOnlyClass(p.ValueType);
                     
-                    Result.SetValue(p.Name, ins);
+                    _result.SetValue(p.Name, ins);
                 }
 
                 return p;
             });
 
-            _configureSampleActionInstance?.Invoke(Result);
+            _configureSampleActionInstance?.Invoke(_result);
 
-            return this;
+            return _result;
         }
 
         private void CreateSamplesIntoCollectionInstance(object instance, string instancePropertyName,
