@@ -179,7 +179,7 @@ namespace ArchPM.NetCore.Builders
         /// <returns></returns>
         public T Build()
         {
-            var properties = _result.CollectProperties().ToList();
+            var properties = _result.ToEntityPropertyInfos().ToList();
             _configureBuilderActionInstance?.Invoke(Configuration);
 
             properties.ModifyEach(p =>

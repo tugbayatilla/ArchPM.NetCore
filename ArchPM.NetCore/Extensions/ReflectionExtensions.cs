@@ -17,7 +17,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">entityType</exception>
-        public static IEnumerable<PropertyInfo> CollectProperties(this Type entityType, Func<PropertyInfo, bool> predicate = null)
+        public static IEnumerable<EntityPropertyInfo> ToEntityPropertyInfos(this Type entityType, Func<EntityPropertyInfo, bool> predicate = null)
         {
             if (entityType == null)
             {
@@ -26,22 +26,22 @@ namespace ArchPM.NetCore.Extensions
 
             if (entityType.Name == "Void")
             {
-                return new List<PropertyInfo>();
+                return new List<EntityPropertyInfo>();
             }
 
             if (entityType.Module.Name == "mscorlib.dll")
             {
-                return new List<PropertyInfo>();
+                return new List<EntityPropertyInfo>();
             }
 
             try
             {
                 var entity = Activator.CreateInstance(entityType);
-                return CollectProperties(entity, predicate);
+                return ToEntityPropertyInfos(entity, predicate);
             }
             catch
             {
-                return new List<PropertyInfo>();
+                return new List<EntityPropertyInfo>();
             }
         }
 
@@ -53,7 +53,7 @@ namespace ArchPM.NetCore.Extensions
         /// <param name="predicate">The predicate.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException">entity</exception>
-        public static IEnumerable<PropertyInfo> CollectProperties<T>(this T entity, Func<PropertyInfo, bool> predicate = null)
+        public static IEnumerable<EntityPropertyInfo> ToEntityPropertyInfos<T>(this T entity, Func<EntityPropertyInfo, bool> predicate = null)
         {
             if (entity == null)
             {
@@ -64,7 +64,7 @@ namespace ArchPM.NetCore.Extensions
 
             foreach (var property in properties)
             {
-                var entityProperty = entity.ConvertPropertyInfoToPropertyDTO(property);
+                var entityProperty = entity.ToEntityPropertyInfo(property);
                 entityProperty.Attributes = property.GetCustomAttributes();
 
                 if (predicate != null)
@@ -82,19 +82,11 @@ namespace ArchPM.NetCore.Extensions
             }
         }
 
-        /// <summary>
-        /// Determines whether [is dot net pirimitive].
-        /// </summary>
-        /// <param name="systemType">Type of the system.</param>
-        /// <param name="acceptNullables">if set to <c>true</c> [accept nullables].</param>
-        /// <returns>
-        ///   <c>true</c> if [is dot net pirimitive] [the specified system type]; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsDotNetPirimitive(this Type systemType, bool acceptNullables = true)
+        public static bool IsDotNetPirimitive(this Type systemType, bool acceptNullable = true)
         {
-            if (acceptNullables)
+            if (acceptNullable)
             {
-                if (systemType.Name == "Nullable`1")
+                if (systemType.Name == "IsNullable`1")
                 {
                     var nullableSystemType = systemType.GetGenericArguments()[0];
                     return IsDotNetPirimitive(nullableSystemType, false);
@@ -132,16 +124,10 @@ namespace ArchPM.NetCore.Extensions
             }
         }
 
-        /// <summary>
-        /// Determines whether [is generic nullable].
-        /// </summary>
-        /// <param name="property">The property.</param>
-        /// <returns>
-        ///   <c>true</c> if [is generic nullable] [the specified property]; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsGenericNullable(this System.Reflection.PropertyInfo property)
+        public static bool IsGenericNullable(this PropertyInfo propertyInfo)
         {
-            return property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
+            return propertyInfo.PropertyType.IsGenericType 
+                   && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
        
@@ -151,19 +137,19 @@ namespace ArchPM.NetCore.Extensions
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj">The object.</param>
-        /// <param name="propertyName">Name of the property.</param>
-        /// <param name="propertyVal">The property value.</param>
-        /// <param name="applyChangeType">if set to <c>true</c> [change type]. if you explicitly change the type of the property then set as false</param>
+        /// <param name="propertyName">Name of the propertyInfo.</param>
+        /// <param name="propertyVal">The propertyInfo value.</param>
+        /// <param name="applyChangeType">if set to <c>true</c> [change type]. if you explicitly change the type of the propertyInfo then set as false</param>
         public static void SetValue<T>(this T obj, string propertyName, object propertyVal, bool applyChangeType = true)
         {
             //find out the type
             var type = obj.GetType();
 
-            //get the property information based on the type
+            //get the propertyInfo information based on the type
             var propertyInfo = type.GetProperty(propertyName);
 
             //Convert.ChangeType does not handle conversion to nullable types
-            //if the property type is nullable, we need to get the underlying type of the property
+            //if the propertyInfo type is nullable, we need to get the underlying type of the propertyInfo
             if (propertyInfo != null)
             {
                 var targetType = propertyInfo.PropertyType.IsNullableType() ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
@@ -178,25 +164,15 @@ namespace ArchPM.NetCore.Extensions
 
             if (propertyInfo != null && propertyInfo.CanWrite)
             {
-                //Set the value of the property
+                //Set the value of the propertyInfo
                 propertyInfo.SetValue(obj, propertyVal, null);
             }
 
         }
 
-
-
-        /// <summary>
-        /// Converts the property information to property dto.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="entity">The entity.</param>
-        /// <param name="property">The property.</param>
-        /// <returns></returns>
-        // ReSharper disable once InconsistentNaming
-        private static PropertyInfo ConvertPropertyInfoToPropertyDTO<T>(this T entity, System.Reflection.PropertyInfo property)
+        private static EntityPropertyInfo ToEntityPropertyInfo<T>(this T entity, PropertyInfo property)
         {
-            var entityProperty = new PropertyInfo
+            var entityProperty = new EntityPropertyInfo
             {
                 Name = property.Name
             };
@@ -210,25 +186,25 @@ namespace ArchPM.NetCore.Extensions
             }
             entityProperty.ValueTypeName = property.PropertyType.Name;
             entityProperty.ValueType = property.PropertyType;
-            entityProperty.Nullable = false;
+            entityProperty.IsNullable = false;
 
             if (property.IsGenericNullable())
             {
                 entityProperty.ValueTypeName = Nullable.GetUnderlyingType(property.PropertyType)?.Name;
                 entityProperty.ValueType = Nullable.GetUnderlyingType(property.PropertyType);
-                entityProperty.Nullable = true;
+                entityProperty.IsNullable = true;
             }
 
             //when datetime gets the default value
             if (entityProperty.Value != null && entityProperty.ValueType == typeof(DateTime) && (DateTime)entityProperty.Value == default(DateTime))
             {
                 entityProperty.Value = null;
-                entityProperty.Nullable = true;
+                entityProperty.IsNullable = true;
             }
             //string is reference type, it can be null
             if (entityProperty.ValueType == typeof(string))
             {
-                entityProperty.Nullable = true;
+                entityProperty.IsNullable = true;
             }
             entityProperty.IsPrimitive = entityProperty.ValueType.IsDotNetPirimitive();
             entityProperty.IsEnum = IsEnumOrIsBaseEnum(entityProperty.ValueType);
@@ -236,11 +212,11 @@ namespace ArchPM.NetCore.Extensions
             entityProperty.IsArray = entityProperty.ValueType?.IsArray ?? false;
             if (entityProperty.IsList)
             {
-                entityProperty.Nullable = true;
+                entityProperty.IsNullable = true;
             }
             if (!property.IsGenericNullable() && !entityProperty.IsPrimitive)
             {
-                entityProperty.Nullable = true;
+                entityProperty.IsNullable = true;
             }
             if (entity.GetType().IsClass && !entityProperty.IsPrimitive)
             {
@@ -256,7 +232,7 @@ namespace ArchPM.NetCore.Extensions
         /// <returns>
         ///   <c>true</c> if [is enum or is base enum] [the specified type]; otherwise, <c>false</c>.
         /// </returns>
-        internal static bool IsEnumOrIsBaseEnum(this Type type)
+        public static bool IsEnumOrIsBaseEnum(this Type type)
         {
             return type.IsEnum || (type.BaseType != null && type.BaseType == typeof(Enum));
         }

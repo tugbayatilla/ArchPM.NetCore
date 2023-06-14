@@ -1035,7 +1035,7 @@
             The value type of.
             </value>
         </member>
-        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.Nullable">
+        <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.IsNullable">
             <summary>
             Gets or sets a value indicating whether this <see cref="T:ArchPM.NetCore.Extensions.PropertyDTO"/> is nullable.
             </summary>
@@ -1053,7 +1053,7 @@
         </member>
         <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.IsEnum">
             <summary>
-            Gets the property whether is enum or not
+            Gets the propertyInfo whether is enum or not
             </summary>
         </member>
         <member name="P:ArchPM.NetCore.Extensions.PropertyDTO.IsList">
@@ -1082,7 +1082,7 @@
             
             </summary>
         </member>
-        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.CollectProperties(System.Type,System.Func{ArchPM.NetCore.Extensions.PropertyDTO,System.Boolean})">
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.ToEntityPropertyInfos(System.Type,System.Func{ArchPM.NetCore.Extensions.PropertyDTO,System.Boolean})">
             <summary>
             Collects the properties.
             </summary>
@@ -1091,7 +1091,7 @@
             <returns></returns>
             <exception cref="T:System.ArgumentNullException">entityType</exception>
         </member>
-        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.CollectProperties``1(``0,System.Func{ArchPM.NetCore.Extensions.PropertyDTO,System.Boolean})">
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.ToEntityPropertyInfos``1(``0,System.Func{ArchPM.NetCore.Extensions.PropertyDTO,System.Boolean})">
             <summary>
             Collects the properties.
             </summary>
@@ -1106,27 +1106,27 @@
             Determines whether [is dot net pirimitive].
             </summary>
             <param name="systemType">Type of the system.</param>
-            <param name="acceptNullables">if set to <c>true</c> [accept nullables].</param>
+            <param name="acceptNullable">if set to <c>true</c> [accept nullables].</param>
             <returns>
               <c>true</c> if [is dot net pirimitive] [the specified system type]; otherwise, <c>false</c>.
             </returns>
         </member>
-        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsGenericNullable(System.Reflection.PropertyInfo)">
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsGenericNullable(System.Reflection.EntityPropertyInfo)">
             <summary>
             Determines whether [is generic nullable].
             </summary>
-            <param name="property">The property.</param>
+            <param name="propertyInfo">The propertyInfo.</param>
             <returns>
-              <c>true</c> if [is generic nullable] [the specified property]; otherwise, <c>false</c>.
+              <c>true</c> if [is generic nullable] [the specified propertyInfo]; otherwise, <c>false</c>.
             </returns>
         </member>
         <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.AddProperty(System.Dynamic.ExpandoObject,System.String,System.Object)">
             <summary>
-            Adds the property.
+            Adds the propertyInfo.
             </summary>
             <param name="expando">The expando.</param>
-            <param name="propertyName">Name of the property.</param>
-            <param name="propertyValue">The property value.</param>
+            <param name="propertyName">Name of the propertyInfo.</param>
+            <param name="propertyValue">The propertyInfo value.</param>
         </member>
         <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.SetValue``1(``0,System.String,System.Object)">
             <summary>
@@ -1134,16 +1134,16 @@
             </summary>
             <typeparam name="T"></typeparam>
             <param name="obj">The object.</param>
-            <param name="propertyName">Name of the property.</param>
-            <param name="propertyVal">The property value.</param>
+            <param name="propertyName">Name of the propertyInfo.</param>
+            <param name="propertyVal">The propertyInfo value.</param>
         </member>
-        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.ConvertPropertyInfoToPropertyDTO``1(``0,System.Reflection.PropertyInfo)">
+        <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.ConvertPropertyInfoToPropertyDTO``1(``0,System.Reflection.EntityPropertyInfo)">
             <summary>
-            Converts the property information to property dto.
+            Converts the propertyInfo information to propertyInfo dto.
             </summary>
             <typeparam name="T"></typeparam>
             <param name="entity">The entity.</param>
-            <param name="property">The property.</param>
+            <param name="propertyInfo">The propertyInfo.</param>
             <returns></returns>
         </member>
         <member name="M:ArchPM.NetCore.Extensions.ReflectionExtensionMethods.IsEnumOrIsBaseEnum(System.Type)">
@@ -1225,7 +1225,7 @@
             The lock
             </summary>
         </member>
-        <member name="M:ArchPM.NetCore.Utils.CreateUniqueNumber(System.Nullable{System.DateTime})">
+        <member name="M:ArchPM.NetCore.Utils.CreateUniqueNumber(System.IsNullable{System.DateTime})">
             <summary>
             Creates the unique number.
             </summary>
