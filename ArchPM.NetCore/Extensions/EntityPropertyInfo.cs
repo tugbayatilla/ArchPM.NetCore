@@ -10,7 +10,7 @@ namespace ArchPM.NetCore.Extensions
         public object Value { get; internal set; }
         public string ValueTypeName { get; internal set; }
         public Type ValueType { get; internal set; }
-        public bool IsNullable { get; set; }
+        public bool IsNullable { get; internal set; }
         public bool IsPrimitive { get; internal set; }
         public bool IsClass { get; internal set; }
         public bool IsEnum { get; internal set; }
